@@ -1,11 +1,13 @@
-"use client";
+'use client';
 
-import React from "react";
-import { LoginForm } from "../../forms/LoginForm";
-import { LoginFormData } from "../../../types/auth";
-import { useAuth } from "../../../contexts/AuthContext";
-import { Icon } from "../../ui/Icon";
-import "./LoginPage.scss";
+import React from 'react';
+
+import { useAuth } from '../../../contexts/AuthContext';
+import { LoginFormData } from '../../../types/auth';
+import { LoginForm } from '../../forms/LoginForm';
+import { Icon } from '../../ui/Icon';
+
+import './LoginPage.scss';
 
 export const LoginPage: React.FC = () => {
   const { login } = useAuth();

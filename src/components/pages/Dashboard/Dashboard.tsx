@@ -1,10 +1,12 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useAuth } from "../../../contexts/AuthContext";
-import { Button } from "../../ui/Button";
-import { LoggedInWrapper } from "../../ui/LoggedInWrapper";
-import "./Dashboard.scss";
+import React from 'react';
+
+import { useAuth } from '../../../contexts/AuthContext';
+import { Button } from '../../ui/Button';
+import { LoggedInWrapper } from '../../ui/LoggedInWrapper';
+
+import './Dashboard.scss';
 
 export const Dashboard: React.FC = () => {
   const { user, logout, isLoading } = useAuth();

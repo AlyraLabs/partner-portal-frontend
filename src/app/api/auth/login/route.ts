@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
 
 // This would typically connect to your actual backend API
 // For now, we'll simulate the authentication logic
@@ -9,28 +9,22 @@ export async function POST(request: NextRequest) {
 
     // Validate input
     if (!email || !password) {
-      return NextResponse.json(
-        { message: 'Email and password are required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: 'Email and password are required' }, { status: 400 });
     }
 
     // TODO: Replace with actual backend API call
     // Example: const response = await fetch(`${process.env.BACKEND_URL}/auth/login`, {...})
-    
+
     // Simulate authentication logic (replace with real backend call)
     const isValidUser = await authenticateUser(email, password);
-    
+
     if (!isValidUser) {
-      return NextResponse.json(
-        { message: 'Invalid credentials' },
-        { status: 401 }
-      );
+      return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 });
     }
 
     // Create session/JWT token (this should be handled by your backend)
     const sessionToken = generateSessionToken(email);
-    
+
     // Set secure HTTP-only cookie
     const cookieStore = await cookies();
     cookieStore.set('session', sessionToken, {
@@ -53,27 +47,23 @@ export async function POST(request: NextRequest) {
       user,
       message: 'Login successful',
     });
-
   } catch (error) {
     console.error('Login API error:', error);
-    return NextResponse.json(
-      { message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }
 }
 
 // Simulate user authentication (replace with actual backend call)
 async function authenticateUser(email: string, password: string): Promise<boolean> {
   // TODO: Replace with actual backend authentication
-  // Example: 
+  // Example:
   // const response = await fetch(`${process.env.BACKEND_URL}/auth/validate`, {
   //   method: 'POST',
   //   headers: { 'Content-Type': 'application/json' },
   //   body: JSON.stringify({ email, password })
   // });
   // return response.ok;
-  
+
   // For demo purposes, accept any email with password length >= 6
   return password.length >= 6;
 }

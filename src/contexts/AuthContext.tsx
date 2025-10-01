@@ -1,14 +1,11 @@
-"use client";
+'use client';
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { User, AuthState } from "../types/auth";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+
+import { AuthState, User } from '../types/auth';
 
 interface AuthContextType extends AuthState {
-  login: (
-    email: string,
-    password: string,
-    rememberMe?: boolean
-  ) => Promise<void>;
+  login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
 }
@@ -32,9 +29,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const checkAuth = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/auth/me", {
-        method: "GET",
-        credentials: "include",
+      const response = await fetch('/api/auth/me', {
+        method: 'GET',
+        credentials: 'include',
       });
 
       if (response.ok) {
@@ -46,7 +43,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setIsAuthenticated(false);
       }
     } catch (error) {
-      console.error("Auth check failed:", error);
+      console.error('Auth check failed:', error);
       setUser(null);
       setIsAuthenticated(false);
     } finally {
@@ -57,18 +54,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async (email: string, password: string, rememberMe = false) => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        credentials: "include",
+        credentials: 'include',
         body: JSON.stringify({ email, password, rememberMe }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
+        throw new Error(errorData.message || 'Login failed');
       }
 
       const data = await response.json();
@@ -76,9 +73,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsAuthenticated(true);
 
       // Redirect to dashboard after successful login
-      window.location.href = "/dashboard";
+      window.location.href = '/dashboard';
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error('Login failed:', error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -88,22 +85,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = async () => {
     setIsLoading(true);
     try {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
       });
 
       setUser(null);
       setIsAuthenticated(false);
 
       // Redirect to login page
-      window.location.href = "/login";
+      window.location.href = '/login';
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.error('Logout failed:', error);
       // Still clear local state even if API call fails
       setUser(null);
       setIsAuthenticated(false);
-      window.location.href = "/login";
+      window.location.href = '/login';
     } finally {
       setIsLoading(false);
     }
@@ -124,7 +121,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };

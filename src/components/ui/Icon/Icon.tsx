@@ -1,20 +1,16 @@
-import React from "react";
-import Image from "next/image";
-import "./Icon.scss";
+import React from 'react';
+import Image from 'next/image';
+
+import './Icon.scss';
 
 interface IconProps {
   name: string;
   className?: string;
-  size?: "sm" | "md" | "lg" | "xl" | "28";
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '28';
   alt?: string;
 }
 
-export const Icon: React.FC<IconProps> = ({
-  name,
-  className = "",
-  size = "md",
-  alt,
-}) => {
+export const Icon: React.FC<IconProps> = ({ name, className = '', size = 'md', alt }) => {
   const iconPath = `/icons/${name}.svg`;
   const altText = alt || `${name} icon`;
 
@@ -34,15 +30,15 @@ export const Icon: React.FC<IconProps> = ({
 
 const getIconSize = (size: string): number => {
   switch (size) {
-    case "sm":
+    case 'sm':
       return 16;
-    case "md":
+    case 'md':
       return 24;
-    case "lg":
+    case 'lg':
       return 32;
-    case "xl":
+    case 'xl':
       return 48;
-    case "28":
+    case '28':
       return 28;
     default:
       return 24;

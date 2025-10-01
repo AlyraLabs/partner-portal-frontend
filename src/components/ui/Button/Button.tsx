@@ -1,19 +1,20 @@
-import React from "react";
-import "./Button.scss";
+import React from 'react';
+
+import './Button.scss';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline";
-  size?: "sm" | "md" | "lg";
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
   loading?: boolean;
   children: React.ReactNode;
 }
 
 export const Button: React.FC<ButtonProps> = ({
-  variant = "primary",
-  size = "md",
+  variant = 'primary',
+  size = 'md',
   loading = false,
   children,
-  className = "",
+  className = '',
   disabled,
   ...props
 }) => {

@@ -1,20 +1,23 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { AuthProvider } from "../contexts/AuthContext";
-import "../styles/globals.scss";
+import { Geist, Geist_Mono } from 'next/font/google';
+
+import type { Metadata } from 'next';
+
+import { AuthProvider } from '../contexts/AuthContext';
+
+import '../styles/globals.scss';
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "Partner Portal - Blackhole",
+  title: 'Partner Portal - Blackhole',
   description: "The only DeFi liquidity stack you'll ever need",
 };
 

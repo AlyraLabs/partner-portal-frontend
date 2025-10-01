@@ -1,19 +1,18 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Header } from "../Header";
-import { BottomNavigation } from "../BottomNavigation";
-import "./LoggedInWrapper.scss";
+import React from 'react';
+
+import { BottomNavigation } from '../BottomNavigation';
+import { Header } from '../Header';
+
+import './LoggedInWrapper.scss';
 
 interface LoggedInWrapperProps {
   children: React.ReactNode;
   className?: string;
 }
 
-export const LoggedInWrapper: React.FC<LoggedInWrapperProps> = ({
-  children,
-  className = "",
-}) => {
+export const LoggedInWrapper: React.FC<LoggedInWrapperProps> = ({ children, className = '' }) => {
   return (
     <div className={`logged-in-wrapper ${className}`.trim()}>
       <Header />

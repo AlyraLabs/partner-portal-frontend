@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 // Define protected routes that require authentication
 const protectedRoutes = ['/dashboard', '/profile', '/settings'];
@@ -13,9 +13,7 @@ export function middleware(request: NextRequest) {
   const isAuthenticated = !!sessionCookie;
 
   // Check if the current route is protected
-  const isProtectedRoute = protectedRoutes.some(route => 
-    pathname.startsWith(route)
-  );
+  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
 
   // Check if the current route is public (keeping for future use)
   // const isPublicRoute = publicRoutes.includes(pathname);
