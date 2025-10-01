@@ -1,0 +1,138 @@
+.bg__wrapper {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background: #000;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  display: block;
+
+  &-blob {
+    --rotate: 0deg;
+    --scale: 1;
+    --delay: 0s;
+
+    position: absolute;
+    background-size: cover !important;
+    animation: drift 10s ease-in-out infinite alternate;
+    animation-delay: var(--delay);
+    transform: rotate(var(--rotate)) scale(var(--scale));
+  }
+
+  &-s1 {
+    --scale: 1;
+    --delay: 3s;
+
+    width: 600px;
+    height: 800px;
+    left: -250px;
+    bottom: 100px;
+    background: url('/background/orange.webp');
+  }
+
+  &-s2 {
+    --scale: 1;
+    --delay: 6s;
+
+    width: 1300px;
+    height: 1000px;
+    left: -500px;
+    bottom: -300px;
+    background: url('/background/purple.webp') no-repeat;
+  }
+
+  &-s3 {
+    --scale: 1;
+    --delay: 9s;
+
+    width: 800px;
+    height: 1000px;
+    right: -400px;
+    bottom: 0;
+    background: url('/background/blue.webp') no-repeat;
+  }
+
+  &-s4 {
+    --scale: 1;
+    --delay: 12s;
+
+    width: 900px;
+    height: 1100px;
+    right: -250px;
+    bottom: -500px;
+    background: url('/background/cyan.webp') no-repeat;
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) rotate(var(--rotate)) scale(var(--scale));
+  }
+  25% {
+    transform: translate(18px, 22px) rotate(var(--rotate)) scale(var(--scale));
+  }
+  50% {
+    transform: translate(18px, -22px) rotate(var(--rotate)) scale(var(--scale));
+  }
+  75% {
+    transform: translate(-18px, -22px) rotate(var(--rotate)) scale(var(--scale));
+  }
+  100% {
+    transform: translate(-18px, 22px) rotate(var(--rotate)) scale(var(--scale));
+  }
+}
+
+@media screen and (max-width: 970px) {
+  .bg__wrapper-s1 {
+    left: -300px;
+    bottom: 50px;
+  }
+
+  .bg__wrapper-s2 {
+    left: -550px;
+    bottom: -350px;
+  }
+
+  .bg__wrapper-s3 {
+    --scale: 0.6;
+    right: -350px;
+    top: -450px;
+  }
+
+  .bg__wrapper-s4 {
+    --rotate: 180deg;
+    --scale: 0.6;
+    top: -200px;
+    right: -450px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .bg__wrapper-s1 {
+    left: -400px;
+    bottom: -100px;
+  }
+
+  .bg__wrapper-s2 {
+    left: -700px;
+    bottom: -500px;
+  }
+
+  .bg__wrapper-s3 {
+    right: -500px;
+    top: -450px;
+  }
+
+  .bg__wrapper-s4 {
+    right: -600px;
+    top: -200px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg__wrapper-blob {
+    animation: none;
+  }
+}
