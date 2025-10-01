@@ -1,0 +1,51 @@
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--text-primary);
+
+  &--sm {
+    .logo__icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .logo__text {
+      font-size: 1rem;
+    }
+  }
+
+  &--md {
+    .logo__icon svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .logo__text {
+      font-size: 1.125rem;
+    }
+  }
+
+  &--lg {
+    .logo__icon svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .logo__text {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+  }
+
+  &__text {
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+}

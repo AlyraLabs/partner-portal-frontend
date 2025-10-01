@@ -1,0 +1,112 @@
+.login-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1e40af 0%, #3730a3 25%, #4338ca 50%, #5b21b6 75%, #1e1b4b 100%);
+  position: relative;
+  overflow: hidden;
+
+  &__container {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 1;
+    padding: var(--spacing-xl);
+
+    @media (max-width: 768px) {
+      max-width: 90%;
+      padding: var(--spacing-lg);
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-2xl);
+    color: white;
+    justify-content: flex-start;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &__brand-text {
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+    opacity: 0.9;
+  }
+
+  &__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    margin: 0 0 var(--spacing-lg) 0;
+    line-height: 1.2;
+  }
+
+  &__subtitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    opacity: 0.95;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+
+    span {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    a {
+      color: #a855f7;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #c084fc;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .login-page {
+    &__title {
+      font-size: 2rem;
+    }
+
+    &__subtitle {
+      font-size: 1.25rem;
+    }
+
+    &__footer {
+      flex-direction: column;
+      text-align: center;
+      gap: var(--spacing-sm);
+    }
+  }
+}
