@@ -21,26 +21,26 @@ export function middleware(request: NextRequest) {
   // const isPublicRoute = publicRoutes.includes(pathname);
 
   // If user is not authenticated and trying to access protected route
-  if (isProtectedRoute && !isAuthenticated) {
-    const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('redirect', pathname);
-    return NextResponse.redirect(loginUrl);
-  }
+  // if (isProtectedRoute && !isAuthenticated) {
+  //   const loginUrl = new URL('/login', request.url);
+  //   loginUrl.searchParams.set('redirect', pathname);
+  //   return NextResponse.redirect(loginUrl);
+  // }
 
   // If user is authenticated and trying to access login page, redirect to dashboard
-  if (pathname === '/login' && isAuthenticated) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
-  }
+  // if (pathname === '/login' && isAuthenticated) {
+  //   return NextResponse.redirect(new URL('/dashboard', request.url));
+  // }
 
   // If user is authenticated and on root path, redirect to dashboard
-  if (pathname === '/' && isAuthenticated) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
-  }
+  // if (pathname === '/' && isAuthenticated) {
+  //   return NextResponse.redirect(new URL('/dashboard', request.url));
+  // }
 
   // If user is not authenticated and on root path, redirect to login
-  if (pathname === '/' && !isAuthenticated) {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
+  // if (pathname === '/' && !isAuthenticated) {
+  //   return NextResponse.redirect(new URL('/login', request.url));
+  // }
 
   return NextResponse.next();
 }

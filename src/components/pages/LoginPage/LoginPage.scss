@@ -3,9 +3,58 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #1e40af 0%, #3730a3 25%, #4338ca 50%, #5b21b6 75%, #1e1b4b 100%);
+  background: #000000;
   position: relative;
   overflow: hidden;
+
+  // Corner gradients
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle at bottom left, #ff6b35 0%, #8b5cf6 50%, transparent 70%);
+    z-index: 0;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle at bottom right, #3b82f6 0%, #06b6d4 50%, transparent 70%);
+    z-index: 0;
+  }
+
+  &__logo {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    z-index: 2;
+
+    @media (max-width: 768px) {
+      top: 1.5rem;
+      left: 1.5rem;
+    }
+  }
+
+  &__logo-icon {
+    // Icon component will handle its own sizing
+  }
+
+  &__logo-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.05em;
+  }
 
   &__container {
     width: 100%;
@@ -20,43 +69,13 @@
     }
   }
 
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-2xl);
-    color: white;
-    justify-content: flex-start;
-
-    svg {
-      width: 24px;
-      height: 24px;
-    }
-  }
-
-  &__brand-text {
-    font-size: 1rem;
-    font-weight: 500;
-    color: white;
-    opacity: 0.9;
-  }
-
   &__title {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: 600;
     color: white;
     text-align: center;
-    margin: 0 0 var(--spacing-lg) 0;
+    margin: 0 0 var(--spacing-2xl) 0;
     line-height: 1.2;
-  }
-
-  &__subtitle {
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: white;
-    text-align: center;
-    margin-bottom: var(--spacing-2xl);
-    opacity: 0.95;
   }
 
   &__form {
@@ -82,12 +101,12 @@
     }
 
     a {
-      color: #a855f7;
+      color: rgba(255, 255, 255, 0.8);
       text-decoration: none;
       transition: color 0.2s ease;
 
       &:hover {
-        color: #c084fc;
+        color: white;
       }
     }
   }
@@ -96,11 +115,7 @@
 @media (max-width: 768px) {
   .login-page {
     &__title {
-      font-size: 2rem;
-    }
-
-    &__subtitle {
-      font-size: 1.25rem;
+      font-size: 1.75rem;
     }
 
     &__footer {
@@ -110,3 +125,4 @@
     }
   }
 }
+

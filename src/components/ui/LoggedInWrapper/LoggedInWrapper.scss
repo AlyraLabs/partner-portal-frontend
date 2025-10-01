@@ -1,0 +1,25 @@
+.logged-in-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  position: relative;
+  padding-bottom: 120px; // Space for bottom navigation
+
+  &__content {
+    padding-top: 0; // No longer needed since header is sticky
+    min-height: 100vh;
+  }
+
+  &__container {
+    max-width: calc(100% - 256px); // 128px on each side
+    margin: 0 auto;
+    padding: 2rem 0;
+
+    @media (max-width: 1200px) {
+      max-width: calc(100% - 128px); // 64px on each side for smaller screens
+    }
+
+    @media (max-width: 768px) {
+      max-width: calc(100% - 64px); // 32px on each side for mobile
+    }
+  }
+}

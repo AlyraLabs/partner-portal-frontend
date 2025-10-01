@@ -1,12 +1,10 @@
 .dashboard {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #1e1b4b 100%);
-  color: white;
-
   &--loading {
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
   }
 
   &__spinner {
@@ -15,84 +13,56 @@
     justify-content: center;
   }
 
-  &__container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-lg);
-  }
-
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--spacing-xl) 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  &__brand {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    font-size: 1.25rem;
-    font-weight: 700;
-  }
-
-  &__user {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-  }
-
-  &__main {
-    padding: var(--spacing-2xl) 0;
-  }
-
   &__welcome {
     text-align: center;
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: 3rem;
 
     h1 {
       font-size: 2.5rem;
       font-weight: 700;
-      margin-bottom: var(--spacing-md);
+      color: white;
+      margin-bottom: 1rem;
+      line-height: 1.2;
     }
 
     p {
       font-size: 1.125rem;
-      opacity: 0.8;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0;
     }
   }
 
   &__cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-2xl);
+    gap: 2rem;
   }
 
   &__card {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-    text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.2s ease;
 
     &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
 
     h3 {
       font-size: 1.25rem;
       font-weight: 600;
-      margin-bottom: var(--spacing-sm);
+      color: white;
+      margin-bottom: 0.75rem;
     }
 
     p {
-      opacity: 0.8;
-      margin-bottom: var(--spacing-lg);
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
     }
   }
 }
@@ -101,7 +71,7 @@
   width: 2rem;
   height: 2rem;
   border: 2px solid transparent;
-  border-top: 2px solid currentColor;
+  border-top: 2px solid white;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -117,18 +87,23 @@
 
 @media (max-width: 768px) {
   .dashboard {
-    &__header {
-      flex-direction: column;
-      gap: var(--spacing-md);
-      text-align: center;
-    }
+    &__welcome {
+      h1 {
+        font-size: 2rem;
+      }
 
-    &__welcome h1 {
-      font-size: 2rem;
+      p {
+        font-size: 1rem;
+      }
     }
 
     &__cards {
       grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    &__card {
+      padding: 1.5rem;
     }
   }
 }

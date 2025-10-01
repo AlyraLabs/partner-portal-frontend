@@ -1,0 +1,194 @@
+.header {
+  position: sticky;
+  top: 56px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 80px;
+  margin-bottom: 2rem;
+  gap: 25px; // 25px distance between header parts
+
+  &__main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 1664px;
+    height: 78px;
+    background: #000000; // Solid black background
+    border-radius: 28px;
+    padding: 1rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+
+    // Glowing border effect only on top
+    &::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.8) 0%, 
+        rgba(255, 255, 255, 0.6) 25%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0.6) 75%,
+        rgba(255, 255, 255, 0.8) 100%
+      );
+      z-index: 1;
+      filter: blur(0.5px);
+    }
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__logo {
+    // Icon component handles its own styling
+  }
+
+  &__brand-text {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.025em;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  &__status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2rem;
+    backdrop-filter: blur(10px);
+  }
+
+  &__status-indicator {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  &__status-text {
+    font-size: 0.875rem;
+    color: white;
+    font-weight: 500;
+  }
+
+  &__social {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__user-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 28px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.9);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 1200px) {
+  .header {
+    padding: 0 40px;
+
+    &__main {
+      width: calc(100vw - 160px); // Adjust for smaller screens
+      max-width: 1664px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 20px;
+    top: 40px;
+    gap: 15px;
+
+    &__main {
+      width: calc(100vw - 80px);
+      height: 60px;
+      border-radius: 20px;
+      padding: 0.75rem 1rem;
+    }
+
+    &__right {
+      gap: 1rem;
+    }
+
+    &__status {
+      padding: 0.375rem 0.75rem;
+    }
+
+    &__status-text {
+      font-size: 0.75rem;
+    }
+
+    &__user-btn {
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
