@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from 'next/font/google';
 
 import type { Metadata } from 'next';
 
+import Background from '@components/Backgroud/Background';
+
 import { AuthProvider } from '../contexts/AuthContext';
 
 import '../styles/globals.scss';
@@ -30,6 +32,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AuthProvider>{children}</AuthProvider>
+        <Background />
       </body>
     </html>
   );
