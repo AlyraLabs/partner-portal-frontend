@@ -2,23 +2,19 @@
 
 import React from 'react';
 
-import { useAuth } from '../../../contexts/AuthContext';
-import { LoginFormData } from '../../../types/auth';
-import { LoginForm } from '../../forms/LoginForm';
-import { Icon } from '../../ui/Icon';
+import useAuth from '@hooks/useAuth';
 
 import './LoginPage.scss';
 
-export const LoginPage: React.FC = () => {
-  const { login } = useAuth();
+import { LoginForm } from '@/components';
+import { Icon } from '@/components';
+import { LoginFormData } from '@/types/auth';
 
-  const handleLogin = async (data: LoginFormData) => {
-    try {
-      await login(data.email, data.password, data.rememberMe);
-    } catch (error) {
-      // Error handling is done in the LoginForm component
-      throw error;
-    }
+export const LoginPage: React.FC = () => {
+  const { loginMutation } = useAuth();
+
+  const handleLogin = (data: LoginFormData) => {
+    // loginMutation.mutate(data);
   };
 
   return (

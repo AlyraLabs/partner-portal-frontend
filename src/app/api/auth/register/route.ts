@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { createServerAxios } from '@/lib/axios/server';
 
-export type LoginBody = {
+export type RegisterBody = {
   email: string;
   password: string;
 };
 
-export type LoginResponse = {
+export type RegisterResponse = {
   accessToken: string;
   user?: { id: string; email: string; name?: string };
 };
@@ -17,11 +17,11 @@ const THIRTY_DAYS = 30 * 24 * 60 * 60;
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = (await request.json()) as LoginBody;
+    const { email, password } = (await request.json()) as RegisterBody;
     const cookieStore = await cookies();
     const axios = createServerAxios();
 
-    const response = await axios.post<LoginResponse>('/auth/login', {
+    const response = await axios.post<RegisterResponse>('/auth/register', {
       email,
       password,
     });
@@ -40,10 +40,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Login successful',
+      message: 'Register successful',
     });
   } catch (error) {
-    console.error('Login API error:', error);
+    console.error('Register API error:', error);
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }
 }

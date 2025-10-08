@@ -4,20 +4,19 @@ import React, { useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { LoginFormData } from '../../../types/auth';
-import { Button } from '../../ui/Button';
-import { Input } from '../../ui/Input';
-
 import './LoginForm.scss';
 
+import { Button } from '@/components';
+import { Input } from '@/components';
+import { LoginFormData } from '@/types/auth';
+
 interface LoginFormProps {
-  onSubmit: (data: LoginFormData) => Promise<void>;
+  onSubmit: (data: LoginFormData) => void;
   isLoading?: boolean;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading = false }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [submitError, setSubmitError] = useState<string>('');
 
   const {
     register,
@@ -27,19 +26,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading = fals
     defaultValues: {
       email: '',
       password: '',
-      rememberMe: false,
     },
   });
 
-  const handleFormSubmit = async (data: LoginFormData) => {
-    try {
-      setSubmitError('');
-      await onSubmit(data);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Login failed. Please try again.';
-      setSubmitError(errorMessage);
-      console.error('Login failed:', error);
-    }
+  const handleFormSubmit = (data: LoginFormData) => {
+    onSubmit(data);
   };
 
   const togglePasswordVisibility = () => {
@@ -98,16 +89,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading = fals
           }
         />
       </div>
-
-      <div className="login-form__checkbox">
-        <label className="checkbox-label">
-          <input type="checkbox" {...register('rememberMe')} className="checkbox-input" />
-          <span className="checkbox-custom"></span>
-          Remember me
-        </label>
-      </div>
-
-      {submitError && <div className="login-form__error">{submitError}</div>}
 
       <Button
         type="submit"

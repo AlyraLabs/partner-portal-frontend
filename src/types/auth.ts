@@ -1,7 +1,6 @@
 export interface LoginFormData {
   email: string;
   password: string;
-  rememberMe: boolean;
 }
 
 export interface User {
@@ -12,6 +11,4 @@ export interface User {
 
 export interface AuthState {
   user: User | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
 }

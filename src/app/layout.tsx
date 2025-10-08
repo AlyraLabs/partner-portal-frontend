@@ -1,12 +1,14 @@
 import { Geist, Geist_Mono } from 'next/font/google';
 
+import { QueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import type { Metadata } from 'next';
 
 import Background from '@components/Backgroud/Background';
 
-import { AuthProvider } from '../contexts/AuthContext';
-
 import '../styles/globals.scss';
+
+import Providers from '@/app/providers';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -23,15 +25,24 @@ export const metadata: Metadata = {
   description: "The only DeFi liquidity stack you'll ever need",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // const queryClient = new QueryClient();
+  //
+  // await queryClient.prefetchQuery({
+  //   queryKey: ['user'],
+  //   queryFn: async () => {
+  //     return await axios.get('/api/auth/me')?.data;
+  //   },
+  // });
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <AuthProvider>{children}</AuthProvider>
+        <Providers>{children}</Providers>
         <Background />
       </body>
     </html>
