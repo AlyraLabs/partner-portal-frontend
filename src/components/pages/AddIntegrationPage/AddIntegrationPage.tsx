@@ -1,30 +1,42 @@
-"use client";
+'use client';
 
-import React from "react";
-import { IntegrationWizard } from "../../ui/IntegrationWizard";
-import { LoggedInWrapper } from "../../ui/LoggedInWrapper";
-import "./AddIntegrationPage.scss";
+import React from 'react';
+import { useRouter } from 'next/navigation';
+
+import { IntegrationWizard } from '../../ui/IntegrationWizard';
+import { LoggedInWrapper } from '../../ui/LoggedInWrapper';
+
+import './AddIntegrationPage.scss';
+
+// Define the integration data type
+interface IntegrationData {
+  name: string;
+  website?: string;
+  string: string;
+  evmWallet: string;
+  solanaWallet: string;
+  suiWallet: string;
+  apiKeyConfirmed: boolean;
+}
 
 export const AddIntegrationPage: React.FC = () => {
-  const handleIntegrationComplete = (data: any) => {
-    console.log("Integration created:", data);
-    // Handle integration creation and redirect to dashboard
-    // You can use Next.js router here to redirect
+  const router = useRouter();
+
+  const handleIntegrationComplete = (data: IntegrationData) => {
+    console.log('Integration created:', data);
+    // Redirect to dashboard after successful creation
+    router.push('/dashboard');
   };
 
   const handleCancel = () => {
-    // Handle cancel action - redirect back to dashboard
-    console.log("Integration creation cancelled");
+    // Redirect back to dashboard on cancel
+    router.push('/dashboard');
   };
 
   return (
     <LoggedInWrapper>
       <div className="add-integration-page">
-        <IntegrationWizard
-          hasExistingIntegrations={false} // Assume user has existing integrations
-          onComplete={handleIntegrationComplete}
-          onCancel={handleCancel}
-        />
+        <IntegrationWizard onComplete={handleIntegrationComplete} onCancel={handleCancel} />
       </div>
     </LoggedInWrapper>
   );
