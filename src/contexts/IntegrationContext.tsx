@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { CreateIntegrationDto, Integration } from '../types/integration';
+import { useAuthContext } from './AuthContext';
 
 interface IntegrationContextType {
   integrations: Integration[];
@@ -38,8 +39,9 @@ interface IntegrationProviderProps {
 
 export const IntegrationProvider: React.FC<IntegrationProviderProps> = ({ children }) => {
   const queryClient = useQueryClient();
+  const { user } = useAuthContext();
 
-  // Fetch integrations
+  // Fetch integrations only if user is logged in
   const {
     data: integrations = [],
     isLoading,
@@ -51,6 +53,7 @@ export const IntegrationProvider: React.FC<IntegrationProviderProps> = ({ childr
       const response = await apiClient.get('/integrations');
       return response.data;
     },
+    enabled: !!user, // Only fetch if user exists
     staleTime: 5 * 60 * 1000, // 5 minutes
     retry: 2,
   });

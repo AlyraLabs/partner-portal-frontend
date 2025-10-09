@@ -1,10 +1,7 @@
-'use client';
-
-import axios from 'axios';
+// import axios from 'axios';
 import type { Metadata } from 'next';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
+// import { QueryClient } from '@tanstack/react-query';
 import '../styles/globals.scss';
 
 import Providers from '@/app/providers';
@@ -20,14 +17,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const queryClient = new QueryClient();
+  // const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ['user'],
-    queryFn: async () => {
-      return await axios.get('/api/auth/me')?.data;
-    },
-  });
+  // await queryClient.prefetchQuery({
+  //   queryKey: ['user'],
+  //   queryFn: async () => {
+  //     return await axios.get('/api/auth/me')?.data;
+  //   },
+  // });
 
   return (
     <html lang="en">

@@ -1,0 +1,37 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 400px;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__submit {
+    margin-top: 1rem;
+  }
+
+  &__footer {
+    text-align: center;
+    margin-top: 1.5rem;
+
+    p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+  }
+
+  &__link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

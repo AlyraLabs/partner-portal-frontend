@@ -25,22 +25,23 @@ export async function POST(request: NextRequest) {
       email,
       password,
     });
-    console.log(response);
-    // const token = response.data.accessToken;
-    //
-    // if (token) {
-    //   cookieStore.set('access_token', token, {
-    //     httpOnly: true,
-    //     secure: process.env.NODE_ENV === 'production',
-    //     sameSite: 'lax',
-    //     maxAge: THIRTY_DAYS,
-    //     path: '/',
-    //   });
-    // }
+
+    const token = response.data.accessToken;
+
+    if (token) {
+      cookieStore.set('access_token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: THIRTY_DAYS,
+        path: '/',
+      });
+    }
 
     return NextResponse.json({
       success: true,
       message: 'Register successful',
+      user: response.data.user,
     });
   } catch (error) {
     console.error('Register API error:', error);

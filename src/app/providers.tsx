@@ -1,6 +1,7 @@
 'use client';
 
 import { AuthProvider } from '@context/AuthContext';
+import { IntegrationProvider } from '@context/IntegrationContext';
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 function makeQueryClient() {
@@ -8,6 +9,7 @@ function makeQueryClient() {
     defaultOptions: {
       queries: {
         staleTime: 60 * 1000,
+        retry: 2,
       },
     },
   });
@@ -29,7 +31,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>{children}</AuthProvider>
+      <AuthProvider>
+        <IntegrationProvider>{children}</IntegrationProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

@@ -1,0 +1,103 @@
+.register-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  &__logo {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    z-index: 2;
+
+    @media (max-width: 768px) {
+      top: 1.5rem;
+      left: 1.5rem;
+    }
+  }
+
+  &__logo-icon {
+    // Icon component will handle its own sizing
+  }
+
+  &__logo-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.05em;
+  }
+
+  &__container {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 1;
+    padding: var(--spacing-xl);
+
+    @media (max-width: 768px) {
+      max-width: 90%;
+      padding: var(--spacing-lg);
+    }
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    margin: 0 0 var(--spacing-2xl) 0;
+    line-height: 1.2;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+
+    span {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .register-page {
+    &__title {
+      font-size: 1.75rem;
+    }
+
+    &__footer {
+      flex-direction: column;
+      text-align: center;
+      gap: var(--spacing-sm);
+    }
+  }
+}
