@@ -18,7 +18,7 @@ export const RegisterPage: React.FC = () => {
   const handleRegister = async (data: { email: string; password: string }) => {
     setIsLoading(true);
     try {
-      await registerMutation.mutateAsync(data);
+      await (registerMutation as any).mutateAsync(data);
       // Redirect to login page after successful registration
       router.push('/login');
     } catch (error) {
