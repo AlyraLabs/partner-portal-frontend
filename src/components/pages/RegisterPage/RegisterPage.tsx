@@ -1,31 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React from 'react';
+import Link from 'next/link';
 
 import useAuth from '@hooks/useAuth';
+
+import Copyright from '../../../../public/icons/copyright.svg';
 
 import './RegisterPage.scss';
 
 import { RegisterForm } from '@/components';
 import { Icon } from '@/components';
+import { RegisterFormData } from '@/types';
 
 export const RegisterPage: React.FC = () => {
-  const router = useRouter();
   const { registerMutation } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleRegister = async (data: { email: string; password: string }) => {
-    setIsLoading(true);
-    try {
-      await (registerMutation as any).mutateAsync(data);
-      // Redirect to login page after successful registration
-      router.push('/login');
-    } catch (error) {
-      console.error('Registration failed:', error);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleRegister = (data: RegisterFormData) => {
+    registerMutation.mutate(data);
   };
 
   return (
@@ -37,17 +29,13 @@ export const RegisterPage: React.FC = () => {
 
       <div className="register-page__container">
         <h2 className="register-page__title">Create an account</h2>
+        <RegisterForm onSubmit={handleRegister} isLoading={registerMutation.isPending} />
+      </div>
 
-        <div className="register-page__form">
-          <RegisterForm onSubmit={handleRegister} isLoading={isLoading} />
-        </div>
-
-        <div className="register-page__footer">
-          <span>©</span>
-          <a href="#">Terms of Use</a>
-          <span>•</span>
-          <a href="#">Privacy Policy</a>
-        </div>
+      <div className="register-page__footer">
+        <Copyright />
+        <Link href="/terms-of-use">Terms of Use</Link>
+        <Link href="/privacy-policy">Privacy Policy</Link>
       </div>
     </div>
   );

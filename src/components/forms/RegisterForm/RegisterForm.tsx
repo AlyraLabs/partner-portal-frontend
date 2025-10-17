@@ -7,23 +7,20 @@ import { useForm } from 'react-hook-form';
 
 import './RegisterForm.scss';
 
+import Arrow from '@/../public/icons/right-arrow.svg';
 import { Button } from '@/components';
 import { Input } from '@/components';
-
-interface RegisterFormData {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import { RegisterFormData } from '@/types';
 
 interface RegisterFormProps {
-  onSubmit: (data: { email: string; password: string }) => void;
+  onSubmit: (data: RegisterFormData) => void;
   isLoading?: boolean;
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading = false }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   const {
     register,
@@ -54,7 +51,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading 
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="register-form">
-      <div className="register-form__field">
+      <div className="register-form__inputs">
         <Input
           id="email"
           type="email"
@@ -66,11 +63,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading 
               message: 'Invalid email address',
             },
           })}
-          error={errors.email?.message}
+          errorMessage={errors.email?.message}
         />
-      </div>
-
-      <div className="register-form__field">
         <Input
           id="password"
           type={showPassword ? 'text' : 'password'}
@@ -82,30 +76,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading 
               message: 'Password must be at least 6 characters',
             },
           })}
-          error={errors.password?.message}
-          rightIcon={
-            <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="password-toggle"
-              aria-label={showPassword ? 'Hide password' : 'Show password'}>
-              {showPassword ? (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                  <line x1="1" y1="1" x2="23" y2="23" />
-                </svg>
-              ) : (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              )}
-            </button>
-          }
+          errorMessage={errors.password?.message}
+          toggleShowPassword={togglePasswordVisibility}
+          showPassword={showPassword}
         />
-      </div>
-
-      <div className="register-form__field">
         <Input
           id="confirmPassword"
           type={showConfirmPassword ? 'text' : 'password'}
@@ -114,27 +88,29 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading 
             required: 'Please confirm your password',
             validate: value => value === password || 'Passwords do not match',
           })}
-          error={errors.confirmPassword?.message}
-          rightIcon={
-            <button
-              type="button"
-              onClick={toggleConfirmPasswordVisibility}
-              className="password-toggle"
-              aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}>
-              {showConfirmPassword ? (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                  <line x1="1" y1="1" x2="23" y2="23" />
-                </svg>
-              ) : (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              )}
-            </button>
-          }
+          errorMessage={errors.confirmPassword?.message}
+          toggleShowPassword={toggleConfirmPasswordVisibility}
+          showPassword={showConfirmPassword}
         />
+      </div>
+
+      <div className="register-form__checkbox">
+        <label htmlFor="register-checkbox" className="checkbox-label">
+          <input
+            checked={isChecked}
+            onChange={e => {
+              setIsChecked(prev => !prev);
+            }}
+            id="register-checkbox"
+            type="checkbox"
+            className="checkbox-input"
+          />
+          <div className="checkbox-custom" />
+          <div>
+            I have read and agree to <Link href="/terms-of-use">Terms of Use</Link> &
+            <Link href="/privacy-policy"> Privacy Policy</Link>
+          </div>
+        </label>
       </div>
 
       <Button
@@ -142,8 +118,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading 
         variant="primary"
         size="lg"
         loading={isLoading || isSubmitting}
+        disabled={!isChecked}
         className="register-form__submit">
-        Sign Up
+        Continue
+        <Arrow />
       </Button>
 
       <div className="register-form__footer">

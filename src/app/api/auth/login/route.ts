@@ -25,25 +25,42 @@ export async function POST(request: NextRequest) {
       email,
       password,
     });
-    console.log(response);
-    // const token = response.data.accessToken;
-    //
-    // if (token) {
-    //   cookieStore.set('access_token', token, {
-    //     httpOnly: true,
-    //     secure: process.env.NODE_ENV === 'production',
-    //     sameSite: 'lax',
-    //     maxAge: THIRTY_DAYS,
-    //     path: '/',
-    //   });
-    // }
+
+    const token = response.data.accessToken;
+
+    if (token) {
+      cookieStore.set('access_token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: THIRTY_DAYS,
+        path: '/',
+      });
+    }
 
     return NextResponse.json({
       success: true,
       message: 'Login successful',
     });
-  } catch (error) {
-    console.error('Login API error:', error);
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+  } catch (error: unknown) {
+    let status = 500;
+    let message = 'Internal server error';
+
+    if (typeof error === 'object' && error !== null) {
+      const err = error as { status?: number; data?: { message?: string } };
+      if (typeof err.status === 'number') status = err.status;
+      if (typeof err.data?.message === 'string') message = err.data.message;
+    } else if (error instanceof Error) {
+      message = error.message;
+    }
+
+    return NextResponse.json(
+      {
+        success: false,
+        message,
+        status,
+      },
+      { status }
+    );
   }
 }

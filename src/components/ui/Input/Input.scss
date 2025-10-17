@@ -1,94 +1,62 @@
 .input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
   width: 100%;
 }
 
-.input-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+.input-error-message {
+  color: var(--error);
+  font-size: 20px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
 }
 
 .input-wrapper {
   position: relative;
-  display: flex;
-  align-items: center;
-
-  &--left-icon .input {
-    padding-left: 2.5rem;
-  }
-
-  &--right-icon .input {
-    padding-right: 2.5rem;
-  }
+  width: 100%;
 }
 
 .input {
+  display: flex;
   width: 100%;
-  padding: 1rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  font-size: 1rem;
-  background-color: rgba(0, 0, 0, 0.2);
-  color: white;
-  transition: all 0.2s ease-in-out;
-  backdrop-filter: blur(10px);
+  height: 63px;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 16px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transition: all 0.3s;
 
   &::placeholder {
     color: rgba(255, 255, 255, 0.6);
   }
 
-  &:focus {
+  &:hover {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  &:focus-visible {
+    border: 1px solid rgba(255, 255, 255, 0.4);
     outline: none;
-    border-color: rgba(255, 255, 255, 0.3);
-    background-color: rgba(0, 0, 0, 0.3);
   }
 
   &:disabled {
-    background-color: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.5);
     cursor: not-allowed;
-  }
-
-  &--error {
-    border-color: #f87171;
-
-    &:focus {
-      border-color: #f87171;
-      box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.2);
-    }
+    pointer-events: none;
+    opacity: 0.5;
   }
 }
 
-.input-icon {
+.input-password-control {
   position: absolute;
+  right: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-muted);
-  pointer-events: none;
+  color: rgba(255, 255, 255, 0.5);
+  width: 24px;
+  height: 24px;
 
-  &--left {
-    left: 0.75rem;
+  &--disabled {
+    pointer-events: none;
   }
-
-  &--right {
-    right: 0.75rem;
-  }
-
-  svg {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-}
-
-.input-error {
-  font-size: 0.875rem;
-  color: #fca5a5;
-}
-
-.input-helper {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.7);
 }

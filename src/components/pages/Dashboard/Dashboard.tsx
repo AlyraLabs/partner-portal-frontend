@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 
-import { useAuthContext } from '../../../contexts/AuthContext';
-import { Button } from '../../ui/Button';
-import { Icon } from '../../ui/Icon';
-import { LoggedInWrapper } from '../../ui/LoggedInWrapper';
+import { useAuthContext } from '@context/AuthContext';
 
 import './Dashboard.scss';
+
+import { Button } from '@/components';
+import { Icon } from '@/components';
+import { LoggedInWrapper } from '@/components';
 
 interface Integration {
   id: string;
@@ -43,7 +44,7 @@ interface Analytics {
 }
 
 export const Dashboard: React.FC = () => {
-  const { user: _ } = useAuthContext();
+  const { user } = useAuthContext();
   const [integrations] = useState<Integration[]>([
     {
       id: '1',
@@ -78,9 +79,6 @@ export const Dashboard: React.FC = () => {
       trend: 'up',
     },
   });
-
-  // Remove the isLoading check since it's not available
-  // Remove logout usage if it's not available
 
   return (
     <LoggedInWrapper>

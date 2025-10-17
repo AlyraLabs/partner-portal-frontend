@@ -9,7 +9,7 @@ type CreateOpts = {
 
 export function createServerAxios(opts: CreateOpts = {}): AxiosInstance {
   const instance = axios.create({
-    baseURL: opts.baseURL ?? process.env.BACKEND_URL,
+    baseURL: opts.baseURL ?? process.env.API_URL,
   });
 
   instance.interceptors.request.use(async config => {

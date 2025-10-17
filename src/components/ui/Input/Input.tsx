@@ -1,39 +1,43 @@
-import React, { forwardRef } from 'react';
+import * as React from 'react';
 
 import './Input.scss';
 
+import Eye from '@/../public/icons/eye.svg';
+import EyeClosed from '@/../public/icons/eye-closed.svg';
+
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  error?: string;
-  helperText?: string;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
+  ref?: React.Ref<HTMLInputElement>;
+  showPassword?: boolean;
+  toggleShowPassword?: () => void;
+  disabled?: boolean;
+  errorMessage?: string;
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, helperText, leftIcon, rightIcon, className = '', ...props }, ref) => {
-    const inputClass = `input ${error ? 'input--error' : ''} ${className}`.trim();
-    const wrapperClass = `input-wrapper ${
-      leftIcon ? 'input-wrapper--left-icon' : ''
-    } ${rightIcon ? 'input-wrapper--right-icon' : ''}`.trim();
+export function Input({
+  className,
+  type,
+  ref,
+  showPassword,
+  toggleShowPassword,
+  disabled,
+  errorMessage,
+  ...props
+}: InputProps) {
+  const hasShowPasswordControl = showPassword !== undefined && toggleShowPassword !== undefined;
 
-    return (
-      <div className="input-container">
-        {label && (
-          <label className="input-label" htmlFor={props.id}>
-            {label}
-          </label>
+  return (
+    <div className="input-container">
+      {errorMessage && <p className="input-error-message">{errorMessage}</p>}
+      <div className="input-wrapper">
+        <input type={type} className={`input ${className}`} ref={ref} disabled={disabled || undefined} {...props} />
+        {hasShowPasswordControl && (
+          <div
+            className={`input-password-control ${disabled && 'input-password-control--disabled'}`}
+            onClick={toggleShowPassword}>
+            {showPassword ? <EyeClosed /> : <Eye />}
+          </div>
         )}
-        <div className={wrapperClass}>
-          {leftIcon && <div className="input-icon input-icon--left">{leftIcon}</div>}
-          <input ref={ref} className={inputClass} {...props} />
-          {rightIcon && <div className="input-icon input-icon--right">{rightIcon}</div>}
-        </div>
-        {error && <span className="input-error">{error}</span>}
-        {helperText && !error && <span className="input-helper">{helperText}</span>}
       </div>
-    );
-  }
-);
-
-Input.displayName = 'Input';
+    </div>
+  );
+}
