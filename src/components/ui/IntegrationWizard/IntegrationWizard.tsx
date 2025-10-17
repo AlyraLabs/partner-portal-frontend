@@ -64,6 +64,7 @@ export const IntegrationWizard: React.FC<IntegrationWizardProps> = ({ onComplete
         evmWallet: data.evmWallet || undefined,
         solanaWallet: data.solanaWallet || undefined,
         suiWallet: data.suiWallet || undefined,
+        apiKeyConfirmed: data.apiKeyConfirmed,
       };
 
       // Create integration via API
