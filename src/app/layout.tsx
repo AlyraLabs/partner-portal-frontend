@@ -15,7 +15,7 @@ const lexendSans = Lexend({
 });
 
 export const metadata: Metadata = {
-  title: 'Partner Portal - Blackhole',
+  title: 'Partner Portal - Alyra',
   description: "The only DeFi liquidity stack you'll ever need",
 };
 

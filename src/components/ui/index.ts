@@ -5,4 +5,3 @@ export { Icon } from './Icon';
 export { Input } from './Input';
 export { IntegrationWizard } from './IntegrationWizard';
 export { LoggedInWrapper } from './LoggedInWrapper';
-export { Logo } from './Logo';
