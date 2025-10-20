@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import GlowLine from '@components/GlowLine/GlowLine';
+
 import { Icon } from '../Icon';
 
 import './Header.scss';
@@ -14,9 +16,12 @@ export const Header: React.FC<HeaderProps> = ({ className = '' }) => {
   return (
     <header className={`header ${className}`.trim()}>
       <div className="header__main">
+        <GlowLine />
         <div className="header__brand">
-          <Icon name="logo" size="lg" className="header__logo" />
-          <span className="header__brand-text">Alyra Portal</span>
+          <Icon name="logo" size="xl" className="header__logo" />
+          <span className="header__brand-text">
+            Alyra <span className="header__brand-text--italic">Portal</span>
+          </span>
         </div>
 
         <div className="header__right">

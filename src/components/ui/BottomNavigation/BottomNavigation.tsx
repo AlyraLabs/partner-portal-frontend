@@ -52,7 +52,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
             onClick={() => handleItemClick(item.id)}
             aria-label={item.label}>
             <div className="bottom-navigation__icon">
-              <Icon name={item.icon} size="md" />
+              <Icon name={item.icon} size="lg" />
             </div>
             <span className="bottom-navigation__label">{item.label}</span>
           </button>

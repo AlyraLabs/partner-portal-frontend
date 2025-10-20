@@ -1,4 +1,4 @@
-import { Lexend } from 'next/font/google';
+import { Lexend, Montserrat } from 'next/font/google';
 
 import type { Metadata } from 'next';
 
@@ -11,6 +11,11 @@ import Background from '@/components/Backgroud/Background';
 
 const lexendSans = Lexend({
   variable: '--font-lexend-sans',
+  subsets: ['latin'],
+});
+
+const montserratSans = Montserrat({
+  variable: '--font-montserrat-sans',
   subsets: ['latin'],
 });
 
@@ -34,7 +39,7 @@ export default async function RootLayout({
   // });
 
   return (
-    <html lang="en" className={`${lexendSans.className}`}>
+    <html lang="en" className={`${lexendSans.className} ${montserratSans.variable}`}>
       <body>
         <Providers>{children}</Providers>
         <Background />

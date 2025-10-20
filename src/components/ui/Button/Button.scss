@@ -57,14 +57,9 @@
   }
 
   &--secondary {
-    background-color: var(--secondary-color);
+    background-color: #000000;
     color: var(--text-primary);
-    border: 1px solid var(--border-color);
-
-    &:hover:not(:disabled) {
-      background-color: var(--surface);
-      border-color: var(--primary-color);
-    }
+    border: 1px solid #000000;
   }
 
   &--outline {

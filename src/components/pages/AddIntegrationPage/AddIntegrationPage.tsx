@@ -1,42 +1,26 @@
 'use client';
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
 
-import { IntegrationWizard } from '../../ui/IntegrationWizard';
-import { LoggedInWrapper } from '../../ui/LoggedInWrapper';
+import { IntegrationWizard } from '@components/ui/IntegrationWizard';
+import { useIntegrations } from '@hooks/useIntegrations';
 
 import './AddIntegrationPage.scss';
 
-// Define the integration data type
-interface IntegrationData {
-  name: string;
-  website?: string;
-  string: string;
-  evmWallet: string;
-  solanaWallet: string;
-  suiWallet: string;
-  apiKeyConfirmed: boolean;
-}
+import { LoggedInWrapper } from '@/components';
+import { CreateIntegrationDto } from '@/types';
 
 export const AddIntegrationPage: React.FC = () => {
-  const router = useRouter();
+  const { createIntegration } = useIntegrations();
 
-  const handleIntegrationComplete = (data: IntegrationData) => {
-    console.log('Integration created:', data);
-    // Redirect to dashboard after successful creation
-    router.push('/dashboard');
-  };
-
-  const handleCancel = () => {
-    // Redirect back to dashboard on cancel
-    router.push('/dashboard');
+  const handleIntegrationComplete = (data: CreateIntegrationDto) => {
+    createIntegration.mutate(data);
   };
 
   return (
     <LoggedInWrapper>
       <div className="add-integration-page">
-        <IntegrationWizard onComplete={handleIntegrationComplete} onCancel={handleCancel} />
+        <IntegrationWizard onComplete={handleIntegrationComplete} />
       </div>
     </LoggedInWrapper>
   );

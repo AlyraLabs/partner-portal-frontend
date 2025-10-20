@@ -1,3 +1,5 @@
+import { useRouter } from 'next/navigation';
+
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
@@ -14,11 +16,13 @@ interface ErrorResponse {
 }
 
 function UseAuth() {
+  const router = useRouter();
   const loginMutation = useMutation({
     mutationFn: async (data: LoginFormData) => {
       return await axios.post('/api/auth/login', data);
     },
     onSuccess: data => {
+      router.push('/dashboard');
       console.log(data);
     },
     onError: (error: ErrorResponse) => {
@@ -31,6 +35,7 @@ function UseAuth() {
       return await axios.post('/api/auth/register', data);
     },
     onSuccess: data => {
+      router.push('/new-integration');
       console.log(data);
     },
     onError: (error: ErrorResponse) => {

@@ -1,0 +1,21 @@
+.glow-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 1px;
+  pointer-events: none;
+  z-index: 10;
+
+  &__content {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.45) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+}

@@ -1,69 +1,42 @@
 .integration-wizard {
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-
-  &__container {
-    // Remove background - let layout background show through
-    padding: 3rem 2rem;
-    position: relative;
-  }
-
-  &__content {
-    margin-bottom: 3rem;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &__step {
-    text-align: center;
+    max-width: 530px;
+    margin: 0 auto;
   }
 
   &__title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 1rem;
-    line-height: 1.2;
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 36px;
   }
 
   &__subtitle {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 2rem;
-    line-height: 1.5;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 40px;
+    text-align: center;
   }
 
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 14px; // 14px between inputs
-    max-width: 528px; // Match design width
+    gap: 14px;
+    max-width: 528px;
     margin: 0 auto;
   }
 
   &__field {
-    width: 100%;
-    
-    // Style the input directly
-    input {
-      width: 528px; // Design width
-      height: 63px; // Design height
-      background: transparent; // Remove background
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      padding: 0 1rem;
-      color: white;
-      font-size: 1rem;
-      transition: border-color 0.2s ease;
+    text-align: start;
+  }
 
-      &::placeholder {
-        color: rgba(255, 255, 255, 0.5);
-      }
-
-      &:focus {
-        outline: none;
-        border-color: #60a5fa; // Blue focus color
-      }
-    }
+  &__error {
+    color: var(--error);
+    margin-left: 6px;
   }
 
   &__name-display {
@@ -87,30 +60,16 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    // Remove background
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     padding: 1rem;
-    width: 528px;
-    height: 63px;
     margin: 0 auto;
 
     input {
-      width: 100%;
-      height: auto;
-      background: transparent;
-      border: none;
-      padding: 0;
-      color: white;
-      font-size: 1rem;
-
-      &::placeholder {
-        color: rgba(255, 255, 255, 0.5);
-      }
-
-      &:focus {
-        outline: none;
-      }
+      padding: 6px;
+      height: 40px;
+      border: 1px solid rgba(255, 255, 255, 0);
+      transition: border 0.3s;
     }
   }
 
@@ -131,15 +90,17 @@
   }
 
   &__api-key-input {
-    flex: 1;
-    background: transparent;
+    width: 100%;
     border: none;
-    color: white;
-    font-size: 1rem;
-    height: 100%;
+    outline: none;
+    transition: none;
+
+    &:hover {
+      border: none;
+    }
 
     &:focus {
-      outline: none;
+      border: none;
     }
   }
 
@@ -149,33 +110,21 @@
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    color: white;
     cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
   }
 
   &__confirm-text {
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin: 1rem 0 0.5rem 0;
-  }
-
-  &__warning {
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.6);
-    margin-top: 1rem;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.5);
     text-align: center;
+
+    span {
+      color: white;
+    }
   }
 
   &__link {
-    color: #60a5fa;
+    color: #ffffff;
     text-decoration: none;
     transition: color 0.2s ease;
 
@@ -190,142 +139,23 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    margin-top: 31px; // 31px between last input and button
-  }
-
-  &__next-section {
+    margin-top: 31px;
     width: 100%;
-    display: flex;
-    justify-content: center;
   }
 
-  &__skip-section {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  &__next-btn,
-  &__complete-btn {
+  &__btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    width: 528px; // Design width
-    height: 58px; // Design height (58px not 63px)
-    background: white; // White background
-    border: none; // No border
-    border-radius: 12px; // Rounded corners
-    color: black; // Black text
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-
-    &:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.95);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.5);
-    }
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    // Style the icon to be black
-    .icon {
-      color: black;
-    }
-  }
-
-  &__skip-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    font-weight: 400;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    padding: 0.5rem 1rem;
-
-    &:hover {
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    &:focus {
-      outline: none;
-    }
+    padding: 14px;
+    font-size: 24px;
+    width: 100%;
 
     .icon {
-      color: white;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .integration-wizard {
-    &__container {
-      padding: 2rem 1.5rem;
-    }
-
-    &__title {
-      font-size: 1.5rem;
-    }
-
-    &__subtitle {
-      font-size: 0.875rem;
-    }
-
-    &__form {
-      max-width: 100%;
-    }
-
-    &__field {
-      input {
-        width: 100%;
-        max-width: 528px;
-      }
-    }
-
-    &__name-display {
-      width: 100%;
-      max-width: 528px;
-    }
-
-    &__wallet-field,
-    &__api-key-field {
-      width: 100%;
-      max-width: 528px;
-    }
-
-    &__next-btn,
-    &__complete-btn {
-      width: 100%;
-      max-width: 528px;
-    }
-
-    &__actions {
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    &__next-section {
-      width: 100%;
-    }
-
-    &__next-btn,
-    &__complete-btn {
-      width: 100%;
-      justify-content: center;
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 }
