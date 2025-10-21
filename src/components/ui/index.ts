@@ -3,5 +3,7 @@ export { Button } from './Button';
 export { Header } from './Header';
 export { Icon } from './Icon';
 export { Input } from './Input';
+export { IntegrationCard } from './IntegrationCard';
+export { IntegrationCardSkeleton } from './IntegrationCardSkeleton';
 export { IntegrationWizard } from './IntegrationWizard';
 export { LoggedInWrapper } from './LoggedInWrapper';

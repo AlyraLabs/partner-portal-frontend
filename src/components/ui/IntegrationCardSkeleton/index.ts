@@ -1,0 +1,1 @@
+export { IntegrationCardSkeleton } from './IntegrationCardSkeleton';

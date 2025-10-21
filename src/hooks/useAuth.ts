@@ -35,7 +35,7 @@ function UseAuth() {
       return await axios.post('/api/auth/register', data);
     },
     onSuccess: data => {
-      router.push('/new-integration');
+      router.push('/login');
       console.log(data);
     },
     onError: (error: ErrorResponse) => {

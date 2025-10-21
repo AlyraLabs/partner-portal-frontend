@@ -16,7 +16,7 @@ import { type IntegrationFormValues, integrationSchema } from '@/validation/inte
 
 type Props = {
   initialData?: Partial<IntegrationFormValues>;
-  onComplete: (data: IntegrationFormValues & { apiKeyConfirmed: true }) => Promise<void> | void;
+  onComplete: (data: { string: string }) => Promise<void> | void;
 };
 
 const DEFAULTS: IntegrationFormValues = {
@@ -48,24 +48,24 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
     const fields = STEP_FIELDS[currentStep];
     const valid = await methods.trigger(fields, { shouldFocus: true });
     if (!valid) return;
-    setCurrentStep(s => Math.min(3, s + 1));
+    setCurrentStep(s => Math.min(2, s + 1));
   };
 
   const handleComplete = async () => {
-    const valid = await methods.trigger(STEP_FIELDS[3], { shouldFocus: true });
+    const valid = await methods.trigger(STEP_FIELDS[2], { shouldFocus: true });
     if (!valid) return;
 
     const values = methods.getValues();
     try {
       setIsCreating(true);
       // map confirmation -> apiKeyConfirmed true for your backend, if needed
-      await onComplete({ ...values, apiKeyConfirmed: true as const });
+      await onComplete({ string: values.string });
     } finally {
       setIsCreating(false);
     }
   };
 
-  const skipStep = () => setCurrentStep(s => Math.min(3, s + 1));
+  const skipStep = () => setCurrentStep(s => Math.min(2, s + 1));
 
   return (
     <FormProvider {...methods}>
@@ -73,7 +73,11 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
         className="integration-wizard"
         onSubmit={e => {
           e.preventDefault();
-          currentStep < 3 ? nextStep() : handleComplete();
+          if (currentStep < 2) {
+            nextStep();
+          } else {
+            handleComplete();
+          }
         }}
         noValidate>
         <div className="integration-wizard__container">
@@ -89,7 +93,7 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
           </div>
 
           <div className="integration-wizard__actions">
-            {currentStep < 3 ? (
+            {currentStep < 2 ? (
               <Button type="button" variant="primary" onClick={nextStep} className="integration-wizard__btn">
                 Next step
                 <Icon name="right-arrow" size="md" />
@@ -101,7 +105,7 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
               </Button>
             )}
 
-            {currentStep === 2 && (
+            {currentStep === 1 && (
               <Button type="button" variant="secondary" className="integration-wizard__btn" onClick={skipStep}>
                 Skip
                 <Icon name="right-arrow-white" size="md" />

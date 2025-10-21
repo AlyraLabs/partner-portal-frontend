@@ -2,8 +2,9 @@
 
 import React from 'react';
 
+import { useIntegrations } from '@context/IntegrationContext';
+
 import { IntegrationWizard } from '@components/ui/IntegrationWizard';
-import { useIntegrations } from '@hooks/useIntegrations';
 
 import './AddIntegrationPage.scss';
 
@@ -14,7 +15,7 @@ export const AddIntegrationPage: React.FC = () => {
   const { createIntegration } = useIntegrations();
 
   const handleIntegrationComplete = (data: CreateIntegrationDto) => {
-    createIntegration.mutate(data);
+    createIntegration({ string: data.string });
   };
 
   return (
