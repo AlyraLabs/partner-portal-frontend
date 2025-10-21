@@ -1,14 +1,5 @@
 import { z } from 'zod';
 
-const optionalUrl = z
-  .string()
-  .trim()
-  .optional()
-  .or(z.literal(''))
-  .refine(v => !v || /^https?:\/\/[\w.-]+(?:\.[\w.-]+)+(?:[/?#][^\s]*)?$/i.test(v), {
-    message: 'Must be a valid URL (http/https)',
-  });
-
 const optionalEvm = z
   .string()
   .trim()
@@ -33,9 +24,6 @@ const optionalSolana = z
   });
 
 export const integrationSchema = z.object({
-  name: z.string().trim().min(2, 'Name must be at least 2 characters').max(64),
-  website: optionalUrl,
-
   string: z
     .string()
     .trim()

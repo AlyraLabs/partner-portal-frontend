@@ -11,8 +11,6 @@ export interface Integration {
 }
 
 export interface CreateIntegrationDto {
-  name: string;
-  website?: string;
   string: string;
   evmWallet?: string;
   solanaWallet?: string;

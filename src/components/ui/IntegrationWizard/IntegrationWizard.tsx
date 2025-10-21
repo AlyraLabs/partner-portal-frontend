@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import StepApiKey from './Steps/StepApiKey';
-import StepBasicInfo from './Steps/StepBasic';
 import StepCreateString from './Steps/StepCreateString';
 import StepWallets from './Steps/StepWallets';
 
@@ -21,8 +20,6 @@ type Props = {
 };
 
 const DEFAULTS: IntegrationFormValues = {
-  name: '',
-  website: '',
   string: '',
   evmWallet: '',
   solanaWallet: '',
@@ -31,10 +28,9 @@ const DEFAULTS: IntegrationFormValues = {
 };
 
 const STEP_FIELDS: Record<number, (keyof IntegrationFormValues)[]> = {
-  0: ['name', 'website'],
-  1: ['string'],
-  2: ['evmWallet', 'solanaWallet', 'suiWallet'],
-  3: ['confirmation'],
+  0: ['string'],
+  1: ['evmWallet', 'solanaWallet', 'suiWallet'],
+  2: ['confirmation'],
 };
 
 export function IntegrationWizard({ initialData, onComplete }: Props) {
@@ -82,16 +78,9 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
         noValidate>
         <div className="integration-wizard__container">
           <div className="integration-wizard__content">
-            {currentStep === 0 && (
-              <>
-                <h1 className="integration-wizard__title">Create your first integration</h1>
-                <StepBasicInfo />
-              </>
-            )}
-
-            {currentStep === 1 && <StepCreateString nameDisplay={methods.getValues('name')} />}
-            {currentStep === 2 && <StepWallets />}
-            {currentStep === 3 && (
+            {currentStep === 0 && <StepCreateString />}
+            {currentStep === 1 && <StepWallets />}
+            {currentStep === 2 && (
               <StepApiKey
                 apiKeyMasked="alyra_sk_****2f6d8f1e7c3b"
                 onCopy={text => navigator.clipboard?.writeText(text).catch(() => {})}
