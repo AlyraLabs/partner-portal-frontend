@@ -9,13 +9,15 @@ import { IntegrationWizard } from '@components/ui/IntegrationWizard';
 import './AddIntegrationPage.scss';
 
 import { LoggedInWrapper } from '@/components';
-import { CreateIntegrationDto } from '@/types';
+import { IntegrationFormValues } from '@/validation/integrationSchemas';
 
 export const AddIntegrationPage: React.FC = () => {
   const { createIntegration } = useIntegrations();
 
-  const handleIntegrationComplete = (data: CreateIntegrationDto) => {
-    createIntegration({ string: data.string });
+  const handleIntegrationComplete = (data: IntegrationFormValues) => {
+    createIntegration({
+      string: data.string,
+    });
   };
 
   return (

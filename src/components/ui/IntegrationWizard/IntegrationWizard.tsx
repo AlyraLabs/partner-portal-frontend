@@ -23,13 +23,12 @@ const DEFAULTS: IntegrationFormValues = {
   string: '',
   evmWallet: '',
   solanaWallet: '',
-  suiWallet: '',
   confirmation: '' as never,
 };
 
 const STEP_FIELDS: Record<number, (keyof IntegrationFormValues)[]> = {
   0: ['string'],
-  1: ['evmWallet', 'solanaWallet', 'suiWallet'],
+  1: ['evmWallet', 'solanaWallet'],
   2: ['confirmation'],
 };
 

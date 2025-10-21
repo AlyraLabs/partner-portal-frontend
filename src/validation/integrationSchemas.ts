@@ -33,7 +33,6 @@ export const integrationSchema = z.object({
 
   evmWallet: optionalEvm,
   solanaWallet: optionalSolana,
-  suiWallet: optionalSui,
 
   confirmation: z.literal('I SAVED IT', {
     message: 'Type "I SAVED IT" to confirm',
