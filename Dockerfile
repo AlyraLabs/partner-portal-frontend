@@ -3,7 +3,7 @@ FROM node:20-alpine AS base
 
 # Устанавливаем зависимости только когда нужно
 FROM base AS deps
-RUN apk add --no-cache libc6-compat python3 make g++ linux-headers
+RUN apk add --no-cache libc6-compat python3 make g++ linux-headers eudev-dev libusb-dev
 WORKDIR /app
 
 # Устанавливаем зависимости
@@ -28,7 +28,7 @@ WORKDIR /app
 ENV NODE_ENV production
 
 # Install runtime dependencies
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat eudev libusb
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
