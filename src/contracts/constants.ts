@@ -18,13 +18,13 @@ export const USDC_ARBITRUM = '0xaf88d065e77c8cC2239327C5EDb3A432268e5831';
 export const getFeeCollectorAddress = (chainId: CHAIN_IDS) => {
   switch (chainId) {
     case CHAIN_IDS.ARBITRUM:
-      return '0xb6555859c0730d039487a15961a390438493cA67';
+      return '0x5EcD7DD14D44227b7686438b8A5Ca75E6727ef2c';
     case CHAIN_IDS.BSC:
-      return '0xb6555859c0730d039487a15961a390438493cA67';
+      return '0x5EcD7DD14D44227b7686438b8A5Ca75E6727ef2c';
     case CHAIN_IDS.POLYGON:
-      return '0xb6555859c0730d039487a15961a390438493cA67';
+      return '0x5EcD7DD14D44227b7686438b8A5Ca75E6727ef2c';
     case CHAIN_IDS.OPTIMISM:
-      return '0xb6555859c0730d039487a15961a390438493cA67';
+      return '0x5EcD7DD14D44227b7686438b8A5Ca75E6727ef2c';
     default:
       throw new Error(
         `FeeCollector contract not deployed on chainId: ${chainId}. Please switch to Arbitrum, BSC, Polygon, Optimism, or Polygon zkEVM.`
