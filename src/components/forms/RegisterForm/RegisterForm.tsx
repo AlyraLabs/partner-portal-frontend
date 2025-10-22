@@ -20,7 +20,6 @@ interface RegisterFormProps {
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading = false }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
 
   const {
     register,
@@ -52,10 +51,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="register-form">
       <div className="register-form__inputs">
+        <label htmlFor="email" className="register-form__label">
+          Email
+        </label>
         <Input
           id="email"
           type="email"
-          placeholder="Enter your email"
+          placeholder="example@gmail.com"
           {...register('email', {
             required: 'Email is required',
             pattern: {
@@ -65,10 +67,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading 
           })}
           errorMessage={errors.email?.message}
         />
+        <label htmlFor="password" className="register-form__label">
+          Password
+        </label>
         <Input
           id="password"
           type={showPassword ? 'text' : 'password'}
-          placeholder="Enter your password"
+          placeholder=""
           {...register('password', {
             required: 'Password is required',
             minLength: {
@@ -80,10 +85,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading 
           toggleShowPassword={togglePasswordVisibility}
           showPassword={showPassword}
         />
+        <label htmlFor="confirmPassword" className="register-form__label">
+          Confirm Password
+        </label>
         <Input
           id="confirmPassword"
           type={showConfirmPassword ? 'text' : 'password'}
-          placeholder="Confirm your password"
+          placeholder=""
           {...register('confirmPassword', {
             required: 'Please confirm your password',
             validate: value => value === password || 'Passwords do not match',
@@ -94,7 +102,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading 
         />
       </div>
 
-      <div className="register-form__checkbox">
+      {/* <div className="register-form__checkbox">
         <label htmlFor="register-checkbox" className="checkbox-label">
           <input
             checked={isChecked}
@@ -111,14 +119,14 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading 
             <Link href="/privacy-policy"> Privacy Policy</Link>
           </div>
         </label>
-      </div>
+      </div> */}
 
       <Button
         type="submit"
         variant="primary"
         size="lg"
         loading={isLoading || isSubmitting}
-        disabled={!isChecked}
+        disabled={false}
         className="register-form__submit">
         Continue
         <Arrow />
@@ -128,8 +136,22 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading 
         <p>
           Already have an account?{' '}
           <Link href="/login" className="register-form__link">
-            Log in
+            Login
           </Link>
+        </p>
+      </div>
+
+      <div className="register-form__agreement">
+        <p>
+          By creating your account you agree to the <br />
+          <Link href="/privacy-policy" className="register-form__link">
+            Privacy Policy
+          </Link>{' '}
+          and{' '}
+          <Link href="/terms-of-use" className="register-form__link">
+            Terms of Use
+          </Link>
+          .
         </p>
       </div>
     </form>

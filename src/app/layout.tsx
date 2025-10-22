@@ -8,13 +8,13 @@ import '../styles/globals.scss';
 
 import Providers from '@/app/providers';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
   subsets: ['latin'],
 });
 
-const geistMonoSans = Geist_Mono({
-  variable: '--font-geistMono-sans',
+const geistSans = Geist({
+  variable: '--font-geist',
   subsets: ['latin'],
 });
 
@@ -38,7 +38,7 @@ export default async function RootLayout({
   // });
 
   return (
-    <html lang="en" className={`${geistMonoSans.className} ${geistSans.variable}`}>
+    <html lang="en" className={`${geistMono.variable} ${geistSans.variable}`}>
       <body>
         <Providers>{children}</Providers>
       </body>

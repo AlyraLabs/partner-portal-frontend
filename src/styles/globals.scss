@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: var(--font-geist-mono), monospace;
 }
 
 html,
@@ -45,6 +46,7 @@ body {
   color: #ffffff;
   background: #0e0e0e;
   line-height: 1.6;
+  font-family: var(--font-geist-mono), monospace;
 }
 
 a {

@@ -6,12 +6,25 @@
   &__inputs {
     display: flex;
     flex-flow: column;
-    gap: 14px;
+    gap: 5px;
   }
 
   &__field {
     width: 100%;
     margin-bottom: var(--spacing-sm);
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+
+    &::after {
+      content: '*';
+      color: var(--error);
+      margin-left: 2px;
+    }
   }
 
   &__checkbox {
@@ -41,8 +54,15 @@
     flex-direction: column;
     gap: 20px;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
     color: rgba(255, 255, 255, 0.5);
+  }
+
+  &__agreement {
+    text-align: center;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 50px;
   }
 
   &__link {
