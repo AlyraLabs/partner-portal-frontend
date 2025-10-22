@@ -10,7 +10,6 @@ import './LoginForm.scss';
 import Arrow from '@/../public/icons/right-arrow.svg';
 import { Button } from '@/components';
 import { Input } from '@/components';
-import { ContractActions } from '@/components/ContractActions';
 import { LoginFormData } from '@/types/auth';
 
 interface LoginFormProps {
@@ -94,12 +93,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading = fals
             Continue
             <Arrow />
           </Button>
-
-          {/* <div className="login-form__divider">
-            <span>or</span>
-          </div> */}
-
-          {/* <ConnectWalletButton variant="secondary" size="lg" className="login-form__wallet-button" /> */}
         </div>
 
         <div className="login-form__footer">
@@ -111,8 +104,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading = fals
           </p>
         </div>
       </form>
-
-      <ContractActions />
     </>
   );
 };

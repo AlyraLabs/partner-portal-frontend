@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './ContractActions.scss';
 
 import { Button } from '@/components';
-import { NetworkSwitcher } from '@/components/NetworkSwitcher';
 import { useWallet } from '@/contexts/WalletContext';
 import { CHAIN_IDS, getFeeCollectorAddress, USDC_ARBITRUM } from '@/contracts/constants';
 import { useFeeCollectorService } from '@/services/FeeCollectorService';
@@ -21,7 +20,6 @@ export const ContractActions: React.FC = () => {
 
   const handleWithdraw = async () => {
     if (!feeCollectorService || !evmAddress) {
-      alert('Please connect your wallet first');
       return;
     }
 
@@ -34,15 +32,10 @@ export const ContractActions: React.FC = () => {
       const tx = await feeCollectorService.withdrawIntegratorFees(USDC_ARBITRUM);
 
       console.log('Transaction hash:', tx.hash);
-      alert(
-        `Withdraw transaction sent! Hash: ${tx.hash}\n\nNote: If you have no fees to withdraw, the transaction will still succeed but won't transfer any tokens.`
-      );
     } catch (error) {
       console.error('Withdraw failed:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      alert(
-        `Withdraw failed: ${errorMessage}\n\nThis might happen if you have no fees to withdraw or if the contract doesn't allow withdrawals.`
-      );
+      console.log(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -50,7 +43,6 @@ export const ContractActions: React.FC = () => {
 
   const handleGetBalance = async () => {
     if (!feeCollectorService || !evmAddress) {
-      alert('Please connect your wallet first');
       return;
     }
 
@@ -71,13 +63,13 @@ export const ContractActions: React.FC = () => {
 
       console.log('Token balance retrieved:', balanceInWei);
 
-      if (balanceInWei === '0') {
-        alert(
-          `Token balance: ${balanceInWei} wei (${balanceInUSDC} USDC)\n\nNote: This means your address is not found in the contract's _balances mapping. This is normal if you haven't collected any fees yet.`
-        );
-      } else {
-        alert(`Token balance: ${balanceInWei} wei (${balanceInUSDC} USDC)`);
-      }
+      // if (balanceInWei === '0') {
+      //   alert(
+      //     `Token balance: ${balanceInWei} wei (${balanceInUSDC} USDC)\n\nNote: This means your address is not found in the contract's _balances mapping. This is normal if you haven't collected any fees yet.`
+      //   );
+      // } else {
+      //   alert(`Token balance: ${balanceInWei} wei (${balanceInUSDC} USDC)`);
+      // }
     } catch (error) {
       console.error('Get balance failed:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -86,6 +78,10 @@ export const ContractActions: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    handleGetBalance();
+  }, [isEVMConnected]);
 
   if (!isEVMConnected || !evmAddress) {
     return null;
@@ -96,62 +92,37 @@ export const ContractActions: React.FC = () => {
 
   return (
     <div className="contract-actions">
-      <div className="contract-actions__header">
-        <h3>FeeCollector Contract Actions</h3>
-        <NetworkSwitcher />
-      </div>
+      <table className="contract-actions__table">
+        <thead>
+          <tr>
+            <th>CHAIN</th>
+            <th>COLLECTABLE FEES </th>
+            <th></th>
+          </tr>
+        </thead>
 
-      <div className="contract-actions__info">
-        <p>
-          Connected: {evmAddress.slice(0, 6)}...{evmAddress.slice(-4)}
-        </p>
-        <p>Chain ID: {evmChainId}</p>
-        <p>
-          Contract: {contractAddress?.slice(0, 6)}...{contractAddress?.slice(-4)}
-        </p>
-        <p>Token: USDC (Arbitrum) - {USDC_ARBITRUM}</p>
-      </div>
+        <tbody>
+          <tr>
+            <td>
+              <p>USDC (Arbitrum)</p>
+            </td>
 
-      {!isSupportedChain && (
-        <div className="contract-actions__warning">
-          <p>
-            ⚠️ Current chain (ID: {evmChainId}) is not supported. Please switch to Arbitrum, BSC, Polygon, Optimism, or
-            Polygon zkEVM.
-          </p>
-        </div>
-      )}
+            <td>${balance}</td>
 
-      <div className="contract-actions__buttons">
-        <Button
-          type="button"
-          variant="primary"
-          size="md"
-          onClick={handleWithdraw}
-          loading={isLoading}
-          className="contract-actions__button">
-          Withdraw Integrator Fees
-        </Button>
-
-        <Button
-          type="button"
-          variant="secondary"
-          size="md"
-          onClick={handleGetBalance}
-          loading={isLoading}
-          className="contract-actions__button">
-          Get Token Balance
-        </Button>
-      </div>
-
-      {balance && (
-        <div className="contract-actions__balance">
-          <p>Token Balance: {balance} wei</p>
-          <p>
-            Balance (USDC): {(BigInt(balance) / BigInt(1e6)).toString()}.
-            {((BigInt(balance) % BigInt(1e6)) / BigInt(1e3)).toString().padStart(3, '0')} USDC
-          </p>
-        </div>
-      )}
+            <td style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Button
+                type="button"
+                variant="primary"
+                size="md"
+                onClick={handleWithdraw}
+                loading={isLoading}
+                className="contract-actions__button">
+                WITHDRAW FEES
+              </Button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };
