@@ -107,33 +107,42 @@
   }
 
   &__api-key-field {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: 528px;
-    height: 63px;
-    margin: 0 auto;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 0 1rem;
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  &__api-key-icon {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    z-index: 5;
   }
 
   &__api-key-input {
+    padding-left: 50px;
     width: 100%;
-    border: none;
+    border: 1px solid #274ac9;
     outline: none;
     transition: none;
+    background: #091025;
 
     &:hover {
-      border: none;
+      border: 1px solid #274ac9;
     }
 
     &:focus {
-      border: none;
+      border: 1px solid #274ac9;
     }
   }
 
   &__copy-btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -144,8 +153,8 @@
 
   &__confirm-text {
     font-size: 20px;
-    color: rgba(255, 255, 255, 0.5);
-    text-align: center;
+    color: #5c5a5a;
+    text-align: start;
 
     span {
       color: white;
