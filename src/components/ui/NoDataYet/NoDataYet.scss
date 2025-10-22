@@ -18,7 +18,7 @@
   }
 
   &__description {
-    color: #5c5a5a;
+    color: var(--text-secondary);
     font-size: 15px;
     max-width: 450px;
   }

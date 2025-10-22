@@ -1,71 +1,37 @@
 .contract-actions {
-  margin-top: 24px;
+  width: 100%;
+  border: 1px solid #878787;
   padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
 
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
+  &__table {
+    width: 100%;
 
-    h3 {
-      color: white;
-      margin: 0;
-      font-size: 18px;
-      font-weight: 600;
+    th {
+      text-align: left;
+      color: var(--text-secondary);
+      font-size: 20px;
+      font-weight: 400;
     }
-  }
-
-  &__info {
-    p {
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 8px;
-      font-size: 14px;
-    }
-  }
-
-  &__buttons {
-    display: flex;
-    gap: 12px;
-    margin-top: 16px;
-    flex-wrap: wrap;
   }
 
   &__button {
-    flex: 1;
-    min-width: 200px;
-  }
+    background: #091025;
+    border: 1px solid #274ac9;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 6px;
+    width: 260px;
+    color: #274ac9;
 
-  &__balance {
-    margin-top: 16px;
-    padding: 12px;
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    border-radius: 8px;
-
-    p {
-      color: #10b981;
-      margin: 0;
-      font-weight: 500;
+    &:hover {
+      background: #274ac9;
+      color: #091025;
     }
-  }
 
-  &__warning {
-    margin: 16px 0;
-    padding: 12px;
-    background: rgba(255, 193, 7, 0.1);
-    border-radius: 8px;
-    border: 1px solid rgba(255, 193, 7, 0.3);
-
-    p {
-      margin: 0;
-      font-size: 14px;
-      color: #ffc107;
-      font-weight: 500;
+    &:hover:not(:disabled) {
+      background: #274ac9;
+      color: #091025;
     }
   }
 }

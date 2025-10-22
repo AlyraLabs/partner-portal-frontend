@@ -20,8 +20,7 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
   size = 'md',
   className = '',
 }) => {
-  const { isEVMConnected, evmAddress, isSolanaConnected, solanaAddress, connectEVM, connectSolana, disconnect } =
-    useWallet();
+  const { isEVMConnected, evmAddress, isSolanaConnected, solanaAddress, connectEVM, disconnect } = useWallet();
 
   const isAnyConnected = isEVMConnected || isSolanaConnected;
 
@@ -29,16 +28,7 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
     if (isAnyConnected) {
       disconnect();
     } else {
-      // Show connection options
-      const choice = window.confirm(
-        'Choose wallet type:\n\nOK - Connect EVM Wallet (MetaMask, WalletConnect, etc.)\nCancel - Connect Solana Wallet (Phantom, Solflare, etc.)'
-      );
-
-      if (choice) {
-        connectEVM();
-      } else {
-        connectSolana();
-      }
+      connectEVM();
     }
   };
 

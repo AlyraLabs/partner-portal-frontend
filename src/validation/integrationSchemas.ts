@@ -27,8 +27,8 @@ export const integrationSchema = z.object({
   evmWallet: optionalEvm,
   solanaWallet: optionalSolana,
 
-  confirmation: z.literal('I SAVED IT', {
-    message: 'Type "I SAVED IT" to confirm',
+  confirmation: z.literal('I SAVED', {
+    message: 'Type "I SAVED" to confirm',
   }),
 });
 export type IntegrationFormValues = z.infer<typeof integrationSchema>;

@@ -62,10 +62,10 @@ export const IntegrationCard: React.FC<IntegrationCardProps> = ({ integration, o
             </div>
           </div>
 
-          <div className="integration-card__field">
-            <span className="integration-card__label">Website</span>
-            <span className="integration-card__value">{integration.string.toLowerCase()}.finance</span>
-          </div>
+          {/*<div className="integration-card__field">*/}
+          {/*  <span className="integration-card__label">Website</span>*/}
+          {/*  <span className="integration-card__value">{integration.string.toLowerCase()}.finance</span>*/}
+          {/*</div>*/}
 
           <div className="integration-card__field">
             <span className="integration-card__label">Plan</span>

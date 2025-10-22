@@ -58,7 +58,7 @@ export default function StepApiKey({ apiKeyMasked, onCopy }: Props) {
           <Input
             id="confirmation"
             type="text"
-            placeholder="I SAVED IT"
+            placeholder="I SAVED"
             aria-invalid={!!errors.confirmation || undefined}
             {...register('confirmation')}
             onChange={e => {
