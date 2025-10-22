@@ -5,8 +5,9 @@ import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import Corners from '@components/ui/Corners/Corners';
+
 import StepApiKey from './Steps/StepApiKey';
-import StepBasicInfo from './Steps/StepBasic';
 import StepCreateString from './Steps/StepCreateString';
 import StepWallets from './Steps/StepWallets';
 
@@ -17,24 +18,20 @@ import { type IntegrationFormValues, integrationSchema } from '@/validation/inte
 
 type Props = {
   initialData?: Partial<IntegrationFormValues>;
-  onComplete: (data: IntegrationFormValues & { apiKeyConfirmed: true }) => Promise<void> | void;
+  onComplete: (data: { string: string }) => Promise<void> | void;
 };
 
 const DEFAULTS: IntegrationFormValues = {
-  name: '',
-  website: '',
   string: '',
   evmWallet: '',
   solanaWallet: '',
-  suiWallet: '',
   confirmation: '' as never,
 };
 
 const STEP_FIELDS: Record<number, (keyof IntegrationFormValues)[]> = {
-  0: ['name', 'website'],
-  1: ['string'],
-  2: ['evmWallet', 'solanaWallet', 'suiWallet'],
-  3: ['confirmation'],
+  0: ['string'],
+  1: ['evmWallet', 'solanaWallet'],
+  2: ['confirmation'],
 };
 
 export function IntegrationWizard({ initialData, onComplete }: Props) {
@@ -52,24 +49,23 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
     const fields = STEP_FIELDS[currentStep];
     const valid = await methods.trigger(fields, { shouldFocus: true });
     if (!valid) return;
-    setCurrentStep(s => Math.min(3, s + 1));
+    setCurrentStep(s => Math.min(2, s + 1));
   };
 
   const handleComplete = async () => {
-    const valid = await methods.trigger(STEP_FIELDS[3], { shouldFocus: true });
+    const valid = await methods.trigger(STEP_FIELDS[2], { shouldFocus: true });
     if (!valid) return;
 
     const values = methods.getValues();
+    console.log(values);
     try {
       setIsCreating(true);
       // map confirmation -> apiKeyConfirmed true for your backend, if needed
-      await onComplete({ ...values, apiKeyConfirmed: true as const });
+      await onComplete({ string: values.string });
     } finally {
       setIsCreating(false);
     }
   };
-
-  const skipStep = () => setCurrentStep(s => Math.min(3, s + 1));
 
   return (
     <FormProvider {...methods}>
@@ -77,21 +73,19 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
         className="integration-wizard"
         onSubmit={e => {
           e.preventDefault();
-          currentStep < 3 ? nextStep() : handleComplete();
+          if (currentStep < 2) {
+            nextStep();
+          } else {
+            handleComplete();
+          }
         }}
         noValidate>
         <div className="integration-wizard__container">
           <div className="integration-wizard__content">
-            {currentStep === 0 && (
-              <>
-                <h1 className="integration-wizard__title">Create your first integration</h1>
-                <StepBasicInfo />
-              </>
-            )}
-
-            {currentStep === 1 && <StepCreateString nameDisplay={methods.getValues('name')} />}
-            {currentStep === 2 && <StepWallets />}
-            {currentStep === 3 && (
+            <Corners />
+            {currentStep === 0 && <StepCreateString />}
+            {currentStep === 1 && <StepWallets />}
+            {currentStep === 2 && (
               <StepApiKey
                 apiKeyMasked="alyra_sk_****2f6d8f1e7c3b"
                 onCopy={text => navigator.clipboard?.writeText(text).catch(() => {})}
@@ -100,7 +94,7 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
           </div>
 
           <div className="integration-wizard__actions">
-            {currentStep < 3 ? (
+            {currentStep < 2 ? (
               <Button type="button" variant="primary" onClick={nextStep} className="integration-wizard__btn">
                 Next step
                 <Icon name="right-arrow" size="md" />
@@ -109,13 +103,6 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
               <Button type="submit" variant="primary" disabled={isCreating} className="integration-wizard__btn">
                 {isCreating ? 'Creating...' : 'Confirm'}
                 <Icon name="right-arrow" size="md" />
-              </Button>
-            )}
-
-            {currentStep === 2 && (
-              <Button type="button" variant="secondary" className="integration-wizard__btn" onClick={skipStep}>
-                Skip
-                <Icon name="right-arrow-white" size="md" />
               </Button>
             )}
           </div>

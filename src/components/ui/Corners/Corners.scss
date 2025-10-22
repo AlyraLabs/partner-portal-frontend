@@ -1,0 +1,26 @@
+.corner {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #878787;
+
+  &--top-left {
+    top: -4px;
+    left: -4px;
+  }
+
+  &--top-right {
+    top: -4px;
+    right: -4px;
+  }
+
+  &--bottom-left {
+    bottom: -4px;
+    left: -4px;
+  }
+
+  &--bottom-right {
+    bottom: -4px;
+    right: -4px;
+  }
+}

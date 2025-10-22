@@ -2,26 +2,29 @@
 
 import React from 'react';
 
+import { useIntegrations } from '@context/IntegrationContext';
+
 import { IntegrationWizard } from '@components/ui/IntegrationWizard';
-import { useIntegrations } from '@hooks/useIntegrations';
 
 import './AddIntegrationPage.scss';
 
-import { LoggedInWrapper } from '@/components';
-import { CreateIntegrationDto } from '@/types';
+import { Wrapper } from '@/components';
+import { IntegrationFormValues } from '@/validation/integrationSchemas';
 
 export const AddIntegrationPage: React.FC = () => {
   const { createIntegration } = useIntegrations();
 
-  const handleIntegrationComplete = (data: CreateIntegrationDto) => {
-    createIntegration.mutate(data);
+  const handleIntegrationComplete = (data: Partial<IntegrationFormValues>) => {
+    createIntegration({
+      string: data.string as string,
+    });
   };
 
   return (
-    <LoggedInWrapper>
+    <Wrapper>
       <div className="add-integration-page">
         <IntegrationWizard onComplete={handleIntegrationComplete} />
       </div>
-    </LoggedInWrapper>
+    </Wrapper>
   );
 };

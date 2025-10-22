@@ -2,6 +2,7 @@
 
 import React from 'react';
 
+import Corners from '@components/ui/Corners/Corners';
 import useAuth from '@hooks/useAuth';
 
 import './RegisterPage.scss';
@@ -25,12 +26,9 @@ export const RegisterPage: React.FC = () => {
       </div>
 
       <div className="register-page__container">
+        <Corners />
         <h2 className="register-page__title">&#47;&#47; CREATE YOUR ACCOUNT</h2>
         <hr />
-        <div className="login-page__corner login-page__corner--top-left"></div>
-        <div className="login-page__corner login-page__corner--top-right"></div>
-        <div className="login-page__corner login-page__corner--bottom-left"></div>
-        <div className="login-page__corner login-page__corner--bottom-right"></div>
         <RegisterForm onSubmit={handleRegister} isLoading={registerMutation.isPending} />
       </div>
 

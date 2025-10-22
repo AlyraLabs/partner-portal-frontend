@@ -1,37 +1,41 @@
 'use client';
 
 import React, { createContext, useContext, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { CreateIntegrationDto, Integration } from '../types/integration';
-import { useAuthContext } from './AuthContext';
+
+import { isAuthenticated } from '@/actions/authActions';
 
 interface IntegrationContextType {
+  // List operations
   integrations: Integration[];
   isLoading: boolean;
   error: string | null;
-  createIntegration: (data: CreateIntegrationDto) => Promise<Integration>;
-  isCreating: boolean;
   refetchIntegrations: () => void;
   hasExistingIntegrations: boolean;
   integrationCount: number;
+
+  // Create
+  createIntegration: (data: CreateIntegrationDto) => Promise<Integration>;
+  isCreating: boolean;
+
+  // Get single
+  getIntegration: (id: string) => Promise<Integration>;
+
+  // Update
+  updateIntegration: (id: string, data: Partial<CreateIntegrationDto>) => Promise<Integration>;
+  isUpdating: boolean;
+
+  // Delete
+  deleteIntegration: (id: string) => Promise<void>;
+  isDeleting: boolean;
 }
 
 const IntegrationContext = createContext<IntegrationContextType | undefined>(undefined);
-
-// API base URL
-const API_BASE_URL = 'http://localhost:3001';
-
-// Create axios instance with default config
-const apiClient = axios.create({
-  baseURL: API_BASE_URL,
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
 
 interface IntegrationProviderProps {
   children: React.ReactNode;
@@ -39,9 +43,8 @@ interface IntegrationProviderProps {
 
 export const IntegrationProvider: React.FC<IntegrationProviderProps> = ({ children }) => {
   const queryClient = useQueryClient();
-  const { user } = useAuthContext();
+  const router = useRouter();
 
-  // Fetch integrations only if user is logged in
   const {
     data: integrations = [],
     isLoading,
@@ -50,42 +53,91 @@ export const IntegrationProvider: React.FC<IntegrationProviderProps> = ({ childr
   } = useQuery({
     queryKey: ['integrations'],
     queryFn: async (): Promise<Integration[]> => {
-      const response = await apiClient.get('/integrations');
-      return response.data;
+      const response = await axios.get('/api/integrations');
+      return response.data.data || [];
     },
-    enabled: !!user, // Only fetch if user exists
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnMount: true,
+    staleTime: 5 * 60 * 1000,
     retry: 2,
   });
 
-  // Create integration mutation
+  // Create integration
   const { mutateAsync: createIntegration, isPending: isCreating } = useMutation({
     mutationFn: async (data: CreateIntegrationDto): Promise<Integration> => {
-      const response = await apiClient.post('/integrations', data);
-      return response.data;
+      const response = await axios.post('/api/integrations', data);
+      return response.data.data;
     },
     onSuccess: () => {
-      // Invalidate and refetch integrations after successful creation
       queryClient.invalidateQueries({ queryKey: ['integrations'] });
+      refetchIntegrations();
+      router.push('/dashboard');
     },
     onError: error => {
       console.error('Failed to create integration:', error);
     },
   });
 
-  // Computed values for integration status
+  // Update integration
+  const { mutateAsync: updateIntegration, isPending: isUpdating } = useMutation({
+    mutationFn: async ({ id, data }: { id: string; data: Partial<CreateIntegrationDto> }): Promise<Integration> => {
+      const response = await axios.patch(`/api/integrations/${id}`, data);
+      return response.data.data;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['integrations'] });
+      queryClient.invalidateQueries({ queryKey: ['integrations', variables.id] });
+    },
+    onError: error => {
+      console.error('Failed to update integration:', error);
+    },
+  });
+
+  // Delete integration
+  const { mutateAsync: deleteIntegration, isPending: isDeleting } = useMutation({
+    mutationFn: async (id: string): Promise<void> => {
+      await axios.delete(`/api/integrations/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['integrations'] });
+    },
+    onError: error => {
+      console.error('Failed to delete integration:', error);
+    },
+  });
+
+  // Get single integration (non-cached, direct fetch)
+  const getIntegration = async (id: string): Promise<Integration> => {
+    const response = await axios.get(`/api/integrations/${id}`);
+    return response.data.data;
+  };
+
+  // Computed values
   const integrationCount = useMemo(() => integrations.length, [integrations]);
   const hasExistingIntegrations = useMemo(() => integrations.length > 0, [integrations]);
 
   const value: IntegrationContextType = {
+    // List
     integrations,
     isLoading,
     error: error?.message || null,
-    createIntegration,
-    isCreating,
     refetchIntegrations,
     hasExistingIntegrations,
     integrationCount,
+
+    // Create
+    createIntegration,
+    isCreating,
+
+    // Get single
+    getIntegration,
+
+    // Update
+    updateIntegration: (id, data) => updateIntegration({ id, data }),
+    isUpdating,
+
+    // Delete
+    deleteIntegration,
+    isDeleting,
   };
 
   return <IntegrationContext.Provider value={value}>{children}</IntegrationContext.Provider>;

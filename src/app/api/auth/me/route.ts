@@ -18,8 +18,25 @@ export async function GET() {
     return NextResponse.json({
       success: true,
     });
-  } catch (error) {
-    console.error('Auth check API error:', error);
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+  } catch (error: unknown) {
+    let status = 500;
+    let message = 'Internal server error';
+
+    if (typeof error === 'object' && error !== null) {
+      const err = error as { status?: number; data?: { message?: string } };
+      if (typeof err.status === 'number') status = err.status;
+      if (typeof err.data?.message === 'string') message = err.data.message;
+    } else if (error instanceof Error) {
+      message = error.message;
+    }
+
+    return NextResponse.json(
+      {
+        success: false,
+        message,
+        status,
+      },
+      { status }
+    );
   }
 }

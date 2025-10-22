@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -14,23 +14,28 @@ interface AuthProviderProps {
   initialUser?: User;
 }
 
+interface UserResponse {
+  success: boolean;
+  data: User;
+}
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children, initialUser }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  // const { data } = useQuery({
-  //   queryKey: ['user'],
-  //   queryFn: () => {
-  //     const response = axios.get('/api/auth/me');
-  //     if (response.success === true) {
-  //       setUser(response.data);
-  //       return response.data;
-  //     }
-  //     return null;
-  //   },
-  //   initialData: initialUser,
-  //   staleTime: 0,
-  //   retry: 0,
-  // });
+  useQuery({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const response: UserResponse = await axios.get('/api/auth/me');
+      if (response.success) {
+        setUser(response.data);
+        return response.data;
+      }
+      return null;
+    },
+    initialData: initialUser,
+    staleTime: 0,
+    retry: 0,
+  });
 
   const value = {
     user,

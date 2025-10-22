@@ -1,7 +1,5 @@
 export interface Integration {
   id: string;
-  name: string;
-  url: string;
   string: string;
   plan: string;
   fee: string;
@@ -11,13 +9,10 @@ export interface Integration {
 }
 
 export interface CreateIntegrationDto {
-  name: string;
-  website?: string;
   string: string;
   evmWallet?: string;
   solanaWallet?: string;
   suiWallet?: string;
-  apiKeyConfirmed: boolean;
 }
 
 export interface IntegrationResponse {

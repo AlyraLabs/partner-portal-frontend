@@ -1,5 +1,4 @@
-import { Geist_Mono } from 'next/font/google';
-import { Geist } from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google';
 
 import type { Metadata } from 'next';
 
@@ -8,7 +7,6 @@ import type { Metadata } from 'next';
 import '../styles/globals.scss';
 
 import Providers from '@/app/providers';
-import Background from '@/components/Backgroud/Background';
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
@@ -43,7 +41,6 @@ export default async function RootLayout({
     <html lang="en" className={`${geistMono.variable} ${geistSans.variable}`}>
       <body>
         <Providers>{children}</Providers>
-        <Background />
       </body>
     </html>
   );
