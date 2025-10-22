@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { logout } from '@/actions/authActions';
 import { LoginFormData, RegisterFormData } from '@/types';
 
 interface ErrorResponse {
@@ -43,9 +44,18 @@ function UseAuth() {
     },
   });
 
+  const handleLogout = () => {
+    logout().then(() => {
+      router.push('/login');
+      // setUserData(null);
+      // queryClient.removeQueries();
+    });
+  };
+
   return {
     loginMutation,
     registerMutation,
+    handleLogout,
   };
 }
 

@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 
 import './MyProjectsPage.scss';
 
-import { Button, Icon, LoggedInWrapper } from '@/components';
+import { NoDataYet, Wrapper } from '@/components';
+import { Button } from '@/components';
 import { IntegrationCard, IntegrationCardSkeleton } from '@/components/ui';
 import { useIntegrations } from '@/contexts/IntegrationContext';
 
@@ -24,16 +25,11 @@ export const MyProjectsPage: React.FC = () => {
   };
 
   return (
-    <LoggedInWrapper>
+    <Wrapper>
       <div className="my-projects-page">
         <div className="my-projects-page__container">
+          {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
           <h1 className="my-projects-page__title">// YOUR PROJECTS</h1>
-
-          {error && (
-            <div className="my-projects-page__error">
-              <p>Failed to load projects: {error}</p>
-            </div>
-          )}
 
           <div className="my-projects-page__grid">
             {isLoading ? (
@@ -41,13 +37,10 @@ export const MyProjectsPage: React.FC = () => {
               <>
                 <IntegrationCardSkeleton />
                 <IntegrationCardSkeleton />
-                <IntegrationCardSkeleton />
               </>
             ) : integrations.length === 0 ? (
               // Empty state
-              <div className="my-projects-page__empty">
-                <p>No projects yet. Create your first integration!</p>
-              </div>
+              <NoDataYet />
             ) : (
               // Show actual integrations
               integrations.map(integration => (
@@ -64,6 +57,6 @@ export const MyProjectsPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </LoggedInWrapper>
+    </Wrapper>
   );
 };

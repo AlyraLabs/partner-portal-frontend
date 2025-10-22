@@ -7,7 +7,6 @@ import type { Metadata } from 'next';
 import '../styles/globals.scss';
 
 import Providers from '@/app/providers';
-import Background from '@/components/Backgroud/Background';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

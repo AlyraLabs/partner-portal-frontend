@@ -10,7 +10,7 @@ interface HeaderProps {
   className?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ className = '' }) => {
+export function Header({ className = '' }: HeaderProps) {
   return (
     <header className={`header ${className}`.trim()}>
       <div className="header__main">
@@ -22,4 +22,4 @@ export const Header: React.FC<HeaderProps> = ({ className = '' }) => {
       </div>
     </header>
   );
-};
+}

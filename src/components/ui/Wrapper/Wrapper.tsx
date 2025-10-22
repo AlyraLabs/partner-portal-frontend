@@ -2,16 +2,14 @@
 
 import React from 'react';
 
-import { Header } from '../Header';
+import './Wrapper.scss';
 
-import './LoggedInWrapper.scss';
-
-interface LoggedInWrapperProps {
+interface WrapperProps {
   children: React.ReactNode;
   className?: string;
 }
 
-export const LoggedInWrapper: React.FC<LoggedInWrapperProps> = ({ children, className = '' }) => {
+export const Wrapper: React.FC<WrapperProps> = ({ children, className = '' }) => {
   return (
     <div className={`logged-in-wrapper ${className}`.trim()}>
       <main className="logged-in-wrapper__content">

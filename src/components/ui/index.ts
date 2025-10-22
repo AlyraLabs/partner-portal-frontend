@@ -6,4 +6,6 @@ export { Input } from './Input';
 export { IntegrationCard } from './IntegrationCard';
 export { IntegrationCardSkeleton } from './IntegrationCardSkeleton';
 export { IntegrationWizard } from './IntegrationWizard';
-export { LoggedInWrapper } from './LoggedInWrapper';
+export { NoDataYet } from './NoDataYet';
+export { Sidebar } from './Sidebar';
+export { Wrapper } from './Wrapper';

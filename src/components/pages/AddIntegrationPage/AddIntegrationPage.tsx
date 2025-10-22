@@ -8,23 +8,23 @@ import { IntegrationWizard } from '@components/ui/IntegrationWizard';
 
 import './AddIntegrationPage.scss';
 
-import { LoggedInWrapper } from '@/components';
+import { Wrapper } from '@/components';
 import { IntegrationFormValues } from '@/validation/integrationSchemas';
 
 export const AddIntegrationPage: React.FC = () => {
   const { createIntegration } = useIntegrations();
 
-  const handleIntegrationComplete = (data: IntegrationFormValues) => {
+  const handleIntegrationComplete = (data: Partial<IntegrationFormValues>) => {
     createIntegration({
-      string: data.string,
+      string: data.string as string,
     });
   };
 
   return (
-    <LoggedInWrapper>
+    <Wrapper>
       <div className="add-integration-page">
         <IntegrationWizard onComplete={handleIntegrationComplete} />
       </div>
-    </LoggedInWrapper>
+    </Wrapper>
   );
 };
