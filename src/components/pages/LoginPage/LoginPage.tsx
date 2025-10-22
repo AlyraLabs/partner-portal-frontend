@@ -1,13 +1,11 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 
 import useAuth from '@hooks/useAuth';
 
 import './LoginPage.scss';
 
-import Copyright from '@/../public/icons/copyright.svg';
 import { LoginForm } from '@/components';
 import { Icon } from '@/components';
 import { LoginFormData } from '@/types/auth';
@@ -27,15 +25,20 @@ export const LoginPage: React.FC = () => {
       </div>
 
       <div className="login-page__container">
-        <h2 className="login-page__title">Log in</h2>
+        <div className="login-page__corner login-page__corner--top-left"></div>
+        <div className="login-page__corner login-page__corner--top-right"></div>
+        <div className="login-page__corner login-page__corner--bottom-left"></div>
+        <div className="login-page__corner login-page__corner--bottom-right"></div>
+        <h2 className="login-page__title">&#47;&#47; LOGIN</h2>
+        <hr />
         <LoginForm onSubmit={handleLogin} isLoading={loginMutation.isPending} />
       </div>
 
-      <div className="login-page__footer">
+      {/* <div className="login-page__footer">
         <Copyright />
         <Link href="/terms-of-use">Terms of Use</Link>
         <Link href="/privacy-policy">Privacy Policy</Link>
-      </div>
+      </div> */}
     </div>
   );
 };

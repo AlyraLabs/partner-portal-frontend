@@ -1,11 +1,8 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 
 import useAuth from '@hooks/useAuth';
-
-import Copyright from '../../../../public/icons/copyright.svg';
 
 import './RegisterPage.scss';
 
@@ -28,15 +25,20 @@ export const RegisterPage: React.FC = () => {
       </div>
 
       <div className="register-page__container">
-        <h2 className="register-page__title">Create an account</h2>
+        <h2 className="register-page__title">&#47;&#47; CREATE YOUR ACCOUNT</h2>
+        <hr />
+        <div className="login-page__corner login-page__corner--top-left"></div>
+        <div className="login-page__corner login-page__corner--top-right"></div>
+        <div className="login-page__corner login-page__corner--bottom-left"></div>
+        <div className="login-page__corner login-page__corner--bottom-right"></div>
         <RegisterForm onSubmit={handleRegister} isLoading={registerMutation.isPending} />
       </div>
 
-      <div className="register-page__footer">
+      {/* <div className="register-page__footer">
         <Copyright />
         <Link href="/terms-of-use">Terms of Use</Link>
         <Link href="/privacy-policy">Privacy Policy</Link>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -10,7 +10,6 @@ import './LoginForm.scss';
 import Arrow from '@/../public/icons/right-arrow.svg';
 import { Button } from '@/components';
 import { Input } from '@/components';
-import { ConnectWalletButton } from '@/components/ConnectWalletButton';
 import { ContractActions } from '@/components/ContractActions';
 import { LoginFormData } from '@/types/auth';
 
@@ -45,10 +44,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading = fals
     <>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="login-form">
         <div className="login-form__inputs">
+          <label htmlFor="email" className="login-form__label">
+            Email
+          </label>
           <Input
             id="email"
             type="email"
-            placeholder="Enter your email"
+            placeholder="example@gmail.com"
             {...register('email', {
               required: 'Email is required',
               pattern: {
@@ -58,10 +60,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading = fals
             })}
             errorMessage={errors.email?.message}
           />
+          <label htmlFor="password" className="login-form__label">
+            Password
+          </label>
           <Input
             id="password"
             type={showPassword ? 'text' : 'password'}
-            placeholder="Enter your password"
+            placeholder=""
             {...register('password', {
               required: 'Password is required',
               minLength: {
@@ -75,6 +80,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading = fals
           />
         </div>
 
+        <a href="/forgot-password" className="login-form__forgot-link">
+          Forgot Password?
+        </a>
+
         <div className="login-form__buttons">
           <Button
             type="submit"
@@ -86,23 +95,20 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading = fals
             <Arrow />
           </Button>
 
-          <div className="login-form__divider">
+          {/* <div className="login-form__divider">
             <span>or</span>
-          </div>
+          </div> */}
 
-          <ConnectWalletButton variant="secondary" size="lg" className="login-form__wallet-button" />
+          {/* <ConnectWalletButton variant="secondary" size="lg" className="login-form__wallet-button" /> */}
         </div>
 
         <div className="login-form__footer">
           <p>
             Don&apos;t have an account?{' '}
             <Link href="/register" className="login-form__link">
-              Sign up
+              Create
             </Link>
           </p>
-          <a href="/forgot-password" className="login-form__link">
-            Forgot Password?
-          </a>
         </div>
       </form>
 

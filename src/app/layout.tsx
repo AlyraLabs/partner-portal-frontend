@@ -1,4 +1,5 @@
-import { Lexend, Montserrat } from 'next/font/google';
+import { Geist_Mono } from 'next/font/google';
+import { Geist } from 'next/font/google';
 
 import type { Metadata } from 'next';
 
@@ -9,13 +10,13 @@ import '../styles/globals.scss';
 import Providers from '@/app/providers';
 import Background from '@/components/Backgroud/Background';
 
-const lexendSans = Lexend({
-  variable: '--font-lexend-sans',
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
   subsets: ['latin'],
 });
 
-const montserratSans = Montserrat({
-  variable: '--font-montserrat-sans',
+const geistSans = Geist({
+  variable: '--font-geist',
   subsets: ['latin'],
 });
 
@@ -39,7 +40,7 @@ export default async function RootLayout({
   // });
 
   return (
-    <html lang="en" className={`${lexendSans.className} ${montserratSans.variable}`}>
+    <html lang="en" className={`${geistMono.variable} ${geistSans.variable}`}>
       <body>
         <Providers>{children}</Providers>
         <Background />
