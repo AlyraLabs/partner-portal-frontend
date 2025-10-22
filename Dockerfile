@@ -1,5 +1,5 @@
 # Dockerfile для Next.js на Render
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 
 # Устанавливаем зависимости только когда нужно
 FROM base AS deps
@@ -18,6 +18,8 @@ COPY . .
 
 # Собираем приложение
 RUN npm run build
+RUN ls -la .next/
+RUN find .next/ -name "*.js" | head -10
 
 # Production image, копируем все файлы и запускаем next
 FROM base AS runner
@@ -37,6 +39,9 @@ RUN chown nextjs:nodejs .next
 # Автоматически используем output traces для уменьшения размера
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+RUN ls -la ./
+RUN find . -name "server.js" | head -5
 
 USER nextjs
 
