@@ -1,5 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
+import Error from '@/../public/icons/error.svg';
+import Key from '@/../public/icons/key.svg';
 import { Icon, Input } from '@/components';
 import type { IntegrationFormValues } from '@/validation/integrationSchemas';
 
@@ -17,14 +19,25 @@ export default function StepApiKey({ apiKeyMasked, onCopy }: Props) {
 
   return (
     <div className="integration-wizard__step">
-      <h1 className="integration-wizard__title">Secure Your API Key</h1>
-      <p className="integration-wizard__subtitle">
-        Keep it safe and use only in backend or server scripts. Do not expose it in frontend.
-      </p>
+      {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
+      <h1 className="integration-wizard__title">// Secure Your API Key</h1>
+      <hr />
+      <div className="integration-wizard__subtitle-container">
+        <p className="integration-wizard__subtitle">
+          Keep it safe and use only in backend or server scripts. Do not expose it in frontend.
+        </p>
+        <Error />
+      </div>
 
       <div className="integration-wizard__form">
         <div className="integration-wizard__field">
+          <label className="integration-wizard__field-label" htmlFor="apiKey">
+            API Key
+          </label>
           <div className="integration-wizard__api-key-field">
+            <div className="integration-wizard__api-key-icon">
+              <Key />
+            </div>
             <Input
               id="apiKey"
               type="text"
@@ -38,11 +51,10 @@ export default function StepApiKey({ apiKeyMasked, onCopy }: Props) {
           </div>
         </div>
 
-        <p className="integration-wizard__confirm-text">
-          Type <span>&quot;I SAVED IT&quot;</span> to confirm
-        </p>
-
         <div className="integration-wizard__field">
+          <label className="integration-wizard__field-label integration-wizard__confirm-text" htmlFor="confirmation">
+            Type <span>&quot;I SAVED&quot;</span> to confirm
+          </label>
           <Input
             id="confirmation"
             type="text"
