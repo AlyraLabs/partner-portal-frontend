@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { logout } from '@/actions/authActions';
@@ -18,12 +18,16 @@ interface ErrorResponse {
 
 function UseAuth() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   const loginMutation = useMutation({
     mutationFn: async (data: LoginFormData) => {
       return await axios.post('/api/auth/login', data);
     },
-    onSuccess: data => {
-      router.push('/dashboard');
+    onSuccess: async data => {
+      await queryClient.invalidateQueries({ queryKey: ['integrations'] });
+      await queryClient.refetchQueries({ queryKey: ['integrations'] });
+      router.push('/projects');
       console.log(data);
     },
     onError: (error: ErrorResponse) => {
@@ -45,10 +49,12 @@ function UseAuth() {
   });
 
   const handleLogout = () => {
-    logout().then(() => {
+    logout().then(async () => {
       router.push('/login');
       // setUserData(null);
-      // queryClient.removeQueries();
+      await queryClient.cancelQueries();
+      queryClient.clear();
+      queryClient.setQueryData(['integrations'], []);
     });
   };
 

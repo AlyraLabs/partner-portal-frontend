@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import Corners from '@components/ui/Corners/Corners';
+
 import StepApiKey from './Steps/StepApiKey';
 import StepCreateString from './Steps/StepCreateString';
 import StepWallets from './Steps/StepWallets';
@@ -55,6 +57,7 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
     if (!valid) return;
 
     const values = methods.getValues();
+    console.log(values);
     try {
       setIsCreating(true);
       // map confirmation -> apiKeyConfirmed true for your backend, if needed
@@ -63,8 +66,6 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
       setIsCreating(false);
     }
   };
-
-  const skipStep = () => setCurrentStep(s => Math.min(2, s + 1));
 
   return (
     <FormProvider {...methods}>
@@ -81,6 +82,7 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
         noValidate>
         <div className="integration-wizard__container">
           <div className="integration-wizard__content">
+            <Corners />
             {currentStep === 0 && <StepCreateString />}
             {currentStep === 1 && <StepWallets />}
             {currentStep === 2 && (
@@ -101,13 +103,6 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
               <Button type="submit" variant="primary" disabled={isCreating} className="integration-wizard__btn">
                 {isCreating ? 'Creating...' : 'Confirm'}
                 <Icon name="right-arrow" size="md" />
-              </Button>
-            )}
-
-            {currentStep === 1 && (
-              <Button type="button" variant="secondary" className="integration-wizard__btn" onClick={skipStep}>
-                Skip
-                <Icon name="right-arrow-white" size="md" />
               </Button>
             )}
           </div>

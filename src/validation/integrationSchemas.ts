@@ -7,13 +7,6 @@ const optionalEvm = z
   .or(z.literal(''))
   .refine(v => !v || /^0x[a-fA-F0-9]{40}$/.test(v), { message: 'Invalid EVM address' });
 
-const optionalSui = z
-  .string()
-  .trim()
-  .optional()
-  .or(z.literal(''))
-  .refine(v => !v || /^0x[a-fA-F0-9]{64}$/.test(v), { message: 'Invalid Sui address (0x + 64 hex)' });
-
 const optionalSolana = z
   .string()
   .trim()

@@ -2,6 +2,7 @@
 
 import React from 'react';
 
+import Corners from '@components/ui/Corners/Corners';
 import useAuth from '@hooks/useAuth';
 
 import './LoginPage.scss';
@@ -25,10 +26,7 @@ export const LoginPage: React.FC = () => {
       </div>
 
       <div className="login-page__container">
-        <div className="login-page__corner login-page__corner--top-left"></div>
-        <div className="login-page__corner login-page__corner--top-right"></div>
-        <div className="login-page__corner login-page__corner--bottom-left"></div>
-        <div className="login-page__corner login-page__corner--bottom-right"></div>
+        <Corners />
         <h2 className="login-page__title">&#47;&#47; LOGIN</h2>
         <hr />
         <LoginForm onSubmit={handleLogin} isLoading={loginMutation.isPending} />

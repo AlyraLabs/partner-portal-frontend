@@ -8,6 +8,8 @@ import axios from 'axios';
 
 import { CreateIntegrationDto, Integration } from '../types/integration';
 
+import { isAuthenticated } from '@/actions/authActions';
+
 interface IntegrationContextType {
   // List operations
   integrations: Integration[];
@@ -43,7 +45,6 @@ export const IntegrationProvider: React.FC<IntegrationProviderProps> = ({ childr
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  // Fetch all integrations
   const {
     data: integrations = [],
     isLoading,
@@ -55,7 +56,7 @@ export const IntegrationProvider: React.FC<IntegrationProviderProps> = ({ childr
       const response = await axios.get('/api/integrations');
       return response.data.data || [];
     },
-    enabled: true,
+    refetchOnMount: true,
     staleTime: 5 * 60 * 1000,
     retry: 2,
   });

@@ -5,6 +5,7 @@
   justify-content: center;
 
   &__container {
+    position: relative;
     border: 1px solid #878787;
     max-width: 615px;
     width: 100%;
@@ -13,22 +14,34 @@
 
   &__title {
     text-align: start;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
     font-size: 22px;
+    text-transform: uppercase;
+  }
+
+  hr {
+    background: #878787;
+    border-color: #878787;
+  }
+
+  &__subtitle-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    margin-bottom: 40px;
   }
 
   &__subtitle {
     font-size: 15px;
     color: #5c5a5a;
-    margin-bottom: 40px;
     text-align: start;
+    max-width: 430px;
   }
 
   &__form {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    max-width: 528px;
     margin: 0 auto;
   }
 
@@ -43,6 +56,10 @@
         position: absolute;
         top: 0;
       }
+    }
+
+    input {
+      margin-top: 10px;
     }
   }
 

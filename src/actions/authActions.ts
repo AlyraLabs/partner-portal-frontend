@@ -7,3 +7,9 @@ export async function logout() {
   cookieStore.delete('access_token');
   cookieStore.delete('refresh_token');
 }
+
+export async function isAuthenticated() {
+  const { value: accessToken } = (await cookies())?.get('access_token') || {};
+
+  return !!accessToken;
+}

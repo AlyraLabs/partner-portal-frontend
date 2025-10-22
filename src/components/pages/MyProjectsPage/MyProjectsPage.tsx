@@ -12,7 +12,7 @@ import { useIntegrations } from '@/contexts/IntegrationContext';
 
 export const MyProjectsPage: React.FC = () => {
   const router = useRouter();
-  const { integrations, isLoading, error } = useIntegrations();
+  const { integrations, isLoading } = useIntegrations();
 
   console.log(integrations);
 
