@@ -56,10 +56,10 @@ export const ContractActions: React.FC = () => {
 
       // Convert from wei to readable format
       const balanceInWei = balance.toString();
-      setBalance(balanceInWei);
 
       // Convert to USDC (6 decimals)
       const balanceInUSDC = (parseInt(balanceInWei) / 1e6).toFixed(6);
+      setBalance(balanceInUSDC);
 
       console.log('Token balance retrieved:', balanceInWei);
 
