@@ -4,14 +4,20 @@
   flex-direction: column;
 
   &__inputs {
-    display: flex;
-    flex-flow: column;
-    gap: 5px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
   }
 
   &__field {
     width: 100%;
-    margin-bottom: var(--spacing-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &--full {
+      grid-column: 1 / -1;
+    }
   }
 
   &__label {
@@ -23,6 +29,12 @@
       content: '*';
       color: var(--error);
       margin-left: 2px;
+    }
+
+    &--optional {
+      &::after {
+        display: none;
+      }
     }
   }
 
@@ -71,6 +83,14 @@
 
     &:hover {
       text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .register-form {
+    &__inputs {
+      grid-template-columns: 1fr;
     }
   }
 }

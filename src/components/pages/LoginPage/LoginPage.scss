@@ -9,10 +9,10 @@
   &__logo {
     position: absolute;
     top: 2rem;
-    left: 2rem;
+    left: 50px;
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-sm);
     z-index: 2;
 
     @media (max-width: 768px) {
@@ -23,8 +23,8 @@
 
   &__logo-text {
     font-family: var(--font-geist), sans-serif;
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 32px;
+    font-weight: 500;
     color: white;
   }
 

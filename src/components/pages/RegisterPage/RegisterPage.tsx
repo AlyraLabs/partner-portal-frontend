@@ -21,7 +21,7 @@ export const RegisterPage: React.FC = () => {
   return (
     <div className="register-page">
       <div className="register-page__logo">
-        <Icon name="logo" size="lg" className="register-page__logo-icon" />
+        <Icon name="logo" size="xl" className="register-page__logo-icon" />
         <span className="register-page__logo-text">Alyra</span>
       </div>
 

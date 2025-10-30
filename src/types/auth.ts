@@ -7,6 +7,10 @@ export interface RegisterFormData {
   email: string;
   password: string;
   confirmPassword?: string;
+  username?: string;
+  companyName?: string;
+  telegram?: string;
+  website?: string;
 }
 
 export interface User {
