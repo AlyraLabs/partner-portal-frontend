@@ -22,7 +22,7 @@ export default function StepWallets() {
       <div className="integration-wizard__subtitle-container">
         <p className="integration-wizard__subtitle">
           Make sure you enter the correct address, funds sent to an exchange may be lost.{' '}
-          <a href="#" className="integration-wizard__link">
+          <a href="https://docs.alyra.finance/welcome" target="_blank" className="integration-wizard__link">
             Learn more
           </a>
         </p>

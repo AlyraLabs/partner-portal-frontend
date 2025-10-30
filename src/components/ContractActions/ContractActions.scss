@@ -1,6 +1,6 @@
 .contract-actions {
   width: 100%;
-  border: 1px solid #878787;
+  border: 1px solid var(--text-secondary);
   padding: 20px;
 
   &__table {
@@ -12,26 +12,33 @@
       font-size: 20px;
       font-weight: 400;
     }
+    td {
+      text-align: left;
+      color: var(--text-primary);
+      font-size: 20px;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
   }
 
-  &__button {
-    background: #091025;
-    border: 1px solid #274ac9;
+  &__button.btn {
+    background: #092522;
+    border: 1px solid #27c99b;
     text-transform: uppercase;
     font-size: 16px;
     font-weight: 400;
     padding: 6px;
     width: 260px;
-    color: #274ac9;
+    color: #27c99b;
 
     &:hover {
-      background: #274ac9;
-      color: #091025;
+      background: #27c99b;
+      color: #092522;
     }
 
     &:hover:not(:disabled) {
-      background: #274ac9;
-      color: #091025;
+      background: #27c99b;
+      color: #092522;
     }
   }
 }

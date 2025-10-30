@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import './MyProjectsPage.scss';
 
-import { NoDataYet, Wrapper } from '@/components';
+import { Wrapper } from '@/components';
 import { Button } from '@/components';
 import { IntegrationCard, IntegrationCardSkeleton } from '@/components/ui';
 import { useIntegrations } from '@/contexts/IntegrationContext';
@@ -38,15 +38,12 @@ export const MyProjectsPage: React.FC = () => {
                 <IntegrationCardSkeleton />
                 <IntegrationCardSkeleton />
               </>
-            ) : integrations.length === 0 ? (
-              // Empty state
-              <NoDataYet />
-            ) : (
+            ) : integrations.length > 0 ? (
               // Show actual integrations
               integrations.map(integration => (
                 <IntegrationCard key={integration.id} integration={integration} onEdit={handleEdit} />
               ))
-            )}
+            ) : null}
           </div>
 
           <div className="my-projects-page__actions">

@@ -18,7 +18,7 @@ export function Header({ className = '' }: HeaderProps) {
           <Icon name="logo" size="xl" className="header__logo" />
           <span className="header__brand-text">Alyra</span>
         </div>
-        <div></div>
+        <p className="header__beta-text">BETA</p>
       </div>
     </header>
   );

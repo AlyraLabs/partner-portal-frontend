@@ -3,16 +3,16 @@
   padding: 0 20px;
 
   hr {
-    border-color: #878787;
-    background: #878787;
+    border-color: var(--text-secondary);
+    background: var(--text-secondary);
     width: 100%;
   }
 
   &__title {
-    font-size: 32px;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 40px;
+    font-size: 40px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 10px;
     letter-spacing: 1px;
   }
 

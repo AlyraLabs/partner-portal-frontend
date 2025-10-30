@@ -15,7 +15,7 @@
   svg {
     position: absolute;
     top: 50%;
-    right: 16px;
+    left: 16px;
     transform: translateY(-50%);
   }
 
@@ -58,9 +58,9 @@
   }
 
   &--secondary {
-    background-color: #000000;
-    color: var(--text-primary);
-    border: 1px solid #000000;
+    background-color: #fff;
+    color: var(--background);
+    text-transform: uppercase;
   }
 
   &--outline {

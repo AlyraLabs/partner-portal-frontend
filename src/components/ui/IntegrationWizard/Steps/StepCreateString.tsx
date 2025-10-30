@@ -19,7 +19,7 @@ export default function StepCreateString() {
       <div className="integration-wizard__subtitle-container">
         <p className="integration-wizard__subtitle">
           Your string is permanent and will serve as your name across all chains and apps.{' '}
-          <a className="integration-wizard__link" href="https://dashboard.galxe.com/overview?space=83850">
+          <a className="integration-wizard__link" href="https://docs.alyra.finance/welcome" target="_blank">
             Learn more
           </a>
         </p>

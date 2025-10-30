@@ -8,6 +8,16 @@
   padding: 0 50px;
   width: 100%;
 
+  &__main {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--text-secondary);
+    pointer-events: none;
+  }
+
   &__brand {
     display: flex;
     align-items: center;
@@ -16,8 +26,15 @@
 
   &__brand-text {
     font-size: 32px;
-    font-weight: 400;
+    font-weight: 500;
     color: white;
-    font-family: var(--font-geist-sans), sans-serif;
+    font-family: var(--font-geist), sans-serif;
+  }
+
+  &__beta-text {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-family: var(--font-geist-mono), monospace;
   }
 }

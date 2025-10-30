@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Wallet, Zap } from 'lucide-react';
+import { Wallet } from 'lucide-react';
 
 import './ConnectWalletButton.scss';
 
@@ -43,9 +43,16 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
   };
 
   return (
-    <Button variant={variant} size={size} className={`connect-wallet-button ${className}`} onClick={handleConnect}>
-      {isEVMConnected || isSolanaConnected ? <Zap className="w-4 h-4 mr-2" /> : <Wallet className="w-4 h-4 mr-2" />}
-      {getButtonText()}
+    <Button
+      variant={variant}
+      size={size}
+      className={`connect-wallet-button ${className}`}
+      onClick={handleConnect}
+      data-connected={isAnyConnected}>
+      {!isAnyConnected ? <Wallet className="w-4 h-4 mr-2" /> : null}
+      <span className={`connect-wallet-button__text${isAnyConnected ? ' connect-wallet-button__text--full' : ''}`}>
+        {getButtonText()}
+      </span>
     </Button>
   );
 };
