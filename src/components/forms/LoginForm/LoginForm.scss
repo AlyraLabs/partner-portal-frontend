@@ -15,7 +15,7 @@
   }
 
   &__label {
-    margin-top: 10px;
+    margin-top: 5px;
     display: block;
     font-size: 18px;
     color: rgba(255, 255, 255, 0.8);
@@ -53,6 +53,8 @@
 
   &__submit {
     width: 100%;
+    margin-bottom: 12px;
+    text-transform: uppercase;
   }
 
   &__divider {

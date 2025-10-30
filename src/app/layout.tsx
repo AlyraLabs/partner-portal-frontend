@@ -19,8 +19,8 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: 'Partner Portal - Alyra',
-  description: "The only DeFi liquidity stack you'll ever need",
+  title: 'Partner Portal | Alyra',
+  description: 'Alyra Partner Portal',
 };
 
 export default async function RootLayout({
