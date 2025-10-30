@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Wallet } from 'lucide-react';
 
@@ -21,18 +21,27 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
   className = '',
 }) => {
   const { isEVMConnected, evmAddress, isSolanaConnected, solanaAddress, connectEVM, disconnect } = useWallet();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const isAnyConnected = isEVMConnected || isSolanaConnected;
+  const displayConnected = isHydrated ? isAnyConnected : false;
 
   const handleConnect = () => {
-    if (isAnyConnected) {
+    if (displayConnected) {
       disconnect();
     } else {
       connectEVM();
     }
   };
 
-  const getButtonText = () => {
+  const buttonText = useMemo(() => {
+    if (!isHydrated) {
+      return 'Connect Wallet';
+    }
     if (isEVMConnected && evmAddress) {
       return `EVM: ${evmAddress.slice(0, 6)}...${evmAddress.slice(-4)}`;
     }
@@ -40,7 +49,7 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
       return `SOL: ${solanaAddress.slice(0, 6)}...${solanaAddress.slice(-4)}`;
     }
     return 'Connect Wallet';
-  };
+  }, [isHydrated, isEVMConnected, evmAddress, isSolanaConnected, solanaAddress]);
 
   return (
     <Button
@@ -48,10 +57,11 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
       size={size}
       className={`connect-wallet-button ${className}`}
       onClick={handleConnect}
-      data-connected={isAnyConnected}>
-      {!isAnyConnected ? <Wallet className="w-4 h-4 mr-2" /> : null}
-      <span className={`connect-wallet-button__text${isAnyConnected ? ' connect-wallet-button__text--full' : ''}`}>
-        {getButtonText()}
+      disableTitleAnimation={displayConnected}
+      data-connected={displayConnected ? 'true' : 'false'}>
+      {!displayConnected ? <Wallet className="w-4 h-4 mr-2" /> : null}
+      <span className={`connect-wallet-button__text${displayConnected ? ' connect-wallet-button__text--full' : ''}`}>
+        {buttonText}
       </span>
     </Button>
   );

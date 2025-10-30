@@ -1,27 +1,27 @@
-# Dockerfile для Next.js на Render
+# Dockerfile for Next.js on Render
 FROM node:20-alpine AS base
 
-# Устанавливаем зависимости только когда нужно
+# Install dependencies only when required
 FROM base AS deps
 RUN apk add --no-cache libc6-compat python3 make g++ linux-headers eudev-dev libusb-dev
 WORKDIR /app
 
-# Устанавливаем зависимости
+# Install project dependencies
 COPY package.json package-lock.json* ./
 RUN npm ci
 
-# Пересобираем исходный код только когда нужно
+# Rebuild source only when needed
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Собираем приложение
+# Build the application
 RUN npm run build
 RUN ls -la .next/
 RUN find .next/ -name "*.js" | head -10
 
-# Production image, копируем все файлы и запускаем next
+# Production image: copy everything and run Next.js
 FROM base AS runner
 WORKDIR /app
 
@@ -35,11 +35,11 @@ RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
 
-# Автоматически используем output traces для уменьшения размера
+# Prepare output directory owned by the runtime user
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
-# Автоматически используем output traces для уменьшения размера
+# Copy standalone output and static assets
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 

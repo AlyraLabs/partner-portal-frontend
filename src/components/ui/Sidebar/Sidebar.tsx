@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import useAuth from '@hooks/useAuth';
@@ -9,6 +9,7 @@ import { sidebarLinks } from '@constants/sidebar';
 
 import './Sidebar.scss';
 
+import { initializeTitleAnimation } from '@/services/title-animation.service';
 import { SVGComponent } from '@/types';
 
 export function Sidebar() {
@@ -42,20 +43,37 @@ const Link = ({ Icon, text, link }: { Icon: SVGComponent; text: string; link: st
   const router = useRouter();
   const pathname = usePathname();
   const isExternal = isFullUrl(link);
+  const textRef = useRef<HTMLSpanElement>(null);
 
   const handleClick = () => {
     if (link === '/logout') return handleLogout();
     if (!isExternal) router.push(link);
   };
+
+  useEffect(() => {
+    const textElement = textRef.current;
+    if (!textElement) {
+      return;
+    }
+
+    return initializeTitleAnimation(textElement);
+  }, [text]);
+
   return (
     <li className={`sidebar__link ${pathname === link && 'sidebar__link--active'}`} onClick={handleClick}>
       {isExternal ? (
         <a href={link} target="_blank" rel="noopener noreferrer">
-          <Icon /> {text}
+          <Icon />
+          <span ref={textRef} className="sidebar__link-text">
+            {text}
+          </span>
         </a>
       ) : (
         <>
-          <Icon /> {text}
+          <Icon />
+          <span ref={textRef} className="sidebar__link-text">
+            {text}
+          </span>
         </>
       )}
     </li>

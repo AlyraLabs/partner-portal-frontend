@@ -6,7 +6,7 @@ import { useAccount, usePublicClient, useWriteContract } from 'wagmi';
 import { useWallet } from '@/contexts/WalletContext';
 import { CHAIN_IDS, getFeeCollectorAddress } from '@/contracts/constants';
 
-// ABI для контракта FeeCollector
+// ABI definition for the FeeCollector contract
 const FEE_COLLECTOR_ABI = parseAbi([
   'function withdrawIntegratorFees(address tokenAddress) external',
   'function getTokenBalance(address integratorAddress, address tokenAddress) external view returns (uint256)',
@@ -37,7 +37,7 @@ export class FeeCollectorService {
       console.log('Attempting to withdraw fees for token:', tokenAddress);
       console.log('Contract address:', this.contract.address);
 
-      // Используем writeContract из wagmi
+      // Use wagmi writeContract helper
       const hash = await (this.writeContract as (args: unknown) => Promise<`0x${string}`>)({
         address: this.contract.address,
         abi: FEE_COLLECTOR_ABI,
@@ -67,7 +67,7 @@ export class FeeCollectorService {
         throw new Error('Public client not available');
       }
 
-      // Используем publicClient.readContract напрямую
+      // Read through publicClient directly
       const balance = await (this.publicClient as { readContract: (args: unknown) => Promise<bigint> }).readContract({
         address: this.contract.address,
         abi: FEE_COLLECTOR_ABI,
