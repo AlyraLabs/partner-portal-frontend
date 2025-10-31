@@ -1,10 +1,12 @@
 .register-page {
-  height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
+  padding: 32px 0;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   &__logo {
     position: absolute;
@@ -77,7 +79,7 @@
     border: none;
     height: 1px;
     background: rgba(255, 255, 255, 0.2);
-    margin-bottom: 50px;
+    margin-bottom: 30px;
   }
 
   &__footer {
@@ -98,6 +100,147 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+  }
+}
+
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+  .register-page {
+    &__logo {
+      top: 30px;
+      left: 50px;
+      gap: var(--spacing-xs);
+    }
+
+    &__logo-text {
+      font-size: 28px;
+    }
+
+    &__container {
+      max-width: 550px;
+      padding: 20px 30px;
+    }
+
+    &__title {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      margin-bottom: 30px;
+    }
+  }
+}
+@media screen and (min-width: 1171px) and (max-width: 1600px) {
+  .register-page {
+    &__logo {
+      top: 26px;
+      left: 40px;
+      gap: var(--spacing-xs);
+    }
+
+    &__logo-text {
+      font-size: 22px;
+    }
+
+    &__container {
+      max-width: 500px;
+      padding: 20px 30px;
+    }
+
+    &__title {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    hr {
+      margin-bottom: 20px;
+    }
+  }
+}
+@media screen and (min-width: 971px) and (max-width: 1170px) {
+  .register-page {
+    &__logo {
+      top: 20px;
+      left: 30px;
+      gap: var(--spacing-xs);
+    }
+
+    &__logo-text {
+      font-size: 22px;
+    }
+
+    &__container {
+      max-width: 500px;
+      padding: 20px 30px;
+    }
+
+    &__title {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    hr {
+      margin-bottom: 20px;
+    }
+  }
+}
+@media screen and (min-width: 481px) and (max-width: 970px) {
+  .register-page {
+    padding: 65px 0;
+
+    &__logo {
+      top: 15px;
+      left: 20px;
+      gap: var(--spacing-xs);
+    }
+
+    &__logo-text {
+      font-size: 18px;
+    }
+
+    &__container {
+      max-width: 450px;
+      padding: 20px 30px;
+    }
+
+    &__title {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    hr {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 480px) {
+  .register-page {
+    padding: 65px 0;
+
+    &__logo {
+      top: 15px;
+      left: 20px;
+      gap: var(--spacing-xs);
+    }
+
+    &__logo-text {
+      font-size: 18px;
+    }
+
+    &__container {
+      max-width: 350px;
+      padding: 20px 20px;
+    }
+
+    &__title {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    hr {
+      margin-bottom: 10px;
     }
   }
 }

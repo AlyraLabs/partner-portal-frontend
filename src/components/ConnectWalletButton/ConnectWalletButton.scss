@@ -1,10 +1,9 @@
 .btn.connect-wallet-button {
   display: flex;
   align-items: center;
+  min-width: 500px;
   gap: 8px;
   transition: all 0.2s ease;
-  max-width: 500px;
-  width: 100%;
 
   &:hover {
     transform: translateY(-1px);
@@ -41,6 +40,43 @@
 
     &:hover {
       background: #4e4e4e30;
+    }
+  }
+}
+
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+  .btn.connect-wallet-button {
+    min-width: 400px;
+    gap: 8px;
+  }
+}
+@media screen and (min-width: 1171px) and (max-width: 1600px) {
+  .btn.connect-wallet-button {
+    min-width: 400px;
+    gap: 8px;
+  }
+}
+@media screen and (min-width: 971px) and (max-width: 1170px) {
+  .btn.connect-wallet-button {
+    min-width: 300px;
+    gap: 8px;
+  }
+}
+@media screen and (min-width: 481px) and (max-width: 970px) {
+  .btn.connect-wallet-button {
+    gap: 8px;
+    min-width: 200px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 480px) {
+  .btn.connect-wallet-button {
+    gap: 8px;
+    min-width: 100px;
+    max-width: 100%;
+    span {
+      font-size: 12px;
     }
   }
 }

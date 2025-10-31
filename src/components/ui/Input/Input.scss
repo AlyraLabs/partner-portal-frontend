@@ -58,8 +58,109 @@
   color: rgba(255, 255, 255, 0.5);
   width: 24px;
   height: 24px;
+  cursor: pointer;
 
   &--disabled {
     pointer-events: none;
+  }
+}
+
+.undefined {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+  .input-error-message {
+    right: 50px;
+    font-size: 14px;
+  }
+
+  .input {
+    height: 50px;
+    font-size: 18px;
+    padding: 16px;
+  }
+
+  .input-password-control {
+    right: 16px;
+    width: 24px;
+    height: 24px;
+  }
+}
+@media screen and (min-width: 1171px) and (max-width: 1600px) {
+  .input-error-message {
+    right: 45px;
+    font-size: 12px;
+  }
+
+  .input {
+    height: 45px;
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .input-password-control {
+    right: 12px;
+    width: 24px;
+    height: 24px;
+  }
+}
+@media screen and (min-width: 971px) and (max-width: 1170px) {
+  .input-error-message {
+    right: 45px;
+    font-size: 12px;
+  }
+
+  .input {
+    height: 45px;
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .input-password-control {
+    right: 12px;
+    width: 24px;
+    height: 24px;
+  }
+}
+@media screen and (min-width: 481px) and (max-width: 970px) {
+  .input-error-message {
+    right: 45px;
+    font-size: 12px;
+  }
+
+  .input {
+    height: 45px;
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .input-password-control {
+    right: 12px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 480px) {
+  .input-error-message {
+    right: 0px;
+    top: -25px;
+    transform: translateY(0);
+    font-size: 12px;
+  }
+
+  .input {
+    height: 45px;
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .input-password-control {
+    right: 12px;
+    width: 24px;
+    height: 24px;
   }
 }

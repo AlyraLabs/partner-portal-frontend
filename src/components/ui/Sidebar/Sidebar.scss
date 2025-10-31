@@ -1,6 +1,6 @@
 .sidebar {
   max-width: 300px;
-  height: 100vh;
+  height: 100dvh;
 
   &__content {
     height: 100%;
@@ -37,7 +37,7 @@
     a {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 5px;
       text-decoration: none;
     }
 
@@ -66,5 +66,95 @@
         }
       }
     }
+  }
+}
+
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+  .sidebar {
+    max-width: 300px;
+
+    &__content {
+      padding: 140px 50px 50px 50px;
+
+      &-bottom {
+        gap: 25px;
+      }
+    }
+
+    &__links {
+      gap: 5px;
+    }
+
+    &__link {
+      gap: 5px;
+      font-size: 18px;
+
+      a {
+        gap: 5px;
+      }
+    }
+  }
+}
+@media screen and (min-width: 1171px) and (max-width: 1600px) {
+  .sidebar {
+    max-width: 300px;
+
+    &__content {
+      padding: 120px 40px 40px 40px;
+
+      &-bottom {
+        gap: 25px;
+      }
+    }
+
+    &__links {
+      gap: 5px;
+    }
+
+    &__link {
+      gap: 5px;
+      font-size: 16px;
+
+      a {
+        gap: 5px;
+      }
+    }
+  }
+}
+@media screen and (min-width: 971px) and (max-width: 1170px) {
+  .sidebar {
+    max-width: 300px;
+
+    &__content {
+      padding: 115px 30px 30px 30px;
+
+      &-bottom {
+        gap: 25px;
+      }
+    }
+
+    &__links {
+      gap: 5px;
+    }
+
+    &__link {
+      gap: 5px;
+      font-size: 16px;
+
+      a {
+        gap: 5px;
+      }
+    }
+  }
+}
+@media screen and (min-width: 481px) and (max-width: 970px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 480px) {
+  .sidebar {
+    display: none;
   }
 }

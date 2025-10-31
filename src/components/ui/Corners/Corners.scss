@@ -2,7 +2,7 @@
   position: absolute;
   width: 8px;
   height: 8px;
-  background: #878787;
+  background: var(--text-secondary);
 
   &--top-left {
     top: -4px;

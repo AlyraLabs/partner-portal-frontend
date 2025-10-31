@@ -103,13 +103,15 @@ export const ContractActions: React.FC = () => {
 
         <tbody>
           <tr>
-            <td>
+            <td className="contract-actions__cell contract-actions__cell--chain" data-label="Chain">
               <p>USDC (Arbitrum)</p>
             </td>
 
-            <td>${balance}</td>
+            <td className="contract-actions__cell contract-actions__cell--amount" data-label="Collectable fees">
+              {balance !== null ? `$${balance}` : '--'}
+            </td>
 
-            <td style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <td className="contract-actions__cell contract-actions__cell--action" data-label="Action">
               <Button
                 type="button"
                 variant="primary"

@@ -1,6 +1,6 @@
 .fees-page {
   width: 100%;
-  padding: 0 20px;
+  padding: 0 50px;
 
   hr {
     border-color: var(--text-secondary);
@@ -26,11 +26,124 @@
   }
 
   .wallet-button {
-    margin-bottom: 44px;
+    margin-bottom: 40px;
   }
 
   &__contract-actions {
     margin-top: 40px;
     width: 100%;
+  }
+}
+
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+  .fees-page {
+    padding: 0 50px;
+
+    &__title {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    &__content {
+      padding-top: 20px;
+    }
+
+    .wallet-button {
+      margin-bottom: 40px;
+    }
+
+    &__contract-actions {
+      margin-top: 40px;
+    }
+  }
+}
+@media screen and (min-width: 1171px) and (max-width: 1600px) {
+  .fees-page {
+    padding: 0 40px;
+
+    &__title {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    &__content {
+      padding-top: 20px;
+    }
+
+    .wallet-button {
+      margin-bottom: 30px;
+    }
+
+    &__contract-actions {
+      margin-top: 20px;
+    }
+  }
+}
+@media screen and (min-width: 971px) and (max-width: 1170px) {
+  .fees-page {
+    padding: 0 30px;
+
+    &__title {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    &__content {
+      padding-top: 20px;
+    }
+
+    .wallet-button {
+      margin-bottom: 30px;
+    }
+
+    &__contract-actions {
+      margin-top: 20px;
+    }
+  }
+}
+@media screen and (min-width: 481px) and (max-width: 970px) {
+  .fees-page {
+    padding: 0 20px;
+
+    &__title {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    &__content {
+      padding-top: 20px;
+    }
+
+    .wallet-button {
+      margin-bottom: 30px;
+    }
+
+    &__contract-actions {
+      margin-top: 20px;
+    }
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 480px) {
+  .fees-page {
+    padding: 0 20px;
+    max-width: 100dvw;
+
+    &__title {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    &__content {
+      padding-top: 20px;
+    }
+
+    .wallet-button {
+      margin-bottom: 30px;
+    }
+
+    &__contract-actions {
+      margin-top: 20px;
+    }
   }
 }

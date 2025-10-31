@@ -43,10 +43,10 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
       return 'Connect Wallet';
     }
     if (isEVMConnected && evmAddress) {
-      return `EVM: ${evmAddress.slice(0, 6)}...${evmAddress.slice(-4)}`;
+      return `EVM: ${evmAddress}`;
     }
     if (isSolanaConnected && solanaAddress) {
-      return `SOL: ${solanaAddress.slice(0, 6)}...${solanaAddress.slice(-4)}`;
+      return `SOL: ${solanaAddress}`;
     }
     return 'Connect Wallet';
   }, [isHydrated, isEVMConnected, evmAddress, isSolanaConnected, solanaAddress]);

@@ -1,7 +1,7 @@
 .my-projects-page {
   min-height: 100vh;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 50px;
 
   &__container {
     max-width: 1400px;
@@ -84,6 +84,17 @@
     &__grid {
       grid-template-columns: 1fr;
     }
+
+    &__create-btn {
+      min-width: 300px;
+      padding: 10px 50px;
+      font-size: 18px;
+
+      span {
+        font-size: 24px;
+        left: 20px;
+      }
+    }
   }
 }
 
@@ -99,6 +110,113 @@
     &__create-btn {
       width: 100%;
       min-width: auto;
+    }
+  }
+}
+
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+  .my-projects-page {
+    padding: 0 50px;
+
+    &__title {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    &__create-btn {
+      min-width: 300px;
+      padding: 10px 50px;
+      font-size: 18px;
+
+      span {
+        font-size: 24px;
+        left: 20px;
+      }
+    }
+  }
+}
+@media screen and (min-width: 1171px) and (max-width: 1600px) {
+  .my-projects-page {
+    padding: 0 40px;
+
+    &__title {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    &__create-btn {
+      min-width: 250px;
+      padding: 10px 50px;
+      font-size: 16px;
+
+      span {
+        font-size: 22px;
+        left: 20px;
+      }
+    }
+  }
+}
+@media screen and (min-width: 971px) and (max-width: 1170px) {
+  .my-projects-page {
+    padding: 0 30px;
+
+    &__title {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    &__create-btn {
+      min-width: 250px;
+      padding: 10px 50px;
+      font-size: 16px;
+
+      span {
+        font-size: 22px;
+        left: 20px;
+      }
+    }
+  }
+}
+@media screen and (min-width: 481px) and (max-width: 970px) {
+  .my-projects-page {
+    padding: 0 20px;
+
+    &__title {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    &__create-btn {
+      min-width: 200px;
+      padding: 10px 50px;
+      font-size: 14px;
+
+      span {
+        font-size: 18px;
+        left: 20px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 480px) {
+  .my-projects-page {
+    padding: 0 20px;
+
+    &__title {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    &__create-btn {
+      min-width: 200px;
+      padding: 10px 50px;
+      font-size: 14px;
+
+      span {
+        font-size: 18px;
+        left: 20px;
+      }
     }
   }
 }

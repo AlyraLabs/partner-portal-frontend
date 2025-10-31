@@ -67,14 +67,14 @@
     gap: 20px;
     text-align: center;
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary);
   }
 
   &__agreement {
     text-align: center;
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.6);
-    margin-top: 50px;
+    color: var(--text-secondary);
+    margin-top: 20px;
   }
 
   &__link {
@@ -88,10 +88,119 @@
   }
 }
 
-@media (max-width: 768px) {
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+  .register-form {
+    &__inputs {
+      gap: 15px;
+    }
+
+    &__label {
+      font-size: 18px;
+    }
+
+    &__submit {
+      margin-top: 50px;
+      margin-bottom: 12px;
+    }
+
+    &__footer,
+    &__agreement {
+      font-size: 16px;
+    }
+  }
+}
+@media screen and (min-width: 1171px) and (max-width: 1600px) {
+  .register-form {
+    &__inputs {
+      gap: 12px;
+    }
+
+    &__label {
+      font-size: 16px;
+    }
+
+    &__submit {
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+
+    &__footer,
+    &__agreement {
+      font-size: 14px;
+    }
+  }
+}
+@media screen and (min-width: 971px) and (max-width: 1170px) {
+  .register-form {
+    &__inputs {
+      gap: 10px;
+    }
+
+    &__label {
+      font-size: 14px;
+    }
+
+    &__submit {
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+
+    &__footer,
+    &__agreement {
+      font-size: 14px;
+    }
+  }
+}
+@media screen and (min-width: 481px) and (max-width: 970px) {
   .register-form {
     &__inputs {
       grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    &__field--full {
+      grid-column: 1;
+    }
+
+    &__label {
+      font-size: 14px;
+    }
+
+    &__submit {
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+
+    &__footer,
+    &__agreement {
+      font-size: 14px;
+    }
+  }
+}
+
+@media screen and (min-width: 360px) and (max-width: 480px) {
+  .register-form {
+    &__inputs {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    &__field--full {
+      grid-column: 1;
+    }
+
+    &__label {
+      font-size: 14px;
+    }
+
+    &__submit {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    &__footer,
+    &__agreement {
+      font-size: 14px;
     }
   }
 }
