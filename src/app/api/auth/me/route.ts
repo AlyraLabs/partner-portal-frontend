@@ -13,10 +13,11 @@ export async function GET() {
       return NextResponse.json({ message: 'Not authenticated' }, { status: 401 });
     }
 
-    const response = axios.get('/auth/profile');
-    console.log(response);
+    const response = await axios.get('/auth/me');
+
     return NextResponse.json({
       success: true,
+      data: response.data,
     });
   } catch (error: unknown) {
     let status = 500;

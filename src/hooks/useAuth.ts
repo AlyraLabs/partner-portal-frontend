@@ -1,11 +1,22 @@
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-import { useWallet } from '@context/WalletContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { logout } from '@/actions/authActions';
-import { LoginFormData, RegisterFormData } from '@/types';
+import { LoginFormData } from '@/types';
+import { RegisterFormData } from '@/validation/auth';
+
+interface RegisterResponse {
+  success: boolean;
+  session: string;
+  message: string;
+}
+
+interface EmailVerificationData {
+  code: string;
+  session: string;
+}
 
 interface ErrorResponse {
   response: {
@@ -20,7 +31,6 @@ interface ErrorResponse {
 function UseAuth() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { disconnect } = useWallet();
 
   const loginMutation = useMutation({
     mutationFn: async (data: LoginFormData) => {
@@ -39,10 +49,23 @@ function UseAuth() {
 
   const registerMutation = useMutation({
     mutationFn: async (data: RegisterFormData) => {
-      return await axios.post('/api/auth/register', data);
+      console.log(data);
+      const { data: responseData } = await axios.post<RegisterResponse>('/api/auth/register', data);
+      return responseData;
     },
     onSuccess: data => {
-      router.push('/new-integration');
+      router.push(`/email-verification?session=${data.session}`);
+    },
+    onError: (error: ErrorResponse) => {
+      console.log(error?.response?.data);
+    },
+  });
+
+  const emailVerificationMutation = useMutation({
+    mutationFn: async (data: EmailVerificationData) => {
+      return await axios.post(`/api/auth/email-verification?session=${data.session}`, data);
+    },
+    onSuccess: data => {
       console.log(data);
     },
     onError: (error: ErrorResponse) => {
@@ -63,6 +86,7 @@ function UseAuth() {
   return {
     loginMutation,
     registerMutation,
+    emailVerificationMutation,
     handleLogout,
   };
 }

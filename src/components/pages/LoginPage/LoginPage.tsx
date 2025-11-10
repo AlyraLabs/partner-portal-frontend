@@ -8,7 +8,7 @@ import useAuth from '@hooks/useAuth';
 import './LoginPage.scss';
 
 import { LoginForm } from '@/components';
-import { Icon } from '@/components';
+import { Logo } from '@/components';
 import { LoginFormData } from '@/types/auth';
 
 export const LoginPage: React.FC = () => {
@@ -20,10 +20,7 @@ export const LoginPage: React.FC = () => {
 
   return (
     <div className="login-page">
-      <div className="login-page__logo">
-        <Icon name="logo" size="xl" className="login-page__logo-icon" />
-        <span className="login-page__logo-text">Alyra</span>
-      </div>
+      <Logo />
 
       <div className="login-page__container">
         <Corners />

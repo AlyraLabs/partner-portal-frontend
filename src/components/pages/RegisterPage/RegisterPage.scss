@@ -8,29 +8,6 @@
   overflow-x: hidden;
   overflow-y: auto;
 
-  &__logo {
-    position: absolute;
-    top: 2rem;
-    left: 50px;
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    z-index: 2;
-    pointer-events: none;
-
-    @media (max-width: 768px) {
-      top: 1.5rem;
-      left: 1.5rem;
-    }
-  }
-
-  &__logo-text {
-    font-family: var(--font-geist), sans-serif;
-    font-size: 32px;
-    font-weight: 500;
-    color: white;
-  }
-
   &__container {
     width: 100%;
     max-width: 600px;

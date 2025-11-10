@@ -1,0 +1,85 @@
+.email-verification-page {
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  &__confirmation-message {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 20px;
+    background: #092522;
+    border: 1px solid #27c99b;
+
+    p {
+      font-size: 20px;
+      color: #f5f5f5;
+    }
+  }
+
+  &__container {
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 30px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__title {
+    font-size: 22px;
+    text-align: left;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    margin-bottom: 30px;
+  }
+
+  .email-verification-form {
+    &__label {
+      margin-top: 8px;
+      display: block;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.8);
+
+      &::after {
+        content: '*';
+        color: var(--error);
+        margin-left: 2px;
+      }
+    }
+
+    &__inputs {
+      display: flex;
+      flex-flow: column;
+      gap: 5px;
+    }
+
+    &__resend-link {
+      margin-top: 8px;
+      margin-bottom: 24px;
+
+      a {
+        color: var(--text-secondary);
+      }
+    }
+
+    &__buttons {
+      width: 100%;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

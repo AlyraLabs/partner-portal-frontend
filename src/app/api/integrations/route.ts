@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { createServerAxios } from '@/lib/axios/server';
@@ -17,6 +18,10 @@ export type IntegrationResponse = {
 
 // GET - Fetch all integrations
 export async function GET() {
+  const accessToken = (await cookies()).get('access-token');
+  if (!accessToken) {
+    return NextResponse.json({ message: 'Not authenticated' }, { status: 401 });
+  }
   try {
     const axios = createServerAxios();
     const response = await axios.get<Integration[]>('/integrations');
@@ -71,7 +76,7 @@ export async function POST(request: NextRequest) {
       const err = error as { status?: number; data?: { message?: string } };
       if (typeof err.status === 'number') status = err.status;
       if (typeof err.data?.message === 'string') message = err.data.message;
-      
+
       console.error('Backend error:', err.data);
     } else if (error instanceof Error) {
       message = error.message;

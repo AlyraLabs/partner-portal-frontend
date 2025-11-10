@@ -1,32 +1,37 @@
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { createServerAxios } from '@/lib/axios/server';
-import { RegisterFormData } from '@/validation/auth';
 
-export type RegisterResponse = {
-  sessionToken: string;
+export type EmailVerificationBody = {
+  code: string;
+  session: string;
+};
+
+export type EmailVerificationResponse = {
+  success: boolean;
   message: string;
-  email: string;
 };
 
 export async function POST(request: NextRequest) {
-  const { email, password, username, companyName, website, telegram } = (await request.json()) as RegisterFormData;
+  const { searchParams } = new URL(request.url);
+  const session = searchParams.get('session');
+  const { code } = (await request.json()) as EmailVerificationBody;
   const axios = createServerAxios();
 
   try {
-    const { data } = await axios.post<RegisterResponse>('/auth/register', {
-      username,
-      companyName,
-      email,
-      password,
-      website,
-      telegram,
+    const { data } = await axios.post<EmailVerificationResponse>('/auth/confirm-email', {
+      code,
+      session,
     });
 
+    if (!data.success) {
+      throw { status: 422, data };
+    }
+
     return NextResponse.json({
-      success: true,
-      message: data.message || 'Register successful',
-      session: data.sessionToken,
+      success: data.success,
+      message: data.message || 'Email verification successful',
     });
   } catch (error: unknown) {
     let status = 500;

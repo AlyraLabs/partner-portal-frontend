@@ -25,10 +25,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children, initialUse
   useQuery({
     queryKey: ['user'],
     queryFn: async () => {
-      const response: UserResponse = await axios.get('/api/auth/me');
-      if (response.success) {
-        setUser(response.data);
-        return response.data;
+      const { data } = await axios.get<UserResponse>('/api/auth/me');
+      if (data.success) {
+        setUser(data.data);
+        return data.data;
       }
       return null;
     },
