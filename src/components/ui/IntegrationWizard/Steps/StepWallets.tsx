@@ -1,11 +1,7 @@
-import Image from 'next/image';
-
 import { useFormContext } from 'react-hook-form';
 
-import Required from '../../../../../public/icons/required.svg';
-
 import Error from '@/../public/icons/error.svg';
-import { Icon, Input } from '@/components';
+import { Input } from '@/components';
 import type { IntegrationFormValues } from '@/validation/integrationSchemas';
 
 export default function StepWallets() {

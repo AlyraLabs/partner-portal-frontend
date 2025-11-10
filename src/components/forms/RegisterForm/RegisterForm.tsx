@@ -25,7 +25,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),

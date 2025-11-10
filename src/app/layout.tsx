@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import type { Metadata } from 'next';
@@ -40,7 +41,9 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${geistMono.variable} ${geistSans.variable}`}>
       <body>
-        <Providers>{children}</Providers>
+        <Suspense>
+          <Providers>{children}</Providers>
+        </Suspense>
       </body>
     </html>
   );
