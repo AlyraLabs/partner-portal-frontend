@@ -21,7 +21,7 @@ interface UserResponse {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children, initialUser }) => {
   const [user, setUser] = useState<User | null>(null);
-
+  console.log(user);
   useQuery({
     queryKey: ['user'],
     queryFn: async () => {

@@ -42,7 +42,7 @@ function UseAuth() {
     },
     onSuccess: async data => {
       console.log(data);
-      await queryClient.invalidateQueries({ queryKey: ['integrations'] });
+      await queryClient.invalidateQueries({ queryKey: ['integrations', 'user'] });
       await queryClient.refetchQueries({ queryKey: ['integrations'] });
       if (data?.newUser) {
         router.push('/new-integration');

@@ -55,14 +55,14 @@ export const sidebarLinks = [
     text: 'Logout',
     link: '/logout',
   },
-  {
-    icon: Logout,
-    text: 'Danger Zone',
-    link: '/danger-zone',
-  },
+  // {
+  //   icon: Logout,
+  //   text: 'Danger Zone',
+  //   link: '/danger-zone',
+  // },
   {
     icon: Bug,
     text: 'Bug Report',
-    link: '/bug-report',
+    link: 'https://t.me/whoisfedelya',
   },
 ];
