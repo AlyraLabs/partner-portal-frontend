@@ -17,9 +17,9 @@ export type IntegrationResponse = {
 };
 
 export async function GET() {
-  const accessToken = (await cookies()).get('access-token');
+  const accessToken = (await cookies()).get('access_token');
   if (!accessToken) {
-    return NextResponse.json({ message: 'Not authenticated' }, { status: 200 });
+    return NextResponse.json({ message: 'Not authenticated' }, { status: 401 });
   }
   const axios = createServerAxios();
 

@@ -3,7 +3,7 @@ export interface Integration {
   string: string;
   plan: string;
   fee: string;
-  rpms: string;
+  rpm: string;
   createdAt?: string;
   updatedAt?: string;
 }

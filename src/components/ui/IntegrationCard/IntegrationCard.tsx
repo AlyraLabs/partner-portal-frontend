@@ -74,7 +74,7 @@ export const IntegrationCard: React.FC<IntegrationCardProps> = ({ integration, o
 
           <div className="integration-card__field">
             <span className="integration-card__label">RPMs</span>
-            <span className="integration-card__value">{integration.rpms || '100'}</span>
+            <span className="integration-card__value">{integration.rpm || '100'}</span>
           </div>
         </div>
       </div>

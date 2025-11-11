@@ -21,7 +21,7 @@ export const MyProjectsPage: React.FC = () => {
   };
 
   const handleEdit = (id: string) => {
-    router.push(`/integrations/${id}/edit`);
+    router.push(`/projects/${id}/edit`);
   };
 
   return (
