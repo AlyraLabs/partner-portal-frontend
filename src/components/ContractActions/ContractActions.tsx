@@ -6,34 +6,41 @@ import './ContractActions.scss';
 
 import { Button } from '@/components';
 import { useWallet } from '@/contexts/WalletContext';
-import { CHAIN_IDS, getFeeCollectorAddress, USDC_ARBITRUM } from '@/contracts/constants';
+import { CHAIN_IDS, getChainName, getFeeCollectorAddress, getPopularTokens } from '@/contracts/constants';
 import { useFeeCollectorService } from '@/services/FeeCollectorService';
 
 export const ContractActions: React.FC = () => {
   const { isEVMConnected, evmAddress, evmChainId } = useWallet();
   const feeCollectorService = useFeeCollectorService();
   const [isLoading, setIsLoading] = useState(false);
-  const [balance, setBalance] = useState<string | null>(null);
+  const [, setBalance] = useState<string | null>(null);
 
-  // Get contract address for current chain
-  const contractAddress = evmChainId ? getFeeCollectorAddress(evmChainId as CHAIN_IDS) : null;
+  const isSupportedChain = React.useMemo(() => {
+    if (!evmChainId) return false;
+    try {
+      getFeeCollectorAddress(evmChainId as CHAIN_IDS);
+      return true;
+    } catch {
+      return false;
+    }
+  }, [evmChainId]);
 
   const handleWithdraw = async () => {
-    if (!feeCollectorService || !evmAddress) {
+    if (!feeCollectorService || !evmAddress || !evmChainId) {
       return;
     }
 
     setIsLoading(true);
     try {
-      console.log('Withdrawing integrator fees for token:', USDC_ARBITRUM);
-      console.log('Integrator address:', evmAddress);
+      const popularTokens = getPopularTokens(evmChainId as CHAIN_IDS);
 
-      // Call real contract method
-      const tx = await feeCollectorService.withdrawIntegratorFees(USDC_ARBITRUM);
+      await feeCollectorService.batchWithdrawIntegratorFees(popularTokens);
 
-      console.log('Transaction hash:', tx.hash);
+      setTimeout(() => {
+        handleGetBalance();
+      }, 2000);
     } catch (error) {
-      console.error('Withdraw failed:', error);
+      console.error('Batch withdraw failed:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       console.log(errorMessage);
     } finally {
@@ -42,17 +49,17 @@ export const ContractActions: React.FC = () => {
   };
 
   const handleGetBalance = async () => {
-    if (!feeCollectorService || !evmAddress) {
+    if (!feeCollectorService || !evmAddress || !evmChainId) {
       return;
     }
 
     setIsLoading(true);
     try {
-      console.log('Getting token balance for integrator:', evmAddress);
-      console.log('Token address:', USDC_ARBITRUM);
+      const popularTokens = getPopularTokens(evmChainId as CHAIN_IDS);
+      const firstToken = popularTokens[0];
 
       // Call real contract method to get balance from mapping
-      const balance = await feeCollectorService.getTokenBalance(evmAddress, USDC_ARBITRUM);
+      const balance = await feeCollectorService.getTokenBalance(evmAddress, firstToken);
 
       // Convert from wei to readable format
       const balanceInWei = balance.toString();
@@ -60,8 +67,6 @@ export const ContractActions: React.FC = () => {
       // Convert to USDC (6 decimals)
       const balanceInUSDC = (parseInt(balanceInWei) / 1e6).toFixed(6);
       setBalance(balanceInUSDC);
-
-      console.log('Token balance retrieved:', balanceInWei);
 
       // if (balanceInWei === '0') {
       //   alert(
@@ -72,23 +77,39 @@ export const ContractActions: React.FC = () => {
       // }
     } catch (error) {
       console.error('Get balance failed:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      alert(`Get balance failed: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
   };
 
+  // Reset balance when chain changes
   useEffect(() => {
-    handleGetBalance();
-  }, [isEVMConnected]);
+    setBalance(null);
+  }, [evmChainId]);
+
+  // Load balance when chain, connection, or address changes
+  useEffect(() => {
+    if (isSupportedChain && isEVMConnected && evmAddress && feeCollectorService) {
+      handleGetBalance();
+    }
+  }, [isEVMConnected, isSupportedChain, evmAddress, evmChainId, feeCollectorService]);
 
   if (!isEVMConnected || !evmAddress) {
     return null;
   }
 
-  // Check if current chain is supported
-  const isSupportedChain = evmChainId && [1, 56, 137, 42161, 10, 324].includes(evmChainId);
+  if (!isSupportedChain) {
+    return (
+      <div className="contract-actions">
+        <div className="contract-actions__unsupported">
+          <p>
+            FeeCollector contract is not available on this network. Please switch to Arbitrum, BSC, Polygon, or
+            Optimism.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="contract-actions">
@@ -96,7 +117,7 @@ export const ContractActions: React.FC = () => {
         <thead>
           <tr>
             <th>CHAIN</th>
-            <th>COLLECTABLE FEES </th>
+            {/* <th>COLLECTABLE FEES </th> */}
             <th></th>
           </tr>
         </thead>
@@ -104,12 +125,16 @@ export const ContractActions: React.FC = () => {
         <tbody>
           <tr>
             <td className="contract-actions__cell contract-actions__cell--chain" data-label="Chain">
-              <p>USDC (Arbitrum)</p>
+              <p>
+                {evmChainId
+                  ? `${getChainName(evmChainId)} (${getPopularTokens(evmChainId as CHAIN_IDS).length} tokens)`
+                  : 'Multiple Tokens'}
+              </p>
             </td>
 
-            <td className="contract-actions__cell contract-actions__cell--amount" data-label="Collectable fees">
+            {/* <td className="contract-actions__cell contract-actions__cell--amount" data-label="Collectable fees">
               {balance !== null ? `$${balance}` : '--'}
-            </td>
+            </td> */}
 
             <td className="contract-actions__cell contract-actions__cell--action" data-label="Action">
               <Button
@@ -119,7 +144,7 @@ export const ContractActions: React.FC = () => {
                 onClick={handleWithdraw}
                 loading={isLoading}
                 className="contract-actions__button">
-                WITHDRAW FEES
+                WITHDRAW ALL FEES
               </Button>
             </td>
           </tr>

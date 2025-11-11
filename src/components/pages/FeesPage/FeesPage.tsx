@@ -4,6 +4,7 @@ import React from 'react';
 
 import { ConnectWalletButton } from '@components/ConnectWalletButton';
 import { ContractActions } from '@components/ContractActions';
+import { NetworkSwitcher } from '@components/NetworkSwitcher';
 
 import './FeesPage.scss';
 
@@ -17,7 +18,10 @@ export const FeesPage: React.FC = () => {
         <p className="fees-page__title">// WALLETS</p>
         <hr />
         <div className="fees-page__content">
-          <ConnectWalletButton variant="secondary" size="lg" className="wallet-button" />
+          <div className="fees-page__wallet-section">
+            <ConnectWalletButton variant="secondary" size="lg" className="wallet-button" />
+            <NetworkSwitcher />
+          </div>
           <hr />
           <div className="fees-page__contract-actions">
             {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}

@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 
-import { ChevronDown, Wifi, WifiOff } from 'lucide-react';
+import { WifiOff } from 'lucide-react';
 
 import './NetworkSwitcher.scss';
 
 import { Button } from '@/components';
 import { useWallet } from '@/contexts/WalletContext';
+import { CHAIN_IDS } from '@/contracts/constants';
 
 interface Network {
   id: number;
@@ -17,12 +18,10 @@ interface Network {
 }
 
 const SUPPORTED_NETWORKS: Network[] = [
-  { id: 1, name: 'Ethereum', symbol: 'ETH', rpcUrl: 'https://eth.llamarpc.com' },
-  { id: 56, name: 'BSC', symbol: 'BNB', rpcUrl: 'https://bsc-dataseed.binance.org' },
-  { id: 137, name: 'Polygon', symbol: 'MATIC', rpcUrl: 'https://polygon-rpc.com' },
-  { id: 42161, name: 'Arbitrum', symbol: 'ETH', rpcUrl: 'https://arb1.arbitrum.io/rpc' },
-  { id: 10, name: 'Optimism', symbol: 'ETH', rpcUrl: 'https://mainnet.optimism.io' },
-  { id: 8453, name: 'Base', symbol: 'ETH', rpcUrl: 'https://mainnet.base.org' },
+  { id: CHAIN_IDS.ARBITRUM, name: 'Arbitrum', symbol: 'ETH', rpcUrl: 'https://arb1.arbitrum.io/rpc' },
+  { id: CHAIN_IDS.BSC, name: 'BSC', symbol: 'BNB', rpcUrl: 'https://bsc-dataseed.binance.org' },
+  { id: CHAIN_IDS.POLYGON, name: 'Polygon', symbol: 'MATIC', rpcUrl: 'https://polygon-rpc.com' },
+  { id: CHAIN_IDS.OPTIMISM, name: 'Optimism', symbol: 'ETH', rpcUrl: 'https://mainnet.optimism.io' },
 ];
 
 export const NetworkSwitcher: React.FC = () => {
@@ -31,9 +30,18 @@ export const NetworkSwitcher: React.FC = () => {
   const [isSwitching, setIsSwitching] = useState(false);
 
   const currentNetwork = SUPPORTED_NETWORKS.find(network => network.id === evmChainId);
+  const isCurrentNetworkSupported = currentNetwork !== undefined;
 
   const handleNetworkSwitch = async (chainId: number) => {
-    if (!isEVMConnected) return;
+    if (!isEVMConnected) {
+      console.warn('Cannot switch network: wallet is not connected');
+      return;
+    }
+
+    if (evmChainId === chainId) {
+      setIsOpen(false);
+      return;
+    }
 
     setIsSwitching(true);
     try {
@@ -41,7 +49,15 @@ export const NetworkSwitcher: React.FC = () => {
       setIsOpen(false);
     } catch (error) {
       console.error('Failed to switch network:', error);
-      alert(`Failed to switch network: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
+      if (errorMessage.includes('user rejected') || errorMessage.includes('User rejected')) {
+        alert('Network switch was cancelled by user');
+      } else if (errorMessage.includes('not added') || errorMessage.includes('not configured')) {
+        alert(`Network is not added to your wallet. Please add it manually in your wallet settings.`);
+      } else {
+        alert(`Failed to switch network: ${errorMessage}`);
+      }
     } finally {
       setIsSwitching(false);
     }
@@ -69,18 +85,7 @@ export const NetworkSwitcher: React.FC = () => {
           onClick={() => setIsOpen(!isOpen)}
           className="network-switcher__button"
           disabled={isSwitching}>
-          <Wifi className="w-4 h-4 mr-2" />
-          {currentNetwork ? (
-            <>
-              {currentNetwork.name}
-              <ChevronDown className="w-4 h-4 ml-2" />
-            </>
-          ) : (
-            <>
-              Chain {evmChainId}
-              <ChevronDown className="w-4 h-4 ml-2" />
-            </>
-          )}
+          {currentNetwork ? <>{currentNetwork.name}</> : <>Chain {evmChainId}</>}
         </Button>
       </div>
 
@@ -93,14 +98,26 @@ export const NetworkSwitcher: React.FC = () => {
             </Button>
           </div>
 
+          {!isCurrentNetworkSupported && (
+            <div className="network-switcher__warning">
+              <p>Current network is not supported. Please switch to a supported network.</p>
+            </div>
+          )}
+
           <div className="network-switcher__networks">
             {SUPPORTED_NETWORKS.map(network => (
               <button
                 key={network.id}
+                type="button"
                 className={`network-switcher__network ${
                   network.id === evmChainId ? 'network-switcher__network--active' : ''
                 }`}
-                onClick={() => handleNetworkSwitch(network.id)}
+                onClick={e => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log(`Network button clicked: ${network.name} (${network.id})`);
+                  handleNetworkSwitch(network.id);
+                }}
                 disabled={isSwitching || network.id === evmChainId}>
                 <div className="network-switcher__network-info">
                   <span className="network-switcher__network-name">{network.name}</span>

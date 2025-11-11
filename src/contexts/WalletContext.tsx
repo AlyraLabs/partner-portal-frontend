@@ -1,11 +1,16 @@
 'use client';
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { ConnectionProvider, WalletProvider as SolanaWalletProvider } from '@solana/wallet-adapter-react';
+import { WalletAdapterNetwork, WalletName } from '@solana/wallet-adapter-base';
+import {
+  ConnectionProvider,
+  useWallet as useSolanaWallet,
+  WalletProvider as SolanaWalletProvider,
+} from '@solana/wallet-adapter-react';
 import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets';
 import { clusterApiUrl } from '@solana/web3.js';
+import type { Connector } from 'wagmi';
 import { useAccount, useConnect, useDisconnect, useSwitchChain } from 'wagmi';
 
 // Solana wallet configuration
@@ -25,8 +30,9 @@ interface WalletState {
 
   // Connection methods
   connectEVM: () => void;
-  connectSolana: () => void;
-  disconnect: () => void;
+  connectEVMWithConnector: (connector: Connector) => void;
+  connectSolana: () => Promise<void>;
+  disconnect: () => Promise<void>;
   switchNetwork: (chainId: number) => Promise<void>;
 }
 
@@ -36,42 +42,65 @@ interface WalletProviderProps {
   children: React.ReactNode;
 }
 
-export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
-  const { address: evmAddress, isConnected: isEVMConnected, chainId: evmChainId } = useAccount();
-  const { connect, connectors } = useConnect();
+// Inner component to use Solana wallet hooks
+const WalletProviderInner: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { address: evmAddress, isConnected: isEVMConnected, chainId: evmChainId, connector } = useAccount();
+  const { connect } = useConnect();
   const { disconnect: disconnectEVM } = useDisconnect();
   const { switchChain } = useSwitchChain();
 
-  const [isSolanaConnected, setIsSolanaConnected] = useState(false);
-  const [solanaAddress, setSolanaAddress] = useState<string | null>(null);
+  // Use Solana wallet adapter hook
+  const solanaWallet = useSolanaWallet();
 
   const connectEVM = () => {
-    // Try to connect with the first available connector (usually injected)
-    const injectedConnector = connectors.find(connector => connector.type === 'injected');
-    if (injectedConnector) {
-      connect({ connector: injectedConnector });
+    // This function is kept for backward compatibility
+    // But should not be used directly - use WalletModal instead
+    console.warn('connectEVM called without connector selection. Use WalletModal to select a wallet.');
+  };
+
+  const connectEVMWithConnector = (connectorToUse: Connector) => {
+    if (connectorToUse) {
+      connect({ connector: connectorToUse });
     } else {
-      console.error('No injected connector found');
+      console.error('Connector not found');
     }
   };
 
-  const connectSolana = () => {
-    // Mock Solana connection for now
-    setIsSolanaConnected(true);
-    setSolanaAddress('mock-solana-address-123456789');
+  const connectSolana = async () => {
+    try {
+      // Find Phantom wallet adapter
+      const phantomWallet = wallets.find(w => w.name === 'Phantom');
+      if (!phantomWallet) {
+        throw new Error('Phantom wallet adapter not found');
+      }
+
+      await solanaWallet.select(phantomWallet.name as WalletName);
+      await solanaWallet.connect();
+    } catch (error) {
+      console.error('Failed to connect Phantom:', error);
+      throw error;
+    }
   };
+
+  const isSolanaConnected = solanaWallet.connected;
+  const solanaAddress = solanaWallet.publicKey?.toBase58() || null;
 
   const disconnect = async () => {
     if (isEVMConnected) {
       disconnectEVM();
     }
-    setIsSolanaConnected(false);
-    setSolanaAddress(null);
+    if (isSolanaConnected) {
+      await solanaWallet.disconnect();
+    }
   };
 
   const switchNetwork = async (chainId: number) => {
+    if (!isEVMConnected || !connector) {
+      throw new Error('Wallet is not connected');
+    }
+
     try {
-      await switchChain({ chainId });
+      await switchChain({ chainId, connector });
     } catch (error) {
       console.error('Failed to switch network:', error);
       throw error;
@@ -85,15 +114,20 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
     isSolanaConnected,
     solanaAddress,
     connectEVM,
+    connectEVMWithConnector,
     connectSolana,
     disconnect,
     switchNetwork,
   };
 
+  return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;
+};
+
+export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <SolanaWalletProvider wallets={wallets} autoConnect>
-        <WalletContext.Provider value={value}>{children}</WalletContext.Provider>
+      <SolanaWalletProvider wallets={wallets} autoConnect={false}>
+        <WalletProviderInner>{children}</WalletProviderInner>
       </SolanaWalletProvider>
     </ConnectionProvider>
   );

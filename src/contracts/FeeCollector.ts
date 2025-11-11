@@ -2,6 +2,7 @@
 export interface FeeCollector {
   // Main functions we need
   withdrawIntegratorFees(tokenAddress: string): Promise<unknown>;
+  batchWithdrawIntegratorFees(tokenAddresses: string[]): Promise<unknown>;
   getTokenBalance(integratorAddress: string, tokenAddress: string): Promise<bigint>;
 
   // Contract interface
@@ -14,6 +15,7 @@ export interface FeeCollector {
 export interface FeeCollectorInterface {
   functions: {
     'withdrawIntegratorFees(address)': unknown;
+    'batchWithdrawIntegratorFees(address[])': unknown;
     'getTokenBalance(address,address)': unknown;
   };
   getFunction(nameOrSignatureOrTopic: string): unknown;

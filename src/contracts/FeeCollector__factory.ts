@@ -19,6 +19,19 @@ const _abi = [
   },
   {
     type: 'function',
+    name: 'batchWithdrawIntegratorFees',
+    inputs: [
+      {
+        name: 'tokenAddresses',
+        type: 'address[]',
+        internalType: 'address[]',
+      },
+    ],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
     name: 'getTokenBalance',
     inputs: [
       {

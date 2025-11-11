@@ -7,6 +7,7 @@ import { Wallet } from 'lucide-react';
 import './ConnectWalletButton.scss';
 
 import { Button } from '@/components';
+import { WalletModal } from '@/components/WalletModal';
 import { useWallet } from '@/contexts/WalletContext';
 
 interface ConnectWalletButtonProps {
@@ -20,8 +21,9 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
   size = 'md',
   className = '',
 }) => {
-  const { isEVMConnected, evmAddress, isSolanaConnected, solanaAddress, connectEVM, disconnect } = useWallet();
+  const { isEVMConnected, evmAddress, isSolanaConnected, solanaAddress, disconnect } = useWallet();
   const [isHydrated, setIsHydrated] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setIsHydrated(true);
@@ -34,7 +36,7 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
     if (displayConnected) {
       disconnect();
     } else {
-      connectEVM();
+      setIsModalOpen(true);
     }
   };
 
@@ -52,17 +54,20 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
   }, [isHydrated, isEVMConnected, evmAddress, isSolanaConnected, solanaAddress]);
 
   return (
-    <Button
-      variant={variant}
-      size={size}
-      className={`connect-wallet-button ${className}`}
-      onClick={handleConnect}
-      disableTitleAnimation={displayConnected}
-      data-connected={displayConnected ? 'true' : 'false'}>
-      {!displayConnected ? <Wallet className="w-4 h-4 mr-2" /> : null}
-      <span className={`connect-wallet-button__text${displayConnected ? ' connect-wallet-button__text--full' : ''}`}>
-        {buttonText}
-      </span>
-    </Button>
+    <>
+      <Button
+        variant={variant}
+        size={size}
+        className={`connect-wallet-button ${className}`}
+        onClick={handleConnect}
+        disableTitleAnimation={displayConnected}
+        data-connected={displayConnected ? 'true' : 'false'}>
+        {!displayConnected ? <Wallet className="w-4 h-4 mr-2" /> : null}
+        <span className={`connect-wallet-button__text${displayConnected ? ' connect-wallet-button__text--full' : ''}`}>
+          {buttonText}
+        </span>
+      </Button>
+      <WalletModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   );
 };

@@ -71,6 +71,22 @@
     }
   }
 
+  &__warning {
+    padding: 12px 16px;
+    margin: 8px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+
+    p {
+      margin: 0;
+      color: #ef4444;
+      font-size: 12px;
+      line-height: 1.4;
+      text-align: center;
+    }
+  }
+
   &__networks {
     padding: 8px;
     max-height: 300px;
