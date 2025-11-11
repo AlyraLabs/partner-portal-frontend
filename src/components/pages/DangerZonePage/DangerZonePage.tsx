@@ -2,22 +2,18 @@
 
 import React, { useState } from 'react';
 
+import useAuth from '@hooks/useAuth';
+
 import './DangerZonePage.scss';
 
 import { Button, Wrapper } from '@/components';
 
 export const DangerZonePage: React.FC = () => {
   const [reason, setReason] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { deleteAccountMutation } = useAuth();
 
   const handleDelete = async () => {
-    setIsSubmitting(true);
-    try {
-      // TODO: hook up to API once backend endpoint is ready
-      await new Promise(resolve => setTimeout(resolve, 800));
-    } finally {
-      setIsSubmitting(false);
-    }
+    deleteAccountMutation.mutate();
   };
 
   return (
@@ -55,7 +51,7 @@ export const DangerZonePage: React.FC = () => {
               disableTitleAnimation
               className="danger-zone-page__delete-btn"
               onClick={handleDelete}
-              loading={isSubmitting}>
+              loading={deleteAccountMutation.isPending}>
               Delete Organization
             </Button>
           </div>

@@ -46,3 +46,18 @@ export const verificationSchema = z.object({
 });
 
 export type VerificationFormData = z.infer<typeof verificationSchema>;
+
+export const changePasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(6, 'Password must be at least 6 characters')
+      .max(128, 'Password must be at most 128 characters'),
+    confirmPassword: z.string().min(1, 'Confirm password is required'),
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
+
+export type ChangePasswordFormValues = z.infer<typeof changePasswordSchema>;
