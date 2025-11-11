@@ -20,11 +20,11 @@ export const sidebarLinks = [
     text: 'My Projects',
     link: '/projects',
   },
-  {
-    icon: Analytics,
-    text: 'Analytics',
-    link: '/analytics',
-  },
+  // {
+  //   icon: Analytics,
+  //   text: 'Analytics',
+  //   link: '/analytics',
+  // },
   {
     icon: Fees,
     text: 'Fees',
@@ -55,11 +55,11 @@ export const sidebarLinks = [
     text: 'Logout',
     link: '/logout',
   },
-  // {
-  //   icon: Logout,
-  //   text: 'Danger Zone',
-  //   link: '/danger-zone',
-  // },
+  {
+    icon: Logout,
+    text: 'Danger Zone',
+    link: '/danger-zone',
+  },
   {
     icon: Bug,
     text: 'Bug Report',

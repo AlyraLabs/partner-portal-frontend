@@ -17,13 +17,13 @@ export function Sidebar() {
     <aside className="sidebar">
       <div className="sidebar__content">
         <ul className="sidebar__links">
-          {sidebarLinks.slice(0, 5).map((link, index) => (
+          {sidebarLinks.slice(0, 2).map((link, index) => (
             <Link key={index} Icon={link.icon} text={link.text} link={link.link}></Link>
           ))}
         </ul>
         <div className="sidebar__content-bottom">
           <ul className="sidebar__links">
-            {sidebarLinks.slice(5, 10).map((link, index) => (
+            {sidebarLinks.slice(2, 10).map((link, index) => (
               <Link key={index} Icon={link.icon} text={link.text} link={link.link}></Link>
             ))}
           </ul>
