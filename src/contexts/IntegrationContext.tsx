@@ -71,7 +71,7 @@ export const IntegrationProvider: React.FC<IntegrationProviderProps> = ({ childr
       console.log(data);
       queryClient.invalidateQueries({ queryKey: ['integrations'] });
       refetchIntegrations();
-      router.push('/dashboard');
+      router.push('/projects');
     },
     onError: error => {
       console.error('Failed to create integration:', error);

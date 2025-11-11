@@ -33,14 +33,22 @@ function UseAuth() {
   const queryClient = useQueryClient();
 
   const loginMutation = useMutation({
-    mutationFn: async (data: LoginFormData) => {
-      return await axios.post('/api/auth/login', data);
+    mutationFn: async (formData: LoginFormData) => {
+      const { data } = await axios.post('/api/auth/login', formData);
+      return {
+        newUser: formData.newUser,
+        ...data,
+      };
     },
     onSuccess: async data => {
+      console.log(data);
       await queryClient.invalidateQueries({ queryKey: ['integrations'] });
       await queryClient.refetchQueries({ queryKey: ['integrations'] });
+      if (data?.newUser) {
+        router.push('/new-integration');
+        return;
+      }
       router.push('/projects');
-      console.log(data);
     },
     onError: (error: ErrorResponse) => {
       console.log(error?.response?.data);
@@ -51,6 +59,13 @@ function UseAuth() {
     mutationFn: async (data: RegisterFormData) => {
       console.log(data);
       const { data: responseData } = await axios.post<RegisterResponse>('/api/auth/register', data);
+      sessionStorage.setItem(
+        'creds',
+        JSON.stringify({
+          email: data.email,
+          password: data.password,
+        })
+      );
       return responseData;
     },
     onSuccess: data => {

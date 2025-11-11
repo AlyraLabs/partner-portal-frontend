@@ -47,10 +47,10 @@ export const MyProjectsPage: React.FC = () => {
           </div>
 
           <div className="my-projects-page__actions">
-            <Button variant="primary" size="lg" onClick={handleCreateNew} className="my-projects-page__create-btn">
-              <span>+</span>
-              CREATE NEW PROJECT
-            </Button>
+            {/*<Button variant="primary" size="lg" onClick={handleCreateNew} className="my-projects-page__create-btn">*/}
+            {/*  <span>+</span>*/}
+            {/*  CREATE NEW PROJECT*/}
+            {/*</Button>*/}
           </div>
         </div>
       </div>

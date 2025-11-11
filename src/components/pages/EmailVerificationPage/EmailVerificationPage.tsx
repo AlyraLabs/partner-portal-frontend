@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -19,9 +19,8 @@ import { Button } from '@/components';
 import { VerificationFormData, verificationSchema } from '@/validation/auth';
 
 export const EmailVerificationPage: React.FC = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const { emailVerificationMutation } = useAuth();
+  const { emailVerificationMutation, loginMutation } = useAuth();
   const isSuccess = emailVerificationMutation.isSuccess;
 
   const session = searchParams.get('session') as string;
@@ -39,7 +38,11 @@ export const EmailVerificationPage: React.FC = () => {
 
   const handleVerification = (data: VerificationFormData) => {
     if (isSuccess) {
-      router.push('/login');
+      const credentials = JSON.parse(sessionStorage.getItem('creds') as string);
+      loginMutation.mutate({
+        newUser: true,
+        ...credentials,
+      });
       return;
     }
     emailVerificationMutation.mutate({
@@ -88,8 +91,8 @@ export const EmailVerificationPage: React.FC = () => {
               type="submit"
               variant="primary"
               size="lg"
-              loading={emailVerificationMutation.isPending}
-              disabled={emailVerificationMutation.isPending}>
+              loading={emailVerificationMutation.isPending || loginMutation.isPending}
+              disabled={emailVerificationMutation.isPending || loginMutation.isPending}>
               CONTINUE
               <Arrow />
             </Button>

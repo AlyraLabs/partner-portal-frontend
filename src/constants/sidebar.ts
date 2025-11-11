@@ -10,11 +10,11 @@ import Settings from '@/../public/icons/settings.svg';
 import Support from '@/../public/icons/support.svg';
 
 export const sidebarLinks = [
-  {
-    icon: Dashboard,
-    text: 'Dashboard',
-    link: '/dashboard',
-  },
+  // {
+  //   icon: Dashboard,
+  //   text: 'Dashboard',
+  //   link: '/dashboard',
+  // },
   {
     icon: Projects,
     text: 'My Projects',
@@ -30,11 +30,11 @@ export const sidebarLinks = [
     text: 'Fees',
     link: '/fees',
   },
-  {
-    icon: Members,
-    text: 'Members',
-    link: '/members',
-  },
+  // {
+  //   icon: Members,
+  //   text: 'Members',
+  //   link: '/members',
+  // },
   {
     icon: Docs,
     text: 'Docs',
@@ -48,7 +48,7 @@ export const sidebarLinks = [
   {
     icon: Support,
     text: 'Support',
-    link: '/support',
+    link: 'https://t.me/whoisfedelya',
   },
   {
     icon: Logout,

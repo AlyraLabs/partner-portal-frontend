@@ -3,6 +3,8 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
+import { useAuthContext } from '@context/AuthContext';
+
 import './IntegrationCard.scss';
 
 import { Button, Icon } from '@/components';
@@ -15,6 +17,7 @@ interface IntegrationCardProps {
 
 export const IntegrationCard: React.FC<IntegrationCardProps> = ({ integration, onEdit }) => {
   const router = useRouter();
+  const { user } = useAuthContext();
 
   const handleCopy = async () => {
     try {
@@ -45,10 +48,10 @@ export const IntegrationCard: React.FC<IntegrationCardProps> = ({ integration, o
             <h3>{integration.string.toUpperCase()}</h3>
           </div>
 
-          <Button variant="primary" size="sm" className="integration-card__edit-btn" onClick={handleEdit}>
-            EDIT
-            <Icon name="right-arrow" size="sm" />
-          </Button>
+          {/*<Button variant="primary" size="sm" className="integration-card__edit-btn" onClick={handleEdit}>*/}
+          {/*  EDIT*/}
+          {/*  <Icon name="right-arrow" size="sm" />*/}
+          {/*</Button>*/}
         </div>
 
         <div className="integration-card__fields">
@@ -61,11 +64,12 @@ export const IntegrationCard: React.FC<IntegrationCardProps> = ({ integration, o
               </button>
             </div>
           </div>
-
-          {/*<div className="integration-card__field">*/}
-          {/*  <span className="integration-card__label">Website</span>*/}
-          {/*  <span className="integration-card__value">{integration.string.toLowerCase()}.finance</span>*/}
-          {/*</div>*/}
+          {user?.website && (
+            <div className="integration-card__field">
+              <span className="integration-card__label">Website</span>
+              <span className="integration-card__value">{user.website}</span>
+            </div>
+          )}
 
           <div className="integration-card__field">
             <span className="integration-card__label">Plan</span>

@@ -1,7 +1,16 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-const protectedRoutes = ['/dashboard', '/profile', '/settings'];
+const protectedRoutes = [
+  '/dashboard',
+  '/profile',
+  '/settings',
+  '/projects',
+  '/danger-zone',
+  '/bug-report',
+  '/fees',
+  '/analytics',
+];
 
 const publicRoutes = ['/login', '/register', '/'];
 
@@ -20,7 +29,7 @@ export function middleware(request: NextRequest) {
   }
 
   if (isPublicRoute && isAuthenticated) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    return NextResponse.redirect(new URL('/projects', request.url));
   }
 
   if (pathname === '/' && !isAuthenticated) {
