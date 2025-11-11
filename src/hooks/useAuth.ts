@@ -1,4 +1,4 @@
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
@@ -16,6 +16,10 @@ interface RegisterResponse {
 interface EmailVerificationData {
   code: string;
   session: string;
+}
+
+interface ResetPasswordData {
+  newPassword: string;
 }
 
 interface ErrorResponse {
@@ -88,6 +92,31 @@ function UseAuth() {
     },
   });
 
+  const deleteAccountMutation = useMutation({
+    mutationFn: async () => {
+      return await axios.delete('/api/auth/delete');
+    },
+    onSuccess: data => {
+      console.log(data);
+      router.push('/login');
+    },
+    onError: (error: ErrorResponse) => {
+      console.log(error?.response?.data);
+    },
+  });
+
+  const resetPassword = useMutation({
+    mutationFn: async (data: ResetPasswordData) => {
+      return await axios.post(`/api/auth/reset-password`, { newPassword: data.newPassword });
+    },
+    onSuccess: data => {
+      console.log(data);
+    },
+    onError: (error: ErrorResponse) => {
+      console.log(error?.response?.data);
+    },
+  });
+
   const handleLogout = () => {
     logout().then(async () => {
       router.push('/login');
@@ -103,6 +132,8 @@ function UseAuth() {
     registerMutation,
     emailVerificationMutation,
     handleLogout,
+    deleteAccountMutation,
+    resetPassword,
   };
 }
 
