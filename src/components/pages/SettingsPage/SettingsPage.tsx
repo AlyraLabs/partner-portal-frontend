@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { useForm } from 'react-hook-form';
 
@@ -124,9 +125,15 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onSubmit, onC
         <div className="settings-page__modal-header">
           {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
           <p className="settings-page__modal-title">// CHANGE PASSWORD</p>
-          <button type="button" className="settings-page__modal-close" onClick={onClose} aria-label="Close modal">
-            ×
-          </button>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={onClose}
+            className="settings-page__modal-close"
+            aria-label="Close modal"
+            disableTitleAnimation>
+            <X size={16} aria-hidden="true" />
+          </Button>
         </div>
 
         <form

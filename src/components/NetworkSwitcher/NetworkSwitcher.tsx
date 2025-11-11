@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-import { WifiOff } from 'lucide-react';
+import { X } from 'lucide-react';
 
 import './NetworkSwitcher.scss';
 
@@ -93,8 +93,13 @@ export const NetworkSwitcher: React.FC = () => {
         <div className="network-switcher__dropdown">
           <div className="network-switcher__header">
             <h4>Switch Network</h4>
-            <Button variant="secondary" size="sm" onClick={() => setIsOpen(false)} className="network-switcher__close">
-              ×
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setIsOpen(false)}
+              className="network-switcher__close"
+              aria-label="Close network switcher">
+              <X size={16} aria-hidden="true" />
             </Button>
           </div>
 
@@ -130,7 +135,6 @@ export const NetworkSwitcher: React.FC = () => {
 
           <div className="network-switcher__footer">
             <Button variant="secondary" size="sm" onClick={handleDisconnect} className="network-switcher__disconnect">
-              <WifiOff className="w-4 h-4 mr-2" />
               Disconnect Wallet
             </Button>
           </div>
