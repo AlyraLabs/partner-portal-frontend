@@ -10,9 +10,9 @@ export interface Integration {
 
 export interface CreateIntegrationDto {
   string: string;
+  apiKey?: string;
   evmWallet?: string;
   solanaWallet?: string;
-  suiWallet?: string;
 }
 
 export interface IntegrationResponse {

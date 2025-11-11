@@ -9,13 +9,13 @@ import { IntegrationWizard } from '@components/ui/IntegrationWizard';
 import './AddIntegrationPage.scss';
 
 import { Wrapper } from '@/components';
-import { IntegrationFormValues } from '@/validation/integrationSchemas';
+import { CreateIntegrationDto } from '@/types';
 
 export const AddIntegrationPage: React.FC = () => {
   const { createIntegration } = useIntegrations();
 
-  const handleIntegrationComplete = (data: Partial<IntegrationFormValues>) => {
-    createIntegration({
+  const handleIntegrationComplete = async (data: CreateIntegrationDto) => {
+    await createIntegration({
       string: data.string as string,
     });
   };

@@ -14,11 +14,12 @@ import StepWallets from './Steps/StepWallets';
 import './IntegrationWizard.scss';
 
 import { Button, Icon } from '@/components';
+import { CreateIntegrationDto } from '@/types';
 import { type IntegrationFormValues, integrationSchema } from '@/validation/integrationSchemas';
 
 type Props = {
   initialData?: Partial<IntegrationFormValues>;
-  onComplete: (data: { string: string }) => Promise<void> | void;
+  onComplete: (data: CreateIntegrationDto) => Promise<void>;
 };
 
 const DEFAULTS: IntegrationFormValues = {
@@ -37,6 +38,7 @@ const STEP_FIELDS: Record<number, (keyof IntegrationFormValues)[]> = {
 export function IntegrationWizard({ initialData, onComplete }: Props) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isCreating, setIsCreating] = useState(false);
+  const [apiKey, setApiKey] = useState('');
 
   const methods = useForm<IntegrationFormValues>({
     resolver: zodResolver(integrationSchema),
@@ -57,11 +59,14 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
     if (!valid) return;
 
     const values = methods.getValues();
-    console.log(values);
     try {
       setIsCreating(true);
-      // map confirmation -> apiKeyConfirmed true for your backend, if needed
-      await onComplete({ string: values.string });
+      await onComplete({
+        string: values.string,
+        evmWallet: values.evmWallet,
+        solanaWallet: values.solanaWallet,
+        apiKey: apiKey,
+      });
     } finally {
       setIsCreating(false);
     }
@@ -87,7 +92,7 @@ export function IntegrationWizard({ initialData, onComplete }: Props) {
             {currentStep === 1 && <StepWallets />}
             {currentStep === 2 && (
               <StepApiKey
-                apiKeyMasked="alyra_sk_****2f6d8f1e7c3b"
+                setApiKey={(key: string) => setApiKey(key)}
                 onCopy={text => navigator.clipboard?.writeText(text).catch(() => {})}
               />
             )}

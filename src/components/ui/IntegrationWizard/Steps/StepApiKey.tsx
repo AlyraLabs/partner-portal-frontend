@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import { useFormContext } from 'react-hook-form';
 
 import Error from '@/../public/icons/error.svg';
@@ -6,16 +10,46 @@ import { Icon, Input } from '@/components';
 import type { IntegrationFormValues } from '@/validation/integrationSchemas';
 
 type Props = {
-  apiKeyMasked: string;
   onCopy: (text: string) => void;
+  setApiKey: (apiKey: string) => void;
 };
 
-export default function StepApiKey({ apiKeyMasked, onCopy }: Props) {
+export default function StepApiKey({ onCopy, setApiKey }: Props) {
+  const queryClient = useQueryClient();
   const {
     register,
     setValue,
     formState: { errors },
   } = useFormContext<IntegrationFormValues>();
+
+  const { data } = useQuery({
+    queryKey: ['generate-api-key'],
+    queryFn: async () => {
+      const { data } = await axios.get(`/api/integrations/api-key`);
+      setApiKey(data?.data?.apiKey);
+      return data;
+    },
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    staleTime: 0,
+    gcTime: 0,
+    retry: 0,
+  });
+
+  useEffect(() => {
+    return () => {
+      queryClient.removeQueries({ queryKey: ['generate-api-key'] });
+    };
+  }, [queryClient]);
+
+  function maskKey(key: string): string {
+    if (!key) return '';
+
+    const start = key.slice(0, 6);
+    const end = key.slice(-10);
+
+    return `${start}******${end}`;
+  }
 
   return (
     <div className="integration-wizard__step">
@@ -41,11 +75,11 @@ export default function StepApiKey({ apiKeyMasked, onCopy }: Props) {
             <Input
               id="apiKey"
               type="text"
-              value={apiKeyMasked}
+              value={maskKey(data?.data?.apiKey)}
               readOnly
               className="integration-wizard__api-key-input"
             />
-            <div className="integration-wizard__copy-btn" onClick={() => onCopy(apiKeyMasked)}>
+            <div className="integration-wizard__copy-btn" onClick={() => onCopy(data?.data?.apiKey || '')}>
               <Icon name="copy" size="md" />
             </div>
           </div>

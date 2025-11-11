@@ -16,14 +16,14 @@ export type IntegrationResponse = {
   message?: string;
 };
 
-// GET - Fetch all integrations
 export async function GET() {
   const accessToken = (await cookies()).get('access-token');
   if (!accessToken) {
-    return NextResponse.json({ message: 'Not authenticated' }, { status: 401 });
+    return NextResponse.json({ message: 'Not authenticated' }, { status: 200 });
   }
+  const axios = createServerAxios();
+
   try {
-    const axios = createServerAxios();
     const response = await axios.get<Integration[]>('/integrations');
 
     return NextResponse.json({
@@ -52,15 +52,16 @@ export async function GET() {
   }
 }
 
-// POST - Create a new integration
 export async function POST(request: NextRequest) {
   try {
-    const body = (await request.json()) as CreateIntegrationDto;
+    const { string, evmWallet, solanaWallet, apiKey } = (await request.json()) as CreateIntegrationDto;
     const axios = createServerAxios();
 
-    // Send only the string field to backend
     const response = await axios.post<Integration>('/integrations', {
-      string: body.string,
+      string,
+      evmWallet,
+      solanaWallet,
+      apiKey,
     });
 
     return NextResponse.json({

@@ -67,7 +67,8 @@ export const IntegrationProvider: React.FC<IntegrationProviderProps> = ({ childr
       const response = await axios.post('/api/integrations', data);
       return response.data.data;
     },
-    onSuccess: () => {
+    onSuccess: data => {
+      console.log(data);
       queryClient.invalidateQueries({ queryKey: ['integrations'] });
       refetchIntegrations();
       router.push('/dashboard');
@@ -105,37 +106,26 @@ export const IntegrationProvider: React.FC<IntegrationProviderProps> = ({ childr
     },
   });
 
-  // Get single integration (non-cached, direct fetch)
   const getIntegration = async (id: string): Promise<Integration> => {
     const response = await axios.get(`/api/integrations/${id}`);
     return response.data.data;
   };
 
-  // Computed values
   const integrationCount = useMemo(() => integrations.length, [integrations]);
   const hasExistingIntegrations = useMemo(() => integrations.length > 0, [integrations]);
 
   const value: IntegrationContextType = {
-    // List
     integrations,
     isLoading,
     error: error?.message || null,
     refetchIntegrations,
     hasExistingIntegrations,
     integrationCount,
-
-    // Create
     createIntegration,
     isCreating,
-
-    // Get single
     getIntegration,
-
-    // Update
     updateIntegration: (id, data) => updateIntegration({ id, data }),
     isUpdating,
-
-    // Delete
     deleteIntegration,
     isDeleting,
   };
