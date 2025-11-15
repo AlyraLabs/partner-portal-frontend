@@ -8,8 +8,6 @@ import axios from 'axios';
 
 import { CreateIntegrationDto, Integration } from '../types/integration';
 
-import { isAuthenticated } from '@/actions/authActions';
-
 interface IntegrationContextType {
   // List operations
   integrations: Integration[];

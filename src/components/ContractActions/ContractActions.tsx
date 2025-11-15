@@ -7,6 +7,7 @@ import './ContractActions.scss';
 import { Button } from '@/components';
 import { useWallet } from '@/contexts/WalletContext';
 import { CHAIN_IDS, getChainName, getFeeCollectorAddress, getPopularTokens } from '@/contracts/constants';
+import { alyraApiService } from '@/services/AlyraApiService';
 import { useFeeCollectorService } from '@/services/FeeCollectorService';
 
 export const ContractActions: React.FC = () => {
@@ -14,6 +15,7 @@ export const ContractActions: React.FC = () => {
   const feeCollectorService = useFeeCollectorService();
   const [isLoading, setIsLoading] = useState(false);
   const [, setBalance] = useState<string | null>(null);
+  const [userTokens, setUserTokens] = useState<string[]>([]);
 
   const isSupportedChain = React.useMemo(() => {
     if (!evmChainId) return false;
@@ -27,14 +29,34 @@ export const ContractActions: React.FC = () => {
 
   const handleWithdraw = async () => {
     if (!feeCollectorService || !evmAddress || !evmChainId) {
+      console.log('[ContractActions] handleWithdraw: Missing required data', {
+        feeCollectorService: !!feeCollectorService,
+        evmAddress,
+        evmChainId,
+      });
       return;
     }
 
     setIsLoading(true);
     try {
-      const popularTokens = getPopularTokens(evmChainId as CHAIN_IDS);
+      // Use user tokens if available, otherwise fallback to popular tokens
+      const tokensToWithdraw = userTokens.length > 0 ? userTokens : getPopularTokens(evmChainId as CHAIN_IDS);
 
-      await feeCollectorService.batchWithdrawIntegratorFees(popularTokens);
+      console.log('[ContractActions] handleWithdraw:', {
+        userTokensCount: userTokens.length,
+        tokensToWithdrawCount: tokensToWithdraw.length,
+        tokensToWithdraw,
+        usingUserTokens: userTokens.length > 0,
+      });
+
+      if (tokensToWithdraw.length === 0) {
+        console.warn('[ContractActions] No tokens available for withdrawal');
+        return;
+      }
+
+      console.log('[ContractActions] Calling batchWithdrawIntegratorFees with tokens:', tokensToWithdraw);
+      await feeCollectorService.batchWithdrawIntegratorFees(tokensToWithdraw);
+      console.log('[ContractActions] batchWithdrawIntegratorFees completed successfully');
 
       setTimeout(() => {
         handleGetBalance();
@@ -84,8 +106,54 @@ export const ContractActions: React.FC = () => {
 
   // Reset balance when chain changes
   useEffect(() => {
+    console.log('[ContractActions] Chain changed, resetting balance:', evmChainId);
     setBalance(null);
   }, [evmChainId]);
+
+  // Load user tokens when address or chain changes
+  useEffect(() => {
+    const loadUserTokens = async () => {
+      // Clear tokens immediately when chain or address changes
+      setUserTokens([]);
+
+      if (evmAddress && evmChainId) {
+        try {
+          console.log('[ContractActions] Loading user tokens for new chain/address:', {
+            evmAddress,
+            evmChainId,
+            chainName: getChainName(evmChainId),
+          });
+
+          const tokens = await alyraApiService.getUserTokens(evmAddress, evmChainId);
+
+          console.log('[ContractActions] Successfully loaded user tokens:', {
+            count: tokens.length,
+            tokens,
+            chainId: evmChainId,
+          });
+
+          setUserTokens(tokens);
+        } catch (error) {
+          console.error('[ContractActions] Failed to load user tokens:', {
+            error,
+            evmAddress,
+            evmChainId,
+          });
+          setUserTokens([]);
+        }
+      } else {
+        if (!evmAddress) {
+          console.log('[ContractActions] No address provided, clearing tokens');
+        }
+        if (!evmChainId) {
+          console.log('[ContractActions] No chain ID provided, clearing tokens');
+        }
+        setUserTokens([]);
+      }
+    };
+
+    loadUserTokens();
+  }, [evmAddress, evmChainId]);
 
   // Load balance when chain, connection, or address changes
   useEffect(() => {
@@ -125,11 +193,7 @@ export const ContractActions: React.FC = () => {
         <tbody>
           <tr>
             <td className="contract-actions__cell contract-actions__cell--chain" data-label="Chain">
-              <p>
-                {evmChainId
-                  ? `${getChainName(evmChainId)} (${getPopularTokens(evmChainId as CHAIN_IDS).length} tokens)`
-                  : 'Multiple Tokens'}
-              </p>
+              <p>{evmChainId ? `${getChainName(evmChainId)}` : ''}</p>
             </td>
 
             {/* <td className="contract-actions__cell contract-actions__cell--amount" data-label="Collectable fees">

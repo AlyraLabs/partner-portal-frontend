@@ -7,7 +7,7 @@ import { useAuthContext } from '@context/AuthContext';
 
 import './IntegrationCard.scss';
 
-import { Button, Icon } from '@/components';
+import { Icon } from '@/components';
 import { Integration } from '@/types/integration';
 
 interface IntegrationCardProps {

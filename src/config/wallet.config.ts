@@ -31,19 +31,29 @@ const getMetaMaskProvider = (): EIP1193Provider | null => {
   return null;
 };
 
-const metamaskConnector = injected({
-  target: (() => {
-    const provider = getMetaMaskProvider();
-    if (!provider) {
-      throw new Error('MetaMask not found');
-    }
+const createMetaMaskConnector = () => {
+  if (typeof window === 'undefined') {
+    return injected({
+      shimDisconnect: true,
+    });
+  }
+
+  const provider = getMetaMaskProvider();
+  if (!provider) {
+    return injected({
+      shimDisconnect: true,
+    });
+  }
+
+  return injected({
     // Type assertion: EIP1193Provider is compatible at runtime with wagmi's expected type
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return provider as any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) as any,
-  shimDisconnect: true,
-});
+    target: provider as any,
+    shimDisconnect: true,
+  });
+};
+
+const metamaskConnector = createMetaMaskConnector();
 
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || 'your-project-id';
 

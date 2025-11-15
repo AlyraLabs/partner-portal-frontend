@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import './MyProjectsPage.scss';
 
 import { Wrapper } from '@/components';
-import { Button } from '@/components';
 import { IntegrationCard, IntegrationCardSkeleton } from '@/components/ui';
 import { useIntegrations } from '@/contexts/IntegrationContext';
 
@@ -16,9 +15,9 @@ export const MyProjectsPage: React.FC = () => {
 
   console.log(integrations);
 
-  const handleCreateNew = () => {
-    router.push('/new-integration');
-  };
+  // const handleCreateNew = () => {
+  //   router.push('/new-integration');
+  // };
 
   const handleEdit = (id: string) => {
     router.push(`/projects/${id}/edit`);
